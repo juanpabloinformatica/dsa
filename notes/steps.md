@@ -6,9 +6,11 @@
 - Implement all the datastructures in python/c
 
   - Array
+  - HashMap
   - Stack
+
   - Queue
-  - Linked-list
+  - Linked-list [x]
   - Trees
     - Bst
   - Graphs

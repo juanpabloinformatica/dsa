@@ -3,13 +3,12 @@
 - Basically I don't feel i have a good foundation
   in this field so what I am whilling to do is the following.
 
-- Implement all the datastructures in python/c
+- Implement all the datastructures in c++/c/python
 
-  - Array
-  - HashMap
-  - Stack
-
+  - Dynamic Array [x]
+  - Stack [X]
   - Queue
+  - HashMap
   - Linked-list [x]
   - Trees
     - Bst
@@ -19,6 +18,8 @@
   the debugging will be good for checking the stack
 
 - Once i implement every dsa
+
+  - In c and them c++ in a oop approach
 
 - I will jump to solve some problems
   - leetcode

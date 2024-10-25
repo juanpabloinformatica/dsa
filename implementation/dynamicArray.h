@@ -15,6 +15,7 @@ struct DynamicArray {
   void (*addElement)(DynamicArray *dynamicArray, void *element);
   void (*setElement)(DynamicArray *dynamicArray, int postion, void *element);
   void (*removeElement)(DynamicArray *dynamicArray, int position);
+  // void (*removeElementBack)(DynamicArray *dynamicArray);
   void *(*getElement)(DynamicArray *dynamicArray, int position);
   void (*showArray)(DynamicArray *dynamicArray);
 };
@@ -23,6 +24,7 @@ DynamicArray *newDynamicArray();
 void addElement(DynamicArray *dynamicArray, void *element);
 void setElement(DynamicArray *dynamicArray, int postion, void *element);
 void removeElement(DynamicArray *dynamicArray, int position);
+void removeElementBack(DynamicArray *dynamicArray);
 void *getElement(DynamicArray *dynamicArray, int position);
 void showArray(DynamicArray *dynamicArray);
 void destroyDynamicArray(DynamicArray *dynamicArray);

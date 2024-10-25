@@ -78,7 +78,7 @@ int main(void) {
   dynamic->setElement(dynamic, 13, &element0);
   // dynamic->showArray(dynamic);
   for (int i = 0; i < 10; i++) {
-    dynamic->removeElement(dynamic, i);
+    dynamic->removeElementFront(dynamic, i);
   }
   // dynamic->showArray(dynamic);
   destroyDynamicArray(dynamic);
@@ -95,5 +95,6 @@ int main(void) {
     printf("\nElement: %d", *(int *)stack->pop(stack));
   }
   printf("\n");
+
   return 0;
 }

@@ -5,6 +5,7 @@
 // #include <stdio.h>
 #include "dynamicArray.h"
 #include "linkedList.h"
+#include "queue.h"
 #include "stack.h"
 
 typedef struct HashMap HashMap;

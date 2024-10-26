@@ -13,13 +13,13 @@ struct Stack {
   void (*push)(Stack *stack, void *element);
   void* (*pop)(Stack *stack);
   void (*peek)(Stack *stack);
-  bool (*isEmpty)(Stack *stack);
+  bool (*stackIsEmpty)(Stack *stack);
 };
 
 Stack *newStack();
 void push(Stack *stack, void *element);
 void* pop(Stack *stack);
 void peek(Stack *stack);
-bool isEmpty(Stack *stack);
+bool stackIsEmpty(Stack *stack);
 void destroyStack();
 #endif

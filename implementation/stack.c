@@ -6,7 +6,7 @@ Stack *newStack() {
   ptrStack->push = push;
   ptrStack->pop = pop;
   ptrStack->peek = peek;
-  ptrStack->isEmpty = isEmpty;
+  ptrStack->stackIsEmpty = stackIsEmpty;
   return ptrStack;
 }
 void push(Stack *stack, void *element) {
@@ -28,6 +28,6 @@ void peek(Stack *stack) {
   printf("\nTOP: %d", *(int *)stack->dynamicArray->getElement(
                           stack->dynamicArray, stack->dynamicArray->counter));
 }
-bool isEmpty(Stack *stack) {
+bool stackIsEmpty(Stack *stack) {
   return (stack->dynamicArray->counter == 0) ? true : false;
 }

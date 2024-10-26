@@ -78,7 +78,7 @@ int main(void) {
   dynamic->setElement(dynamic, 13, &element0);
   // dynamic->showArray(dynamic);
   for (int i = 0; i < 10; i++) {
-    dynamic->removeElementFront(dynamic, i);
+    dynamic->removeElement(dynamic, i);
   }
   // dynamic->showArray(dynamic);
   destroyDynamicArray(dynamic);
@@ -91,10 +91,28 @@ int main(void) {
   stack->push(stack, &element3);
   stack->push(stack, &element4);
   stack->dynamicArray->showArray(stack->dynamicArray);
-  while (stack->isEmpty(stack) == false) {
+  while (stack->stackIsEmpty(stack) == false) {
     printf("\nElement: %d", *(int *)stack->pop(stack));
   }
   printf("\n");
+  // ------------ Testing queue ----------------
+  printf("[QUEUE] Testing queue\n");
+  Queue *queue = newQueue();
+  queue->enqueue(queue, &element0);
+  queue->dynamicArray->showArray(queue->dynamicArray);
+  queue->enqueue(queue, &element1);
+  queue->dynamicArray->showArray(queue->dynamicArray);
+  queue->enqueue(queue, &element2);
+  queue->dynamicArray->showArray(queue->dynamicArray);
+  queue->enqueue(queue, &element3);
+  queue->enqueue(queue, &element4);
+  queue->enqueue(queue, &element5);
+  queue->dynamicArray->showArray(queue->dynamicArray);
+  while (queue->queueIsEmpty(queue) == false) {
+    printf("[QUEUE] Element: %d ", *(int *)queue->dequeue(queue));
+  }
+
+  queue->dynamicArray->showArray(queue->dynamicArray);
 
   return 0;
 }

@@ -3,12 +3,13 @@
 DynamicArray *newDynamicArray() {
   DynamicArray *ptrArray = (DynamicArray *)malloc(sizeof(DynamicArray));
   ptrArray->counter = 0;
+  ptrArray->bottomIndex = 0;
   ptrArray->size = DYNAMICARRAYCAP;
   ptrArray->array = malloc(sizeof(void *) * ptrArray->size);
   ptrArray->addElement = addElement;
   ptrArray->setElement = setElement;
   ptrArray->removeElement = removeElement;
-  // ptrArray->removeElementBack = removeElementBack;
+  ptrArray->removeElementBack = removeElementBack;
   ptrArray->getElement = getElement;
   ptrArray->showArray = showArray;
 
@@ -35,19 +36,25 @@ void setElement(DynamicArray *dynamicArray, int position, void *element) {
 // no he gives the pos
 // I know what i am doing is extremely inneficient but not the purpose now
 // I will do a variation  for doing the stack
-void removeElement(DynamicArray *dynamicArray, int position) {
+void removeElementFront(DynamicArray *dynamicArray, int position) {
   for (int i = position; i < dynamicArray->counter; i++) {
     ((int *)dynamicArray->array)[i] = ((int *)dynamicArray->array)[i + 1];
   }
   // update they array reducing it
   dynamicArray->counter--;
-  dynamicArray->size = dynamicArray->size - 1;
+  // dynamicArray->size = dynamicArray->size - 1;
   // updatin ptr to point to chunk with 4 less bytes in this case cause is an
   // integer as we are using integers in this example
-  dynamicArray->array =
-      realloc(dynamicArray->array, sizeof(int) * dynamicArray->size);
+  // dynamicArray->array =
+  // realloc(dynamicArray->array, sizeof(int) * dynamicArray->size);
 }
-void removeElementBack(DynamicArray *dynamicArray) {
+void removeElementBack(DynamicArray *dynamicArray, int position) {
+  for (int i = position; i < dynamicArray->counter; i++) {
+    ((int *)dynamicArray->array)[i] = ((int *)dynamicArray->array)[i + 1];
+  }
+  dynamicArray->bottomIndex++;
+  // update they array reducing it
+  // dynamicArray->counter--;
   // [0,2,3,4,5,6,7,8]
   // [2,3,4,5,6,7,8]
 
@@ -57,7 +64,7 @@ void removeElementBack(DynamicArray *dynamicArray) {
   // // update they array reducing it
   // dynamicArray->counter--;
   // dynamicArray->size = dynamicArray->size - 1;
-  // // updatin ptr to point to chunk with 4 less bytes in this case cause is an
+  // // updatin ptr to point to chunk with 4 less bytes in this case cause is
   // // integer as we are using integers in this example
   // dynamicArray->array =
   //     realloc(dynamicArray->array, sizeof(int) * dynamicArray->size);
@@ -79,5 +86,4 @@ void showArray(DynamicArray *dynamicArray) {
   for (int i = 0; i < dynamicArray->counter; i++) {
     printf("%i\n", ((int *)dynamicArray->array)[i]);
   }
-  // printf("\n");
 }

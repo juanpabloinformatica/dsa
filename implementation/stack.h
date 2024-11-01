@@ -21,5 +21,5 @@ void push(Stack *stack, void *element);
 void* pop(Stack *stack);
 void peek(Stack *stack);
 bool stackIsEmpty(Stack *stack);
-void destroyStack();
+void destroyStack(Stack* stack);
 #endif

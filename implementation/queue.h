@@ -7,13 +7,13 @@ struct Queue {
   DynamicArray *dynamicArray;
   bool (*queueIsEmpty)(Queue *queue);
   void (*enqueue)(Queue *queue, void *element);
-  void* (*dequeue)(Queue *queue);
+  void *(*dequeue)(Queue *queue);
   int (*queueSize)();
 };
 Queue *newQueue();
 bool queueIsEmpty(Queue *queue);
 void enqueue(Queue *queue, void *element);
-void* dequeue(Queue *queue);
-int queueSize(Queue* queue);
-void destroyQueue(Queue* queue);
+void *dequeue(Queue *queue);
+int queueSize(Queue *queue);
+void destroyQueue(Queue *queue);
 #endif

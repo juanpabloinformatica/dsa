@@ -16,9 +16,7 @@ LinkedList *newLinkedList() {
   ptrLinkedList->deleteNode = deleteNode;
   return ptrLinkedList;
 }
-// i want to do everything recursive
 void addNode(LinkedList *linkedList, LinkedListNode *node) {
-  // for starting
   if (linkedList->head == NULL) {
     linkedList->head = node;
   } else {
@@ -26,24 +24,6 @@ void addNode(LinkedList *linkedList, LinkedListNode *node) {
     linkedList->head = node;
   }
 }
-// void deleteNode(LinkedListNode *antNode, LinkedListNode *node, void *value) {
-//   if (node == NULL) {
-//     return;
-//   }
-//   if (*(int *)node->element == *(int *)value && antNode == NULL) {
-//     node = node->next;
-//     return;
-//   }
-//   if (*(int *)node->element == *(int *)value) {
-//     antNode->next = node->next;
-//     free(node);
-//     return;
-//   }
-//   deleteNode(node, node->next, value);
-// }
-// this works like that because what is happening is that the return do an stack
-// pop and retake from the end of the previous line in the stack element top-1
-//
 LinkedListNode *deleteNode(LinkedListNode *antNode, LinkedListNode *node,
                            void *value) {
   if (node == NULL) {
@@ -65,11 +45,3 @@ void showLinkedList(LinkedListNode *node) {
   node = node->next;
   showLinkedList(node);
 }
-// void showLinkedList(LinkedList *linkedList) {
-//   if (linkedList->head == NULL) {
-//     return;
-//   }
-//   printf("\nvalue: %i", *(int *)linkedList->head->element);
-//   linkedList->head = linkedList->head->next;
-//   showLinkedList(linkedList);
-// }

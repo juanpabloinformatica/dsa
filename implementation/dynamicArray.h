@@ -11,12 +11,12 @@ struct DynamicArray {
   int counter;
   int bottomIndex;
   int size;
-  // void *array[size];
   void *array;
+  // int* array;
   void (*addElement)(DynamicArray *dynamicArray, void *element);
   void (*setElement)(DynamicArray *dynamicArray, int postion, void *element);
-  void (*removeElement)(DynamicArray *dynamicArray, int position);
-  void (*removeElementBack)(DynamicArray *dynamicArray,int position);
+  void (*removeElementFront)(DynamicArray *dynamicArray, int position);
+  void (*removeElementBack)(DynamicArray *dynamicArray, int position);
   void *(*getElement)(DynamicArray *dynamicArray, int position);
   void (*showArray)(DynamicArray *dynamicArray);
 };
@@ -24,8 +24,8 @@ struct DynamicArray {
 DynamicArray *newDynamicArray();
 void addElement(DynamicArray *dynamicArray, void *element);
 void setElement(DynamicArray *dynamicArray, int postion, void *element);
-void removeElement(DynamicArray *dynamicArray, int position);
-void removeElementBack(DynamicArray *dynamicArray,int position);
+void removeElementFront(DynamicArray *dynamicArray, int position);
+void removeElementBack(DynamicArray *dynamicArray, int position);
 void *getElement(DynamicArray *dynamicArray, int position);
 void showArray(DynamicArray *dynamicArray);
 void destroyDynamicArray(DynamicArray *dynamicArray);

@@ -5,10 +5,11 @@ DynamicArray *newDynamicArray() {
   ptrArray->counter = 0;
   ptrArray->bottomIndex = 0;
   ptrArray->size = DYNAMICARRAYCAP;
-  ptrArray->array = malloc(sizeof(void *) * ptrArray->size);
+  // ptrArray->array = malloc(sizeof(void *) * ptrArray->size);
+  ptrArray->array = malloc(sizeof(int *) * ptrArray->size);
   ptrArray->addElement = addElement;
   ptrArray->setElement = setElement;
-  ptrArray->removeElement = removeElement;
+  ptrArray->removeElementFront = removeElementFront;
   ptrArray->removeElementBack = removeElementBack;
   ptrArray->getElement = getElement;
   ptrArray->showArray = showArray;
@@ -42,32 +43,12 @@ void removeElementFront(DynamicArray *dynamicArray, int position) {
   }
   // update they array reducing it
   dynamicArray->counter--;
-  // dynamicArray->size = dynamicArray->size - 1;
-  // updatin ptr to point to chunk with 4 less bytes in this case cause is an
-  // integer as we are using integers in this example
-  // dynamicArray->array =
-  // realloc(dynamicArray->array, sizeof(int) * dynamicArray->size);
 }
 void removeElementBack(DynamicArray *dynamicArray, int position) {
   for (int i = position; i < dynamicArray->counter; i++) {
     ((int *)dynamicArray->array)[i] = ((int *)dynamicArray->array)[i + 1];
   }
   dynamicArray->bottomIndex++;
-  // update they array reducing it
-  // dynamicArray->counter--;
-  // [0,2,3,4,5,6,7,8]
-  // [2,3,4,5,6,7,8]
-
-  // for (int i = position; i < dynamicArray->counter; i++) {
-  //   ((int *)dynamicArray->array)[i] = ((int *)dynamicArray->array)[i + 1];
-  // }
-  // // update they array reducing it
-  // dynamicArray->counter--;
-  // dynamicArray->size = dynamicArray->size - 1;
-  // // updatin ptr to point to chunk with 4 less bytes in this case cause is
-  // // integer as we are using integers in this example
-  // dynamicArray->array =
-  //     realloc(dynamicArray->array, sizeof(int) * dynamicArray->size);
 }
 void *getElement(DynamicArray *dynamicArray, int position) {
   // I think what is passing is the problem with pointer arithmetic
@@ -83,7 +64,9 @@ void destroyDynamicArray(DynamicArray *dynamicArray) {
 }
 void showArray(DynamicArray *dynamicArray) {
   printf("ARRAY\n");
-  for (int i = 0; i < dynamicArray->counter; i++) {
+  // for stack
+  for (int i = 0; i < dynamicArray->counter - dynamicArray->bottomIndex; i++) {
     printf("%i\n", ((int *)dynamicArray->array)[i]);
   }
+  // for queue
 }

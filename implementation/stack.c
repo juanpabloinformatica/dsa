@@ -20,8 +20,8 @@ void *pop(Stack *stack) {
   int null = 0;
   stack->dynamicArray->setElement(stack->dynamicArray,
                                   stack->dynamicArray->counter, &null);
-  stack->dynamicArray->removeElement(stack->dynamicArray,
-                                     stack->dynamicArray->counter);
+  stack->dynamicArray->removeElementFront(stack->dynamicArray,
+                                          stack->dynamicArray->counter);
   return topElementPopped;
 }
 void peek(Stack *stack) {
@@ -30,4 +30,8 @@ void peek(Stack *stack) {
 }
 bool stackIsEmpty(Stack *stack) {
   return (stack->dynamicArray->counter == 0) ? true : false;
+}
+void destroyStack(Stack *stack) {
+  destroyDynamicArray(stack->dynamicArray);
+  free(stack);
 }

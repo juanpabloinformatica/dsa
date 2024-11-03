@@ -63,7 +63,7 @@ void destroyDynamicArray(DynamicArray *dynamicArray) {
   free(dynamicArray);
 }
 void showArray(DynamicArray *dynamicArray) {
-  printf("ARRAY\n");
+  printf("\nARRAY\n");
   // for stack
   for (int i = 0; i < dynamicArray->counter - dynamicArray->bottomIndex; i++) {
     printf("%i\n", ((int *)dynamicArray->array)[i]);

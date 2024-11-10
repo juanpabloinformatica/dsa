@@ -101,7 +101,7 @@ int main(void) {
   destroyStack(stack);
   printf("\n");
   // ------------ end testing queue -----------------
-  // // // ------------ Testing queue ----------------
+  // ------------ Testing queue ----------------
   printf("[QUEUE] Testing queue\n");
   Queue *queue = newQueue();
   queue->enqueue(queue, &element0);
@@ -121,5 +121,6 @@ int main(void) {
   }
   queue->dynamicArray->showArray(queue->dynamicArray);
   destroyQueue(queue);
+  //
   return 0;
 }

@@ -1,5 +1,6 @@
 #include "hashmap.h"
-
+#include <stdint.h>
+#
 Hashmap *newHashmap() {
   Hashmap *ptrHashmap = (Hashmap *)malloc(sizeof(Hashmap));
   ptrHashmap->hashmapPut = hashmapPut;
@@ -9,17 +10,42 @@ Hashmap *newHashmap() {
   ptrHashmap->hashmapContainsValue = hashmapContainsValue;
   return ptrHashmap;
 }
-int hashFunction(void *element) {}
-void hashmapPut(Hashmap *hashmap, void *element) {
-  // get hash
-  int index = hashFunction(element);
-  if (hashmap->array[index] == NULL) {
-    hashmap->array[index] = element;
+int hashFunction(Hashmap *hashmap, void *key, char *type) {
+
+  assert(strcmp(type, "number") == 0 || strcmp(type, "string"));
+  if (strcmp(type, "number") == 0) {
+    // this warning is good to know nevertheless is assure that a int is passed
+    int key = *(int *)key;
+    int keyToIndex = key / DIVIDE_FACTOR;
+    return keyToIndex;
+    // is a number
+  } else if (strcmp(type, "string") == 0) {
+    return -1;
   } else {
+    printf("Not yet implemented.");
+    return -1;
   }
 }
-void hashmapGet(void *key) {}
-void hashmapRemove(void *key) {}
-bool hashmapContainsKey(void *key) {}
-bool hashmapContainsValue(void *element) {}
+char* getKeyType(void* key){
+
+}
+void hashmapPut(Hashmap *hashmap, void *key, void *value) {
+  // get hash
+  int index;
+  char *type = getKeyType(key);
+  if () {
+    index = hashFunction(key, );
+  } else if () {
+    index = hashFunction(key, );
+  } else {
+  }
+  // if (hashmap->array[index] == NULL) {
+  //   hashmap->array[index] = value;
+  // } else {
+  // }
+}
+void hashmapGet(Hashmap *hashmap, void *key) {}
+void hashmapRemove(Hashmap *hashmap, void *key) {}
+bool hashmapContainsKey(Hashmap *hashmap, void *key) {}
+bool hashmapContainsValue(Hashmap *hashmap, void *element) {}
 void destroyHashmap(Hashmap *hashmap) {}

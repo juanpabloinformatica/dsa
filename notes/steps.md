@@ -7,9 +7,9 @@
 
   - Dynamic Array [x]
   - Stack [X]
-  - Queue
-  - HashMap
+  - Queue [X]
   - Linked-list [x]
+  - HashMap []
   - Trees
     - Bst
   - Graphs

@@ -1,8 +1,12 @@
 #include "hashmap.h"
 #include <stdint.h>
-#
-Hashmap *newHashmap() {
+Hashmap *newHashmap(char *keyType, char *valueType) {
   Hashmap *ptrHashmap = (Hashmap *)malloc(sizeof(Hashmap));
+  ptrHashmap->keyType = (char *)malloc(sizeof(char) * strlen(keyType));
+  ptrHashmap->valueType = (char *)malloc(sizeof(char) * strlen(valueType));
+  ptrHashmap->counter = 0;
+  memcpy(ptrHashmap->keyType, keyType, strlen(keyType));
+  memcpy(ptrHashmap->valueType, valueType, strlen(valueType));
   ptrHashmap->hashmapPut = hashmapPut;
   ptrHashmap->hashmapGet = hashmapGet;
   ptrHashmap->hashmapRemove = hashmapRemove;
@@ -10,42 +14,58 @@ Hashmap *newHashmap() {
   ptrHashmap->hashmapContainsValue = hashmapContainsValue;
   return ptrHashmap;
 }
-int hashFunction(Hashmap *hashmap, void *key, char *type) {
+int hashFunction(Hashmap *hashmap, void *key) {
+  assert(strcmp(hashmap->keyType, HASHMAP_TYPE_NUMBER) == 0 ||
+         strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0);
+  if (strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0) {
+    // printf("\nin here\n");
+    // char *keyString;
+    // memcpy(keyString, key, strlen(key));
+    int sum = 0;
+    while (*(char *)key) {
+      // printf("%c", *(char *)key);
+      sum += *(char *)key;
+      key++;
+    }
 
-  assert(strcmp(type, "number") == 0 || strcmp(type, "string"));
-  if (strcmp(type, "number") == 0) {
-    // this warning is good to know nevertheless is assure that a int is passed
-    int key = *(int *)key;
-    int keyToIndex = key / DIVIDE_FACTOR;
-    return keyToIndex;
-    // is a number
-  } else if (strcmp(type, "string") == 0) {
-    return -1;
+    printf("\nModule factor: %d ", MODULE_FACTOR);
+    printf("\nvalue: %d", sum % MODULE_FACTOR);
+    return sum % MODULE_FACTOR;
+  } else if (strcmp(hashmap->keyType, HASHMAP_TYPE_NUMBER) == 0) {
+    int keyNumber = *(int *)key;
+    return keyNumber % MODULE_FACTOR;
   } else {
-    printf("Not yet implemented.");
     return -1;
   }
 }
-char* getKeyType(void* key){
-
-}
+// char *getKeyType(void *key) {}
 void hashmapPut(Hashmap *hashmap, void *key, void *value) {
-  // get hash
-  int index;
-  char *type = getKeyType(key);
-  if () {
-    index = hashFunction(key, );
-  } else if () {
-    index = hashFunction(key, );
+  assert(strcmp(hashmap->keyType, HASHMAP_TYPE_NUMBER) == 0 ||
+         strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0);
+  if (strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0) {
+    // printf("hashmap key is a string.");
+    int getIndex = hashFunction(hashmap, key);
+    if (hashmap->array[getIndex] == NULL) {
+      hashmap->array[getIndex] = value;
+      // printf("%d", *(int *)hashmap->array[getIndex]);
+    } else {
+      // handling collision
+    }
+  } else if (strcmp(hashmap->keyType, HASHMAP_TYPE_NUMBER) == 0) {
+    // printf("hashmap key is a number.");
+    int getIndex = hashFunction(hashmap, key);
+    if (hashmap->array[getIndex] == NULL) {
+      hashmap->array[getIndex] = value;
+      // printf("%d", *(int *)hashmap->array[getIndex]);
+    } else {
+      // handling collision
+    }
   } else {
+    printf("Not defined yet.");
   }
-  // if (hashmap->array[index] == NULL) {
-  //   hashmap->array[index] = value;
-  // } else {
-  // }
 }
 void hashmapGet(Hashmap *hashmap, void *key) {}
 void hashmapRemove(Hashmap *hashmap, void *key) {}
-bool hashmapContainsKey(Hashmap *hashmap, void *key) {}
-bool hashmapContainsValue(Hashmap *hashmap, void *element) {}
+bool hashmapContainsKey(Hashmap *hashmap, void *key) { return true; }
+bool hashmapContainsValue(Hashmap *hashmap, void *element) { return true; }
 void destroyHashmap(Hashmap *hashmap) {}

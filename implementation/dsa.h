@@ -4,10 +4,10 @@
 // #include <stdlib.h>
 // #include <stdio.h>
 #include "dynamicArray.h"
+#include "hashmap.h"
 #include "linkedList.h"
 #include "queue.h"
 #include "stack.h"
-#include "hashmap.h"
 
 typedef struct HashMap HashMap;
 typedef struct Stack Stack;

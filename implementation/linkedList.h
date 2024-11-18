@@ -24,4 +24,5 @@ void showLinkedList(LinkedListNode *node);
 // void deleteNode(LinkedListNode *antNode, LinkedListNode *node, void *value);
 LinkedListNode *deleteNode(LinkedListNode *antNode, LinkedListNode *node,
                            void *value);
+void destroyLinkedList();
 #endif

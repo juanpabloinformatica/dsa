@@ -5,8 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "linkedList.h"
 // hashfunction Cormen method applied
-#define ARRAY_MAX_SIZE 1 << 4
+#define ARRAY_MAX_SIZE (1 << 4)
 // #define DIVIDE_FACTOR (1 << 4) * 10
 #define MODULE_FACTOR ARRAY_MAX_SIZE
 #define HASHMAP_TYPE_NUMBER "number"

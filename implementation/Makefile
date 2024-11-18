@@ -7,7 +7,7 @@ OBJ=$(SRC:.c=.o)
 all: $(EXEC)
 
 dsa: $(OBJ)
-	$(CC) -o $@ $^
+	$(CC) -o  $@ $^
 
 %.o: %.c
 	$(CC) -o $@ -c $(CCFLAGS) $<

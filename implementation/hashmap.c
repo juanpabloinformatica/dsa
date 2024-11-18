@@ -18,50 +18,31 @@ int hashFunction(Hashmap *hashmap, void *key) {
   assert(strcmp(hashmap->keyType, HASHMAP_TYPE_NUMBER) == 0 ||
          strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0);
   if (strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0) {
-    // printf("\nin here\n");
-    // char *keyString;
-    // memcpy(keyString, key, strlen(key));
     int sum = 0;
     while (*(char *)key) {
-      // printf("%c", *(char *)key);
       sum += *(char *)key;
       key++;
     }
-
-    printf("\nModule factor: %d ", MODULE_FACTOR);
-    printf("\nvalue: %d", sum % MODULE_FACTOR);
     return sum % MODULE_FACTOR;
-  } else if (strcmp(hashmap->keyType, HASHMAP_TYPE_NUMBER) == 0) {
+  } else {
     int keyNumber = *(int *)key;
     return keyNumber % MODULE_FACTOR;
-  } else {
-    return -1;
   }
 }
-// char *getKeyType(void *key) {}
+
 void hashmapPut(Hashmap *hashmap, void *key, void *value) {
   assert(strcmp(hashmap->keyType, HASHMAP_TYPE_NUMBER) == 0 ||
          strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0);
-  if (strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0) {
-    // printf("hashmap key is a string.");
-    int getIndex = hashFunction(hashmap, key);
-    if (hashmap->array[getIndex] == NULL) {
-      hashmap->array[getIndex] = value;
-      // printf("%d", *(int *)hashmap->array[getIndex]);
-    } else {
-      // handling collision
-    }
-  } else if (strcmp(hashmap->keyType, HASHMAP_TYPE_NUMBER) == 0) {
-    // printf("hashmap key is a number.");
-    int getIndex = hashFunction(hashmap, key);
-    if (hashmap->array[getIndex] == NULL) {
-      hashmap->array[getIndex] = value;
-      // printf("%d", *(int *)hashmap->array[getIndex]);
-    } else {
-      // handling collision
-    }
+  int getIndex = hashFunction(hashmap, key);
+  if (hashmap->array[getIndex] == NULL) {
+    LinkedList *list = newLinkedList();
+    list->addNode(list, value);
+    // hashmap->array[getIndex]
+    hashmap->array[getIndex] = list;
   } else {
-    printf("Not defined yet.");
+    LinkedList *list = hashmap->array[getIndex];
+    list->addNode(list, value);
+    // collision detected
   }
 }
 void hashmapGet(Hashmap *hashmap, void *key) {}

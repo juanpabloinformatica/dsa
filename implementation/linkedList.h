@@ -3,6 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// typedef struct HashmapNode HashmapNode;
+// struct HashmapNode {
+//   void *key;
+//   void *value;
+// };
 typedef struct LinkedListNode LinkedListNode;
 struct LinkedListNode {
   void *element;
@@ -13,6 +18,7 @@ struct LinkedList {
   LinkedListNode *head;
   void (*addNode)(LinkedList *linkedList, LinkedListNode *node);
   void (*showLinkedList)(LinkedListNode *node);
+  void (*showLinkedListIterative)(LinkedListNode *node);
   LinkedListNode *(*deleteNode)(LinkedListNode *antNode, LinkedListNode *node,
                                 void *value);
 };
@@ -24,5 +30,6 @@ void showLinkedList(LinkedListNode *node);
 // void deleteNode(LinkedListNode *antNode, LinkedListNode *node, void *value);
 LinkedListNode *deleteNode(LinkedListNode *antNode, LinkedListNode *node,
                            void *value);
+void showLinkedListIterative(LinkedListNode *node);
 void destroyLinkedList();
 #endif

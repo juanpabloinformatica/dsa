@@ -1,0 +1,2 @@
+x can be any index of the array from 0 - 15 in this case.
+p *(int*)((*(LinkedListNode*) (hashmap->array[x])).element)

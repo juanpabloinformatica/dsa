@@ -29,24 +29,46 @@ int hashFunction(Hashmap *hashmap, void *key) {
     return keyNumber % MODULE_FACTOR;
   }
 }
-
+HashmapNode *newHashmapNode(void *key, void *value) {
+  HashmapNode *ptrHashmapNode = (HashmapNode *)malloc(sizeof(HashmapNode));
+  ptrHashmapNode->key = key;
+  ptrHashmapNode->value = value;
+  return ptrHashmapNode;
+}
 void hashmapPut(Hashmap *hashmap, void *key, void *value) {
   assert(strcmp(hashmap->keyType, HASHMAP_TYPE_NUMBER) == 0 ||
          strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0);
   int getIndex = hashFunction(hashmap, key);
   if (hashmap->array[getIndex] == NULL) {
     LinkedList *list = newLinkedList();
-    list->addNode(list, value);
-    // hashmap->array[getIndex]
+    HashmapNode *hashmapNode = newHashmapNode(key, value);
+    LinkedListNode *node = newLinkedListNode(hashmapNode);
+    list->addNode(list, node);
     hashmap->array[getIndex] = list;
   } else {
     LinkedList *list = hashmap->array[getIndex];
-    list->addNode(list, value);
-    // collision detected
+    // I need to add a node but the node has to have the value and the key
+    // why???
+    // because at the moment of looking different keys can return the same index
+    // bucket so I need to verify the key and the value in each node at the
+    // moment of traversing the bucket list
+    HashmapNode *hashmapNode = newHashmapNode(key, value);
+    LinkedListNode *node = newLinkedListNode(hashmapNode);
+    list->addNode(list, node);
+    list->showLinkedList(list->head);
   }
+}
+void destroyHashmapNode(HashmapNode *hashmapNode) {
+  free(hashmapNode->key);
+  free(hashmapNode->value);
+  free(hashmapNode);
 }
 void hashmapGet(Hashmap *hashmap, void *key) {}
 void hashmapRemove(Hashmap *hashmap, void *key) {}
 bool hashmapContainsKey(Hashmap *hashmap, void *key) { return true; }
 bool hashmapContainsValue(Hashmap *hashmap, void *element) { return true; }
-void destroyHashmap(Hashmap *hashmap) {}
+void destroyHashmap(Hashmap *hashmap) {
+  free(hashmap->keyType);
+  free(hashmap->valueType);
+  free(hashmap);
+}

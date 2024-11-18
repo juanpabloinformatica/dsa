@@ -125,6 +125,7 @@ int main(void) {
   // destroyQueue(queue);
   // //
   // return 0;
+  // ---------------- Testing hashmap ------------------
   Hashmap *hashmap = newHashmap("number", "number");
   int keys[32];
   for (int i = 0; i < 32; i++) {
@@ -135,13 +136,30 @@ int main(void) {
     int *keyValue = (int *)malloc(sizeof(int));
     *keyValue = keys[i] * 100;
     hashmap->hashmapPut(hashmap, &keys[i], keyValue);
-    printf("\nPOINTER OF THE ARRAY IN {i} INDEX:\t%p", &keys[i]);
+    // printf("\nPOINTER OF THE ARRAY IN %d INDEX:\t%p", i, &keys[i]);
   }
   // for (int i = 0; i < 32; i++) {
   //   printf("\nvalue: %d", *(int *)(hashmap->array[i]));
   // }
-  printf("%p", hashmap);
+  printf("\n%p", hashmap);
   // Hashmap *hashmap2 = newHashmap("string", "string");
   // hashmap2->hashmapPut(hashmap2, "hola", "daniel");
   // hashmap2->hashmapPut(hashmap2, "carola", "miguel");
 }
+// [[1600, 0],
+//  [1700, 100],
+//  [1800, 200],
+//  [1900, 300],
+//  [2000, 400],
+//  [2100, 500],
+//  [2200, 600],
+//  [2300, 700],
+//  [2400, 800],
+//  [2500, 900],
+//  [2600, 1000],
+//  [2700, 1100],
+//  [2800, 1200],
+//  [2900, 1300],
+//  [3000, 1400],
+//  [3100, 1500]]
+//

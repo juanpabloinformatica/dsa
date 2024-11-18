@@ -41,7 +41,30 @@ void showLinkedList(LinkedListNode *node) {
   if (node == NULL) {
     return;
   }
-  printf("\nvalue: %i", *(int *)node->element);
+  if (node->next == NULL) {
+    printf(" %i ", *(int *)node->element);
+  } else {
+    printf(" %i ->", *(int *)node->element);
+  }
   node = node->next;
   showLinkedList(node);
 }
+// void showLinkedListIterative(LinkedListNode *node) {
+//   LinkedListNode *tmp = node;
+//   printf("[");
+//   while (tmp != NULL) {
+//     if (tmp->next != NULL) {
+//       printf("%d", *(int *)tmp->element);
+//     } else {
+//       printf("%d ->", *(int *)tmp->element);
+//     }
+//     if (tmp->next != NULL) {
+//       tmp = tmp->next;
+//     }
+//   }
+// printf("]");
+// }
+// Need to be implemented !!!!!!!!!!
+// void destroyLinkedList(){
+//
+// }

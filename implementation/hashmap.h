@@ -15,10 +15,10 @@
 
 #define IS_NUMBER(variable) (())
 typedef struct HashmapNode HashmapNode;
-struct HashmapNode {
-  void *key;
-  void *value;
-};
+// struct HashmapNode {
+//   void *key;
+//   void *value;
+// };
 
 typedef struct Hashmap Hashmap;
 struct Hashmap {
@@ -27,20 +27,22 @@ struct Hashmap {
   void *array[ARRAY_MAX_SIZE];
   int counter;
   void (*hashmapPut)(Hashmap *hashmap, void *key, void *value);
-  void (*hashmapGet)(Hashmap *hashmap, void *key);
+  // void *(*hashmapGet)(Hashmap *hashmap, void *key);
+  int (*hashmapGet)(Hashmap *hashmap, void *key);
   void (*hashmapRemove)(Hashmap *hashmap, void *key);
   bool (*hashmapContainsKey)(Hashmap *hashmap, void *key);
   bool (*hashmapContainsValue)(Hashmap *hashmap, void *value);
 };
 
 Hashmap *newHashmap(char *keyType, char *valueType);
-HashmapNode *newHashmapNode(void *key, void *value);
+// HashmapNode *newHashmapNode(void *key, void *value);
 int hashFunction(Hashmap *hashmap, void *key);
 void hashmapPut(Hashmap *hashmap, void *key, void *value);
-void hashmapGet(Hashmap *hashmap, void *key);
+// void* hashmapGet(Hashmap *hashmap, void *key);
+int hashmapGet(Hashmap *hashmap, void *key);
 void hashmapRemove(Hashmap *hashmap, void *key);
 bool hashmapContainsKey(Hashmap *hashmap, void *key);
 bool hashmapContainsValue(Hashmap *hashmap, void *value);
 void destroyHashmap(Hashmap *hashmap);
-void destroyHashmapNode(HashmapNode *hashmapNode);
+// void destroyHashmapNode(HashmapNode *hashmapNode);
 #endif

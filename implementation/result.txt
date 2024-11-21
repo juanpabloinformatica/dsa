@@ -1,0 +1,112 @@
+Result Index Number: 0
+ Number % BUCKET_LENGTH: 0
+
+Result Index Number: 1
+ Number % BUCKET_LENGTH: 1
+
+Result Index Number: 2
+ Number % BUCKET_LENGTH: 2
+
+Result Index Number: 3
+ Number % BUCKET_LENGTH: 3
+
+Result Index Number: 4
+ Number % BUCKET_LENGTH: 4
+
+Result Index Number: 5
+ Number % BUCKET_LENGTH: 5
+
+Result Index Number: 6
+ Number % BUCKET_LENGTH: 6
+
+Result Index Number: 7
+ Number % BUCKET_LENGTH: 7
+
+Result Index Number: 8
+ Number % BUCKET_LENGTH: 8
+
+Result Index Number: 9
+ Number % BUCKET_LENGTH: 9
+
+Result Index Number: 10
+ Number % BUCKET_LENGTH: 10
+
+Result Index Number: 11
+ Number % BUCKET_LENGTH: 11
+
+Result Index Number: 12
+ Number % BUCKET_LENGTH: 12
+
+Result Index Number: 13
+ Number % BUCKET_LENGTH: 13
+
+Result Index Number: 14
+ Number % BUCKET_LENGTH: 14
+
+Result Index Number: 15
+ Number % BUCKET_LENGTH: 15
+
+Result Index Number: 16
+ Number % BUCKET_LENGTH: 0
+
+Result Index Number: 17
+ Number % BUCKET_LENGTH: 1
+
+Result Index Number: 18
+ Number % BUCKET_LENGTH: 2
+
+Result Index Number: 19
+ Number % BUCKET_LENGTH: 3
+
+Result Index Number: 20
+ Number % BUCKET_LENGTH: 4
+
+Result Index Number: 21
+ Number % BUCKET_LENGTH: 5
+
+Result Index Number: 22
+ Number % BUCKET_LENGTH: 6
+
+Result Index Number: 23
+ Number % BUCKET_LENGTH: 7
+
+Result Index Number: 24
+ Number % BUCKET_LENGTH: 8
+
+Result Index Number: 25
+ Number % BUCKET_LENGTH: 9
+
+Result Index Number: 26
+ Number % BUCKET_LENGTH: 10
+
+Result Index Number: 27
+ Number % BUCKET_LENGTH: 11
+
+Result Index Number: 28
+ Number % BUCKET_LENGTH: 12
+
+Result Index Number: 29
+ Number % BUCKET_LENGTH: 13
+
+Result Index Number: 30
+ Number % BUCKET_LENGTH: 14
+
+Result Index Number: 31
+ Number % BUCKET_LENGTH: 15
+
+[[1600, 0],
+ [1700, 100],
+ [1800, 200],
+ [1900, 300],
+ [2000, 400],
+ [2100, 500],
+ [2200, 600],
+ [2300, 700],
+ [2400, 800],
+ [2500, 900],
+ [2600, 1000],
+ [2700, 1100],
+ [2800, 1200],
+ [2900, 1300],
+ [3000, 1400],
+ [3100, 1500]]

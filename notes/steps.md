@@ -25,3 +25,6 @@
   - leetcode
   - Read this book
   - Following france website
+
+- I will recheck linkedlist but this time everything recursive as I tried but
+  Testing everything.

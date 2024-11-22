@@ -29,12 +29,6 @@ int hashFunction(Hashmap *hashmap, void *key) {
     return keyNumber % MODULE_FACTOR;
   }
 }
-// HashmapNode *newHashmapNode(void *key, void *value) {
-//   HashmapNode *ptrHashmapNode = (HashmapNode *)malloc(sizeof(HashmapNode));
-//   ptrHashmapNode->key = key;
-//   ptrHashmapNode->value = value;
-//   return ptrHashmapNode;
-// }
 void hashmapPut(Hashmap *hashmap, void *key, void *value) {
   assert(strcmp(hashmap->keyType, HASHMAP_TYPE_NUMBER) == 0 ||
          strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0);
@@ -43,7 +37,7 @@ void hashmapPut(Hashmap *hashmap, void *key, void *value) {
     LinkedList *list = newLinkedList();
     HashmapNode *hashmapNode = newHashmapNode(key, value);
     LinkedListNode *node = newLinkedListNode(hashmapNode);
-    list->addNode(list, node);
+    // list->addNode(list, node);
     hashmap->array[getIndex] = list;
   } else {
     LinkedList *list = hashmap->array[getIndex];
@@ -54,8 +48,8 @@ void hashmapPut(Hashmap *hashmap, void *key, void *value) {
     // moment of traversing the bucket list
     HashmapNode *hashmapNode = newHashmapNode(key, value);
     LinkedListNode *node = newLinkedListNode(hashmapNode);
-    list->addNode(list, node);
-    list->showLinkedList(list->head);
+    // list->addNode(list, node);
+    // list->showLinkedList(list->head);
   }
 }
 // void destroyHashmapNode(HashmapNode *hashmapNode) {
@@ -96,13 +90,34 @@ int hashmapGet(Hashmap *hashmap, void *key) {
   HashmapNode *hashmapNode = NULL;
   int keyIndex = hashFunction(hashmap, key);
   LinkedList *linkedList = (LinkedList *)hashmap->array[keyIndex];
-  hashmapNode = linkedList->getHashmapNode(linkedList->head, key);
-  if (hashmapNode != NULL) {
-    return *(int *)hashmapNode->value;
+  if (linkedList != NULL) {
+    // hashmapNode = linkedList->getHashmapNode(linkedList->head, key);
+    if (hashmapNode != NULL) {
+      return *(int *)hashmapNode->value;
+    }
   }
   return -1;
 }
-void hashmapRemove(Hashmap *hashmap, void *key) {}
+void hashmapRemove(Hashmap *hashmap, void *key) {
+  int hashmapLength = sizeof(hashmap->array) / sizeof(hashmap->array[0]);
+  bool keyExist = false;
+  HashmapNode *hashmapNode = NULL;
+  int keyIndex = hashFunction(hashmap, key);
+  LinkedList *linkedList = (LinkedList *)hashmap->array[keyIndex];
+  if (linkedList != NULL) {
+    // HashmapNode *hashmapNode =
+    // linkedList->getHashmapNode(linkedList->head, key);
+    // printf("Removing node ->  key:%i -> key:%i", *(int *)hashmapNode->key,
+    printf("\nBefore removing it:");
+    // showLinkedList(linkedList->head);
+    // *(int *)hashmapNode->key);
+    // I need to do all of this better  for sure
+    LinkedListNode *antptr = newLinkedListNode(NULL);
+    // linkedList->head = linkedList->deleteNode(antptr, linkedList->head, key);
+    printf("\nAfter removing it:");
+    // showLinkedList(linkedList->head);
+  }
+}
 bool hashmapContainsKey(Hashmap *hashmap, void *key) { return true; }
 bool hashmapContainsValue(Hashmap *hashmap, void *element) { return true; }
 void destroyHashmap(Hashmap *hashmap) {

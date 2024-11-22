@@ -20,23 +20,46 @@ int main(void) {
   // int element16 = 16;
   // int element17 = 17;
   // // // ------------------- Testing linked list--------------
-  // // LinkedList *linkedList = newLinkedList();
-  // // int *nextValue = malloc(sizeof(int));
-  // // int *nextNextValue = malloc(sizeof(int));
-  // // int *nextNextNextValue = malloc(sizeof(int));
-  // // *nextValue = 10;
-  // // *nextNextValue = 20;
-  // // *nextNextNextValue = 30;
-  // // LinkedListNode *next = newLinkedListNode((void *)nextValue);
-  // // LinkedListNode *nextNext = newLinkedListNode((void *)nextNextValue);
+  LinkedList *linkedList = newLinkedList();
+  int *v1Ptr;
+  int *v2Ptr;
+  int *v3Ptr;
+  int *v4Ptr;
+  int *v5Ptr;
+  int v1 = 1;
+  int v2 = 2;
+  int v3 = 3;
+  int v4 = 4;
+  int v5 = 5;
+  v1Ptr = &v1;
+  v2Ptr = &v2;
+  v3Ptr = &v3;
+  v4Ptr = &v4;
+  v5Ptr = &v5;
+  linkedList->recAddLinkedListNode(linkedList, newLinkedListNode(v1Ptr));
+  linkedList->recAddLinkedListNode(linkedList, newLinkedListNode(v2Ptr));
+  linkedList->recAddLinkedListNode(linkedList, newLinkedListNode(v3Ptr));
+  linkedList->recAddLinkedListNode(linkedList, newLinkedListNode(v4Ptr));
+  linkedList->recAddLinkedListNode(linkedList, newLinkedListNode(v5Ptr));
+  linkedList->recShowLinkedList(linkedList);
+  // int *nextValue = malloc(sizeof(int));
+  // int *nextNextValue = malloc(sizeof(int));
+  // // // int *nextNextNextValue = malloc(sizeof(int));
+  // *nextValue = 10;
+  // *nextNextValue = 20;
+  // // // *nextNextNextValue = 30;
+  // LinkedListNode *next = newLinkedListNode((void *)nextValue);
+  // LinkedListNode *nextNext = newLinkedListNode((void *)nextNextValue);
   // // LinkedListNode *nextNextNext = newLinkedListNode((void
-  // // *)nextNextNextValue); linkedList->addNode(linkedList, next);
-  // // linkedList->addNode(linkedList, nextNext);
+  // // *)nextNextNextValue);
+  // linkedList->addNode(linkedList, next);
+  // linkedList->addNode(linkedList, nextNext);
   // // linkedList->addNode(linkedList, nextNextNext);
-  // // linkedList->head =
-  // //     linkedList->deleteNode(NULL, linkedList->head, (void *)nextValue);
-  // // printf("\nAddress at the beginning: %p", linkedList->head);
-  // // linkedList->showLinkedList(linkedList->head);
+  // linkedList->head =
+  //     linkedList->deleteNode(NULL, linkedList->head, (void *)nextNextValue);
+  // // // printf("\nAddress at the beginning: %p", linkedList->head);
+  // // linkedList->showLinkedListN(linkedList->head);
+  // showLinkedListNormalNode(linkedList->head);
   // // printf("\nAddress at the end: %p", linkedList->head);
   // // // both are the same because before i was passing the linked list so it
   // // // was
@@ -126,40 +149,20 @@ int main(void) {
   // //
   // return 0;
   // ---------------- Testing hashmap ------------------
-  Hashmap *hashmap = newHashmap("number", "number");
-  int keys[32];
-  for (int i = 0; i < 32; i++) {
-    keys[i] = i;
-  }
-  for (int i = 0; i < 32; i++) {
-    // int keyValue = keys[i] * 100;
-    int *keyValue = (int *)malloc(sizeof(int));
-    *keyValue = keys[i] * 100;
-    hashmap->hashmapPut(hashmap, &keys[i], keyValue);
-    // printf("\nPOINTER OF THE ARRAY IN %d INDEX:\t%p", i, &keys[i]);
-  }
+  // Hashmap *hashmap = newHashmap("number", "number");
+  // int keys[32];
   // for (int i = 0; i < 32; i++) {
-  //   printf("\nvalue: %d", *(int *)(hashmap->array[i]));
+  //   keys[i] = i;
   // }
-  printf("\n%p", hashmap);
-  // Hashmap *hashmap2 = newHashmap("string", "string");
-  // hashmap2->hashmapPut(hashmap2, "hola", "daniel");
-  // hashmap2->hashmapPut(hashmap2, "carola", "miguel");
+  // for (int i = 0; i < 32; i++) {
+  //   int *keyValue = (int *)malloc(sizeof(int));
+  //   *keyValue = keys[i] * 100;
+  //   hashmap->hashmapPut(hashmap, &keys[i], keyValue);
+  // }
+  // printf("\n%p", hashmap);
+  // int result = hashmap->hashmapGet(hashmap, &keys[17]);
+  // assert(result == keys[17] * 100);
+  // hashmap->hashmapRemove(hashmap, &keys[17]);
+
+  // ---------------- End Testing hashmap ------------------
 }
-// [[1600, 0],
-//  [1700, 100],
-//  [1800, 200],
-//  [1900, 300],
-//  [2000, 400],
-//  [2100, 500],
-//  [2200, 600],
-//  [2300, 700],
-//  [2400, 800],
-//  [2500, 900],
-//  [2600, 1000],
-//  [2700, 1100],
-//  [2800, 1200],
-//  [2900, 1300],
-//  [3000, 1400],
-//  [3100, 1500]]
-//

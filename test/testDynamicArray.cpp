@@ -88,7 +88,3 @@ TEST(DynamicArrayTest, HandleDeletingElementsBack) {
   DynamicArray *dynamicArray = newDynamicArray();
 }
 // TEST(DynamicArrayTest, HandleSettingElements) {}
-int main(int argc, char **argv) {
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}

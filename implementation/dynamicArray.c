@@ -16,6 +16,16 @@ DynamicArray *newDynamicArray() {
 
   return ptrArray;
 }
+// General Functions
+void *getElement(DynamicArray *dynamicArray, int position) {
+  // I think what is passing is the problem with pointer arithmetic
+  // return ((void**)dynamicArray->array)[position];
+  // this one needed to be rethink for th eistance
+  // return ((void **)dynamicArray->array)[position];
+  int *element = &((int *)dynamicArray->array)[position];
+  return (void *)element;
+}
+// good because there is no for
 void addElement(DynamicArray *dynamicArray, void *element) {
   // imagine we are using int values
   assert(dynamicArray->array != NULL);
@@ -32,41 +42,68 @@ void setElement(DynamicArray *dynamicArray, int position, void *element) {
   // this case we are testing with ints
   ((int *)dynamicArray->array)[position] = *(int *)element;
 }
+// Recursive functions
+void removeElementFront(DynamicArray *dynamicArray, int position) {
 
+  if (position == dynamicArray->counter) {
+    dynamicArray->counter--;
+    return;
+  }
+  ((int *)dynamicArray->array)[position] =
+      ((int *)dynamicArray->array)[position + 1];
+  removeElementFront(dynamicArray, ++position);
+  // update they array reducing it
+}
+void removeElementBack(DynamicArray *dynamicArray, int position) {
+  if (position == dynamicArray->counter) {
+    dynamicArray->bottomIndex++;
+    return;
+  }
+  ((int *)dynamicArray->array)[position] =
+      ((int *)dynamicArray->array)[position + 1];
+  removeElementBack(dynamicArray, ++position);
+}
+
+void showArray(DynamicArray *dynamicArray, int i, int size) {
+  if (i == size) {
+    return;
+  }
+  if (i == size - 1) {
+    printf("%i\n", ((int *)dynamicArray->array)[i]);
+  } else {
+    printf("%i -> ", ((int *)dynamicArray->array)[i]);
+  }
+  showArray(dynamicArray, ++i, size);
+}
 // I will skip this one by now because shifting left array kind of boring
 // no he gives the pos
 // I know what i am doing is extremely inneficient but not the purpose now
 // I will do a variation  for doing the stack
-void removeElementFront(DynamicArray *dynamicArray, int position) {
-  for (int i = position; i < dynamicArray->counter; i++) {
-    ((int *)dynamicArray->array)[i] = ((int *)dynamicArray->array)[i + 1];
-  }
-  // update they array reducing it
-  dynamicArray->counter--;
-}
-void removeElementBack(DynamicArray *dynamicArray, int position) {
-  for (int i = position; i < dynamicArray->counter; i++) {
-    ((int *)dynamicArray->array)[i] = ((int *)dynamicArray->array)[i + 1];
-  }
-  dynamicArray->bottomIndex++;
-}
-void *getElement(DynamicArray *dynamicArray, int position) {
-  // I think what is passing is the problem with pointer arithmetic
-  // return ((void**)dynamicArray->array)[position];
-  // this one needed to be rethink for th eistance
-  // return ((void **)dynamicArray->array)[position];
-  int *element = &((int *)dynamicArray->array)[position];
-  return (void *)element;
-}
+// void removeElementFront(DynamicArray *dynamicArray, int position) {
+//   for (int i = position; i < dynamicArray->counter; i++) {
+//     ((int *)dynamicArray->array)[i] = ((int *)dynamicArray->array)[i + 1];
+//   }
+//   // update they array reducing it
+//   dynamicArray->counter--;
+// }
+// void removeElementBack(DynamicArray *dynamicArray, int position) {
+//   for (int i = position; i < dynamicArray->counter; i++) {
+//     ((int *)dynamicArray->array)[i] = ((int *)dynamicArray->array)[i + 1];
+//   }
+//   dynamicArray->bottomIndex++;
+// }
+// void showArray(DynamicArray *dynamicArray) {
+//   printf("\nARRAY\n");
+//   // for stack
+//   for (int i = 0; i < dynamicArray->counter - dynamicArray->bottomIndex; i++)
+//   {
+//     printf("%i\n", ((int *)dynamicArray->array)[i]);
+//   }
+//   // for queue
+// }
+
+// Destruying everything
 void destroyDynamicArray(DynamicArray *dynamicArray) {
   free(dynamicArray->array);
   free(dynamicArray);
-}
-void showArray(DynamicArray *dynamicArray) {
-  printf("\nARRAY\n");
-  // for stack
-  for (int i = 0; i < dynamicArray->counter - dynamicArray->bottomIndex; i++) {
-    printf("%i\n", ((int *)dynamicArray->array)[i]);
-  }
-  // for queue
 }

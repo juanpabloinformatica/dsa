@@ -3,6 +3,7 @@
 // #include ""
 // #include <stdlib.h>
 // #include <stdio.h>
+// The first thing to check is Dynamic array
 #include "dynamicArray.h"
 #include "hashmap.h"
 #include "linkedList.h"

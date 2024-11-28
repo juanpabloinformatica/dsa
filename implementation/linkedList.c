@@ -1,5 +1,6 @@
 #include "linkedList.h"
 
+
 LinkedListNode *newLinkedListNode(void *value) {
   LinkedListNode *ptrLinkedListNode =
       (LinkedListNode *)malloc(sizeof(LinkedListNode));
@@ -41,8 +42,11 @@ void recShowLinkedList(LinkedList *linkedList) {
   if (linkedList->head == NULL) {
     return;
   }
-  LinkedList *tmpLinkedList = linkedList;
-  LinkedListNode *tmpLinkedListNode = (LinkedListNode *)linkedList->head;
+  // LinkedList *tmpLinkedList = linkedList;
+  // LinkedList *tmpLinkedList;
+  LinkedList *tmpLinkedList = newLinkedList();
+  tmpLinkedList->head = linkedList->head;
+  LinkedListNode* tmpLinkedListNode = tmpLinkedList->head;
   printf("%d ->", *(int *)tmpLinkedListNode->element);
   tmpLinkedList->head = tmpLinkedList->head->next;
   recShowLinkedList(tmpLinkedList);
@@ -52,7 +56,14 @@ void recAddLinkedListNode(LinkedList *linkedList, LinkedListNode *node) {
     linkedList->head = node;
     return;
   }
-  LinkedList *tmpLinkedList = linkedList;
+  // LinkedList *tmpLinkedList = linkedList;
+  //
+  LinkedList *tmpLinkedList = newLinkedList();
+  // LinkedList *tmpLinkedList;
+  // printf("\nvalue not real head -> %p",tmpLinkedList->head);
+  // printf("\nvalue reald head -> %p",linkedList->head);
+  // memcpy(tmpLinkedList->head,linkedList->head,sizeof(LinkedListNode));
+  tmpLinkedList->head = linkedList->head;
   if (tmpLinkedList->head->next == NULL) {
     tmpLinkedList->head->next = node;
     return;

@@ -28,3 +28,5 @@
 
 - I will recheck linkedlist but this time everything recursive as I tried but
   Testing everything.
+
+- Doing everything now by tdd approach, need to try new things and i think this is good for showing a good work.

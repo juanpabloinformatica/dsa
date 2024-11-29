@@ -37,30 +37,57 @@ LinkedList *newLinkedList() {
 //   }
 // }
 //
-void recShowLinkedList(LinkedList *linkedList) {
-  if (linkedList->head == NULL) {
+static void _showList(LinkedListNode *linkedListNode) {
+  if (linkedListNode == NULL) {
     return;
   }
-  // LinkedList *tmpLinkedList = linkedList;
-  // LinkedList *tmpLinkedList;
-  printf("%d ->", *(int *)(linkedList->head->element));
-  LinkedList *tmpLinkedList;
-  tmpLinkedList->head = linkedList->head->next;
-  recShowLinkedList(tmpLinkedList);
+  if (linkedListNode->next == NULL) {
+    printf("%i  ", *(int *)linkedListNode->element);
+  } else {
+    printf("%i -> ", *(int *)linkedListNode->element);
+  }
+  _showList(linkedListNode->next);
 }
-void recAddLinkedListNode(LinkedList *linkedList, LinkedList *antTmpLinkedList,
-                          LinkedListNode *node) {
-  if (linkedList->head == NULL && antTmpLinkedList == NULL) {
+void recShowLinkedList(LinkedList *linkedList) {
+  LinkedListNode *linkedListNode = linkedList->head;
+  _showList(linkedListNode);
+  // if (linkedList->head == NULL) {
+  //   return;
+  // }
+  // // LinkedList *tmpLinkedList = linkedList;
+  // // LinkedList *tmpLinkedList;
+  // printf("%d ->", *(int *)(linkedList->head->element));
+  // LinkedList *tmpLinkedList;
+  // tmpLinkedList->head = linkedList->head->next;
+  // recShowLinkedList(tmpLinkedList);
+}
+static void _addNode(LinkedListNode *linkedListNode,
+                     LinkedListNode *linkedListNewNode) {
+  if (linkedListNode->next == NULL) {
+    linkedListNode->next = linkedListNewNode;
+    return;
+  }
+  _addNode(linkedListNode->next, linkedListNewNode);
+}
+void recAddLinkedListNode(LinkedList *linkedList, LinkedListNode *node) {
+  if (linkedList->head == NULL) {
     linkedList->head = node;
     return;
   }
-  if (linkedList->head == NULL && antTmpLinkedList != NULL) {
-    antTmpLinkedList->head->next = node;
-  }
-  antTmpLinkedList->head = linkedList->head;
-  LinkedList *tmpLinkedList;
-  tmpLinkedList->head = linkedList->head->next;
-  recAddLinkedListNode(tmpLinkedList, antTmpLinkedList, node);
+  LinkedListNode *linkedListNode = linkedList->head;
+  _addNode(linkedListNode, node);
+
+  // if (linkedList->head == NULL && antTmpLinkedList == NULL) {
+  //   linkedList->head = node;
+  //   return;
+  // }
+  // if (linkedList->head == NULL && antTmpLinkedList != NULL) {
+  //   antTmpLinkedList->head->next = node;
+  // }
+  // antTmpLinkedList->head = linkedList->head;
+  // LinkedList *tmpLinkedList;
+  // tmpLinkedList->head = linkedList->head->next;
+  // recAddLinkedListNode(tmpLinkedList, antTmpLinkedList, node);
 }
 
 void recDeleteLinkedListNode(LinkedList *linkedList, LinkedList *antLinkedList,
@@ -191,13 +218,13 @@ void destroyHashmapNode(HashmapNode *hashmapNode) {
   free(hashmapNode);
 }
 
-void showList(LinkedList *ptrLinkedList) {
-  LinkedListNode *tmpPtrNode = ptrLinkedList->head;
-  for (; tmpPtrNode != NULL; tmpPtrNode = tmpPtrNode->next) {
-    printf("%d", *(int *)tmpPtrNode->element);
-    if (tmpPtrNode->next != NULL) {
-      printf("->");
-    }
-  }
-  printf("\n");
-}
+// void showList(LinkedList *ptrLinkedList) {
+//   LinkedListNode *tmpPtrNode = ptrLinkedList->head;
+//   for (; tmpPtrNode != NULL; tmpPtrNode = tmpPtrNode->next) {
+//     printf("%d", *(int *)tmpPtrNode->element);
+//     if (tmpPtrNode->next != NULL) {
+//       printf("->");
+//     }
+//   }
+//   printf("\n");
+// }

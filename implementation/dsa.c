@@ -7,9 +7,8 @@ int main(void) {
   for (int i = 0; i < ARRAY_LENGTH; i++) {
     elements[i] = i;
     LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
-    linkedList->recAddLinkedListNode(linkedList, NULL, lLNode);
-    showList(linkedList);
+    linkedList->recAddLinkedListNode(linkedList, lLNode);
   }
-  showList(linkedList);
+  linkedList->recShowLinkedList(linkedList);
   // linkedList->recShowLinkedList(linkedList);
 }

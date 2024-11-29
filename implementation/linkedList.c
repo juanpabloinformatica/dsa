@@ -1,6 +1,5 @@
 #include "linkedList.h"
 
-
 LinkedListNode *newLinkedListNode(void *value) {
   LinkedListNode *ptrLinkedListNode =
       (LinkedListNode *)malloc(sizeof(LinkedListNode));
@@ -46,7 +45,7 @@ void recShowLinkedList(LinkedList *linkedList) {
   // LinkedList *tmpLinkedList;
   LinkedList *tmpLinkedList = newLinkedList();
   tmpLinkedList->head = linkedList->head;
-  LinkedListNode* tmpLinkedListNode = tmpLinkedList->head;
+  LinkedListNode *tmpLinkedListNode = tmpLinkedList->head;
   printf("%d ->", *(int *)tmpLinkedListNode->element);
   tmpLinkedList->head = tmpLinkedList->head->next;
   recShowLinkedList(tmpLinkedList);
@@ -56,22 +55,32 @@ void recAddLinkedListNode(LinkedList *linkedList, LinkedListNode *node) {
     linkedList->head = node;
     return;
   }
-  // LinkedList *tmpLinkedList = linkedList;
-  //
-  LinkedList *tmpLinkedList = newLinkedList();
-  // LinkedList *tmpLinkedList;
-  // printf("\nvalue not real head -> %p",tmpLinkedList->head);
-  // printf("\nvalue reald head -> %p",linkedList->head);
-  // memcpy(tmpLinkedList->head,linkedList->head,sizeof(LinkedListNode));
-  tmpLinkedList->head = linkedList->head;
-  if (tmpLinkedList->head->next == NULL) {
-    tmpLinkedList->head->next = node;
-    return;
-  }
-  tmpLinkedList->head = tmpLinkedList->head->next;
+  LinkedList *tmpLinkedList;
+  tmpLinkedList->head = linkedList->head->next;
   recAddLinkedListNode(tmpLinkedList, node);
 }
-void recDeleteLinkedListNode(LinkedList *linkedList, LinkedListNode *node) {}
+void recDeleteLinkedListNode(LinkedList *linkedList, LinkedList *antLinkedList,
+                             LinkedListNode *node) {
+  if (linkedList->head == NULL) {
+    return;
+  }
+  if (*(int *)linkedList->head->element == *(int *)node->element) {
+    if (antLinkedList->head == NULL) {
+      antLinkedList->head = linkedList->head;
+      linkedList->head = linkedList->head->next;
+      free(antLinkedList->head);
+    } else {
+      antLinkedList->head->next = node;
+      free(linkedList->head);
+    }
+    return;
+  }
+  LinkedList *tmpLinkedList;
+  antLinkedList->head = linkedList->head;
+  tmpLinkedList->head = linkedList->head->next;
+  recDeleteLinkedListNode(tmpLinkedList, antLinkedList, node);
+}
+
 // design the recursive function
 // LinkedListNode *deleteNode(LinkedListNode *antNode, LinkedListNode *node,
 //                            void *value) {

@@ -16,7 +16,6 @@ TEST(QueueTest, HandleQueueEnqueue) {
   }
   for (int i = 0; i < ARRAY_LENGTH; i++) {
     int queueElement = ((int *)queue->dynamicArray->array)[i];
-    printf("element -> %d", queueElement);
     ASSERT_EQ(queueElement, elements[i]);
   }
 }

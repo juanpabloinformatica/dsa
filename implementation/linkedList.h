@@ -24,7 +24,7 @@ struct LinkedList {
   // *node);
   void (*recAddLinkedListNode)(LinkedList *linkedList, LinkedListNode *node);
   void (*recShowLinkedList)(LinkedList *linkedList);
-  void (*recDeleteLinkedListNode)(LinkedList *linkedList, LinkedListNode *node);
+  void (*recDeleteLinkedListNode)(LinkedList *linkedList,LinkedList* antLinkedList, LinkedListNode *node);
   // void (*addNode)(LinkedList *linkedList, LinkedListNode *node);
   // void (*showLinkedList)(LinkedListNode *node);
   // void (*showLinkedListIterative)(LinkedListNode *node);
@@ -41,7 +41,7 @@ HashmapNode *newHashmapNode(void *key, void *value);
 // void recShowLinkedList(LinkedList *linkedList);
 void recAddLinkedListNode(LinkedList *linkedList, LinkedListNode *node);
 void recShowLinkedList(LinkedList *linkedList);
-void recDeleteLinkedListNode(LinkedList *linkedList, LinkedListNode *node);
+void recDeleteLinkedListNode(LinkedList *linkedList,LinkedList* antLinkedList, LinkedListNode *node);
 // void showLinkedList(LinkedList *linkedList);
 // void showLinkedList(LinkedListNode *node);
 // void showLinkedListNormalNode(LinkedListNode *node);

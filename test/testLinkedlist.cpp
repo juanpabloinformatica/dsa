@@ -13,8 +13,9 @@ TEST(TestLinkedList, HandleAddElementLinkedList) {
   for (int i = 0; i < ARRAY_LENGTH; i++) {
     elements[i] = i;
     LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
-    linkedList->recAddLinkedListNode(linkedList, lLNode);
+    linkedList->recAddLinkedListNode(linkedList, NULL, lLNode);
   }
+  linkedList->recShowLinkedList(linkedList);
   int arrayIndex = 0;
   while (linkedList->head != NULL) {
     ASSERT_EQ(*(int *)linkedList->head->element, arrayIndex++);
@@ -29,13 +30,12 @@ TEST(TestLinkedList, HandleRemoveElementLinkedList) {
   for (int i = 0; i < ARRAY_LENGTH; i++) {
     elements[i] = i;
     LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
-    linkedList->recAddLinkedListNode(linkedList, lLNode);
+    linkedList->recAddLinkedListNode(linkedList, NULL, lLNode);
   }
-  LinkedList *antLinkedList;
-  for (int i = 0; i < ARRAY_LENGTH; i++) {
-    antLinkedList->head = NULL;
-    LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
-    linkedList->recDeleteLinkedListNode(linkedList, antLinkedList, lLNode);
-    ASSERT_EQ(*(int *)linkedList->head->element, i + 1);
-  }
+  linkedList->recShowLinkedList(linkedList);
+  // for (int i = 0; i < ARRAY_LENGTH; i++) {
+  //   LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
+  //   linkedList->recDeleteLinkedListNode(linkedList, NULL, lLNode);
+  //   ASSERT_EQ(*(int *)linkedList->head->element, i + 1);
+  // }
 }

@@ -43,30 +43,34 @@ void recShowLinkedList(LinkedList *linkedList) {
   }
   // LinkedList *tmpLinkedList = linkedList;
   // LinkedList *tmpLinkedList;
-  LinkedList *tmpLinkedList = newLinkedList();
-  tmpLinkedList->head = linkedList->head;
-  LinkedListNode *tmpLinkedListNode = tmpLinkedList->head;
-  printf("%d ->", *(int *)tmpLinkedListNode->element);
-  tmpLinkedList->head = tmpLinkedList->head->next;
+  printf("%d ->", *(int *)(linkedList->head->element));
+  LinkedList *tmpLinkedList;
+  tmpLinkedList->head = linkedList->head->next;
   recShowLinkedList(tmpLinkedList);
 }
-void recAddLinkedListNode(LinkedList *linkedList, LinkedListNode *node) {
-  if (linkedList->head == NULL) {
+void recAddLinkedListNode(LinkedList *linkedList, LinkedList *antTmpLinkedList,
+                          LinkedListNode *node) {
+  if (linkedList->head == NULL && antTmpLinkedList == NULL) {
     linkedList->head = node;
     return;
   }
+  if (linkedList->head == NULL && antTmpLinkedList != NULL) {
+    antTmpLinkedList->head->next = node;
+  }
+  antTmpLinkedList->head = linkedList->head;
   LinkedList *tmpLinkedList;
   tmpLinkedList->head = linkedList->head->next;
-  recAddLinkedListNode(tmpLinkedList, node);
+  recAddLinkedListNode(tmpLinkedList, antTmpLinkedList, node);
 }
+
 void recDeleteLinkedListNode(LinkedList *linkedList, LinkedList *antLinkedList,
                              LinkedListNode *node) {
   if (linkedList->head == NULL) {
     return;
   }
   if (*(int *)linkedList->head->element == *(int *)node->element) {
-    if (antLinkedList->head == NULL) {
-      antLinkedList->head = linkedList->head;
+    if (antLinkedList == NULL) {
+      antLinkedList = linkedList;
       linkedList->head = linkedList->head->next;
       free(antLinkedList->head);
     } else {
@@ -185,4 +189,15 @@ void destroyHashmapNode(HashmapNode *hashmapNode) {
   free(hashmapNode->key);
   free(hashmapNode->value);
   free(hashmapNode);
+}
+
+void showList(LinkedList *ptrLinkedList) {
+  LinkedListNode *tmpPtrNode = ptrLinkedList->head;
+  for (; tmpPtrNode != NULL; tmpPtrNode = tmpPtrNode->next) {
+    printf("%d", *(int *)tmpPtrNode->element);
+    if (tmpPtrNode->next != NULL) {
+      printf("->");
+    }
+  }
+  printf("\n");
 }

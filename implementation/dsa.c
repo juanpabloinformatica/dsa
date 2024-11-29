@@ -1,3 +1,15 @@
 #include "dsa.h"
 
-int main(void) {}
+int main(void) {
+  LinkedList *linkedList = newLinkedList();
+  const int ARRAY_LENGTH = 30;
+  int elements[ARRAY_LENGTH];
+  for (int i = 0; i < ARRAY_LENGTH; i++) {
+    elements[i] = i;
+    LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
+    linkedList->recAddLinkedListNode(linkedList, NULL, lLNode);
+    showList(linkedList);
+  }
+  showList(linkedList);
+  // linkedList->recShowLinkedList(linkedList);
+}

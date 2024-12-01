@@ -18,14 +18,9 @@ DynamicArray *newDynamicArray() {
 }
 // General Functions
 void *getElement(DynamicArray *dynamicArray, int position) {
-  // I think what is passing is the problem with pointer arithmetic
-  // return ((void**)dynamicArray->array)[position];
-  // this one needed to be rethink for th eistance
-  // return ((void **)dynamicArray->array)[position];
   int *element = &((int *)dynamicArray->array)[position];
   return (void *)element;
 }
-// good because there is no for
 void addElement(DynamicArray *dynamicArray, void *element) {
   // imagine we are using int values
   assert(dynamicArray->array != NULL);
@@ -75,33 +70,6 @@ void showArray(DynamicArray *dynamicArray, int i, int size) {
   }
   showArray(dynamicArray, ++i, size);
 }
-// I will skip this one by now because shifting left array kind of boring
-// no he gives the pos
-// I know what i am doing is extremely inneficient but not the purpose now
-// I will do a variation  for doing the stack
-// void removeElementFront(DynamicArray *dynamicArray, int position) {
-//   for (int i = position; i < dynamicArray->counter; i++) {
-//     ((int *)dynamicArray->array)[i] = ((int *)dynamicArray->array)[i + 1];
-//   }
-//   // update they array reducing it
-//   dynamicArray->counter--;
-// }
-// void removeElementBack(DynamicArray *dynamicArray, int position) {
-//   for (int i = position; i < dynamicArray->counter; i++) {
-//     ((int *)dynamicArray->array)[i] = ((int *)dynamicArray->array)[i + 1];
-//   }
-//   dynamicArray->bottomIndex++;
-// }
-// void showArray(DynamicArray *dynamicArray) {
-//   printf("\nARRAY\n");
-//   // for stack
-//   for (int i = 0; i < dynamicArray->counter - dynamicArray->bottomIndex; i++)
-//   {
-//     printf("%i\n", ((int *)dynamicArray->array)[i]);
-//   }
-//   // for queue
-// }
-
 // Destruying everything
 void destroyDynamicArray(DynamicArray *dynamicArray) {
   free(dynamicArray->array);

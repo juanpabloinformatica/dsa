@@ -22,10 +22,9 @@ LinkedList *newLinkedList() {
   ptrLinkedList->addLinkedListNode = addLinkedListNode;
   ptrLinkedList->showLinkedList = showLinkedList;
   ptrLinkedList->deleteLinkedListNode = deleteLinkedListNode;
-  // ptrLinkedList->getHashmapNode = getHashmapNode;
   return ptrLinkedList;
 }
-static void _showList(LinkedListNode *linkedListNode) {
+static void _showNormalList(LinkedListNode *linkedListNode) {
   if (linkedListNode == NULL) {
     return;
   }
@@ -34,12 +33,36 @@ static void _showList(LinkedListNode *linkedListNode) {
   } else {
     printf("%i -> ", *(int *)linkedListNode->element);
   }
-  _showList(linkedListNode->next);
+  _showNormalList(linkedListNode->next);
+}
+
+static void _showHashmapList(LinkedListNode *linkedListNode) {
+  if (linkedListNode == NULL) {
+    return;
+  }
+  HashmapNode *hn = (HashmapNode *)linkedListNode->element;
+  if (linkedListNode->next == NULL) {
+    printf("[%i,%i]  ", *(int *)hn->key, *(int *)hn->value);
+  } else {
+    printf("[%i,%i] -> ", *(int *)hn->key, *(int *)hn->value);
+  }
+  _showHashmapList(linkedListNode->next);
 }
 void showLinkedList(LinkedList *linkedList) {
   // i do this wrapper to been able to execute the recursion.
-  LinkedListNode *linkedListNode = linkedList->head;
-  _showList(linkedListNode);
+  // just for testing
+  bool isNumberNode = false;
+  bool isHashmapNode = true;
+
+  if (isNumberNode == true) {
+    LinkedListNode *linkedListNode = linkedList->head;
+    _showNormalList(linkedListNode);
+  }
+  if (isHashmapNode == true) {
+    printf("\nI enter here");
+    LinkedListNode *linkedListNode = linkedList->head;
+    _showHashmapList(linkedListNode);
+  }
 }
 
 static void _addNode(LinkedListNode *linkedListNode,
@@ -65,19 +88,9 @@ static void _deleteNode(LinkedListNode *head, LinkedListNode *antHead,
     return;
   }
   if (*(int *)head->element == *(int *)node->element) {
-    if (antHead == NULL) {
-      antHead = head;
-      head = head->next;
-      free(antHead);
-      return;
-    } else {
-      antHead->next = head->next;
-      free(head);
-      return;
-    }
-    // printf("\nANT_VALUE: %d", *(int *)antHead->element);
-    // printf("\nANT_VALUE: %d", *(int *)antHead->element);
-    // return;
+    antHead->next = head->next;
+    free(head);
+    return;
   }
   antHead = head;
   head = head->next;
@@ -86,13 +99,14 @@ static void _deleteNode(LinkedListNode *head, LinkedListNode *antHead,
 void deleteLinkedListNode(LinkedList *linkedList, LinkedListNode *node) {
   // printf("I am here");
   LinkedListNode *antHead = NULL;
-  // printf("i pass here");
   LinkedListNode *head = linkedList->head;
-  // printf("HEAD NEXT PTR: %p", head->next);
+  if (*(int *)linkedList->head->element == *(int *)node->element) {
+    antHead = head;
+    linkedList->head = linkedList->head->next;
+    free(antHead);
+    return;
+  }
   _deleteNode(head, antHead, node);
-  // printf("HEAD NEXT PTR: %p", head);
-
-
 }
 
 HashmapNode *getHashmapNode(LinkedListNode *node, void *key) {

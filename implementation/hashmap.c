@@ -12,6 +12,7 @@ Hashmap *newHashmap(char *keyType, char *valueType) {
   ptrHashmap->hashmapRemove = hashmapRemove;
   ptrHashmap->hashmapContainsKey = hashmapContainsKey;
   ptrHashmap->hashmapContainsValue = hashmapContainsValue;
+
   return ptrHashmap;
 }
 int hashFunction(Hashmap *hashmap, void *key) {
@@ -37,8 +38,11 @@ void hashmapPut(Hashmap *hashmap, void *key, void *value) {
     LinkedList *list = newLinkedList();
     HashmapNode *hashmapNode = newHashmapNode(key, value);
     LinkedListNode *node = newLinkedListNode(hashmapNode);
-    // list->addNode(list, node);
+    list->addLinkedListNode(list, node);
+    // list->showLinkedList(list);
     hashmap->array[getIndex] = list;
+    // LinkedList *listT = hashmap->array[getIndex];
+    // listT->showLinkedList(listT);
   } else {
     LinkedList *list = hashmap->array[getIndex];
     // I need to add a node but the node has to have the value and the key
@@ -48,8 +52,8 @@ void hashmapPut(Hashmap *hashmap, void *key, void *value) {
     // moment of traversing the bucket list
     HashmapNode *hashmapNode = newHashmapNode(key, value);
     LinkedListNode *node = newLinkedListNode(hashmapNode);
-    // list->addNode(list, node);
-    // list->showLinkedList(list->head);
+    list->addLinkedListNode(list, node);
+    // list->showLinkedList(list);
   }
 }
 // void destroyHashmapNode(HashmapNode *hashmapNode) {

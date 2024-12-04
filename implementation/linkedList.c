@@ -22,6 +22,8 @@ LinkedList *newLinkedList() {
   ptrLinkedList->addLinkedListNode = addLinkedListNode;
   ptrLinkedList->showLinkedList = showLinkedList;
   ptrLinkedList->deleteLinkedListNode = deleteLinkedListNode;
+  ptrLinkedList->getLinkedListNode = getLinkedListNode;
+
   return ptrLinkedList;
 }
 static void _showNormalList(LinkedListNode *linkedListNode) {
@@ -48,6 +50,34 @@ static void _showHashmapList(LinkedListNode *linkedListNode) {
   }
   _showHashmapList(linkedListNode->next);
 }
+static void *_getNode(LinkedListNode *tmpHead, LinkedListNode *node) {
+  if (tmpHead == NULL) {
+    return NULL;
+  }
+
+  HashmapNode *hnh = (HashmapNode *)tmpHead->element;
+  HashmapNode *hnn = (HashmapNode *)node->element;
+  if (*(int *)hnh->key == *(int *)node->element) {
+    return tmpHead;
+  }
+
+  tmpHead = tmpHead->next;
+  _getNode(tmpHead, node);
+  return NULL;
+}
+void *getLinkedListNode(LinkedList *linkedList,
+                        LinkedListNode *linkedListNode) {
+  bool isHashmapNode = false;
+  bool isNormalNode = true;
+
+  if (isHashmapNode == true) {
+    HashmapNode *gHmn = _getNode(linkedList->head, linkedListNode);
+    return gHmn;
+  }
+  if(isNormalNode==true){
+    LinkedListNode*
+  }
+}
 void showLinkedList(LinkedList *linkedList) {
   // i do this wrapper to been able to execute the recursion.
   // just for testing
@@ -59,7 +89,7 @@ void showLinkedList(LinkedList *linkedList) {
     _showNormalList(linkedListNode);
   }
   if (isHashmapNode == true) {
-    printf("\nI enter here");
+    printf("I enter here");
     LinkedListNode *linkedListNode = linkedList->head;
     _showHashmapList(linkedListNode);
   }

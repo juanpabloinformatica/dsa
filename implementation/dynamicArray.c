@@ -13,7 +13,6 @@ DynamicArray *newDynamicArray() {
   ptrArray->removeElementBack = removeElementBack;
   ptrArray->getElement = getElement;
   ptrArray->showArray = showArray;
-
   return ptrArray;
 }
 // General Functions

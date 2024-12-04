@@ -1,6 +1,7 @@
 #include "dsa.h"
 
 int main(void) {
+
   // int element0 = 0;
   // int element1 = 1;
   // int element2 = 2;
@@ -136,12 +137,12 @@ int main(void) {
     int *keyValue = (int *)malloc(sizeof(int));
     *keyValue = keys[i] * 100;
     hashmap->hashmapPut(hashmap, &keys[i], keyValue);
-    // assert(listT->head != NULL);
-    // assert(listT->addLinkedListNode != NULL);
-    // printf("\nPOINTER OF THE ARRAY IN %d INDEX:\t%p", i, &keys[i]);
+    // assert(listt->head != null);
+    // assert(listt->addlinkedlistnode != null);
+    // printf("\npointer of the array in %d index:\t%p", i, &keys[i]);
   }
   for (int i = 0; i < 32 / 2; i++) {
-    LinkedList *listT = (hashmap->array)[i];
+    LinkedList *listT = ((LinkedList *)(hashmap->array)[i]);
     // assert(listT->deleteLinkedListNode != NULL);
     assert(listT->showLinkedList != NULL);
     printf("\n------ I:%i------\n", i);
@@ -149,7 +150,6 @@ int main(void) {
     printf("\n-------------\n", i);
   }
 
-  // for (int i = 0; i < 32; i++) {
   //   printf("\nvalue: %d", *(int *)(hashmap->array[i]));
   // }
   printf("\n%p", hashmap);

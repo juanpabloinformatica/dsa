@@ -48,7 +48,7 @@ add_custom_target(check dsaTest)
 #
 add_executable(dsaRun "./implementation/dsa.c")
 target_link_libraries(dsaRun dsa)
-execute_process(COMMAND ctags -R "./implementation/")
+execute_process(COMMAND ctags -f "./implementation/" -R "./implementation/")
 
 #
 # Ajout d'une cible pour le project

@@ -39,21 +39,13 @@ void hashmapPut(Hashmap *hashmap, void *key, void *value) {
     HashmapNode *hashmapNode = newHashmapNode(key, value);
     LinkedListNode *node = newLinkedListNode(hashmapNode);
     list->addLinkedListNode(list, node);
-    // list->showLinkedList(list);
     hashmap->array[getIndex] = list;
-    // LinkedList *listT = hashmap->array[getIndex];
-    // listT->showLinkedList(listT);
   } else {
     LinkedList *list = hashmap->array[getIndex];
-    // I need to add a node but the node has to have the value and the key
-    // why???
-    // because at the moment of looking different keys can return the same index
-    // bucket so I need to verify the key and the value in each node at the
-    // moment of traversing the bucket list
     HashmapNode *hashmapNode = newHashmapNode(key, value);
     LinkedListNode *node = newLinkedListNode(hashmapNode);
     list->addLinkedListNode(list, node);
-    // list->showLinkedList(list);
+    list->showLinkedList(list);
   }
 }
 // void destroyHashmapNode(HashmapNode *hashmapNode) {
@@ -61,44 +53,14 @@ void hashmapPut(Hashmap *hashmap, void *key, void *value) {
 //   free(hashmapNode->value);
 //   free(hashmapNode);
 // }
-// for the moment it will return integers
-// void *hashmapGet(Hashmap *hashmap, void *key) {
-//   int hashmapLength = sizeof(hashmap->array) / sizeof(hashmap->array[0]);
-//   bool keyExist = false;
-//   HashmapNode *hashmapNode = NULL;
-//   // int keyIndex =
-//   for (int i = 0; i < hashmapLength; i++) {
-//     LinkedList *linkedList = (LinkedList *)hashmap->array[i];
-//     hashmapNode = linkedList->getHashmapNode(linkedList->head, key);
-//     if (hashmapNode != NULL) {
-//       return hashmapNode;
-//     }
-//     // if ((hashmapNode = linkedList->getHashmapNode(linkedList->head,
-//     // key)!=NULL)) traverse linkedlist
-//     //   HashmapNode *hashmapNode =
-//     //       (HashmapNode *)((*(LinkedList *)(hashmap->array[i])).head);
-//     //
-//     // LinkedListNode *linkedListNode =
-//     //     (LinkedListNode *)(*(LinkedList *)(hashmap->array[i])).head;
-//
-//     // for integer by the moment
-//     // if (*(int *)hashmapNode->key == *(int *)key) {
-//     //   keyExist = true;
-//     //   break;
-//     // }
-//   }
-// }
 int hashmapGet(Hashmap *hashmap, void *key) {
   int hashmapLength = sizeof(hashmap->array) / sizeof(hashmap->array[0]);
   bool keyExist = false;
   HashmapNode *hashmapNode = NULL;
   int keyIndex = hashFunction(hashmap, key);
-  LinkedList *linkedList = (LinkedList *)hashmap->array[keyIndex];
+  LinkedList *linkedList = ((LinkedList *)hashmap->array[keyIndex]);
   if (linkedList != NULL) {
-    // hashmapNode = linkedList->getHashmapNode(linkedList->head, key);
-    if (hashmapNode != NULL) {
-      return *(int *)hashmapNode->value;
-    }
+    linkedList->getLinkedListNode(key);
   }
   return -1;
 }
@@ -107,19 +69,11 @@ void hashmapRemove(Hashmap *hashmap, void *key) {
   bool keyExist = false;
   HashmapNode *hashmapNode = NULL;
   int keyIndex = hashFunction(hashmap, key);
-  LinkedList *linkedList = (LinkedList *)hashmap->array[keyIndex];
+  LinkedList *linkedList = ((LinkedList *)(hashmap->array)[keyIndex]);
   if (linkedList != NULL) {
-    // HashmapNode *hashmapNode =
-    // linkedList->getHashmapNode(linkedList->head, key);
-    // printf("Removing node ->  key:%i -> key:%i", *(int *)hashmapNode->key,
-    printf("\nBefore removing it:");
-    // showLinkedList(linkedList->head);
-    // *(int *)hashmapNode->key);
-    // I need to do all of this better  for sure
-    LinkedListNode *antptr = newLinkedListNode(NULL);
-    // linkedList->head = linkedList->deleteNode(antptr, linkedList->head, key);
-    printf("\nAfter removing it:");
-    // showLinkedList(linkedList->head);
+    HashmapNode *hashmapNode = newHashmapNode(key, NULL);
+    LinkedListNode *lLNode = newLinkedListNode(hashmapNode);
+    linkedList->deleteLinkedListNode(linkedList, lLNode);
   }
 }
 bool hashmapContainsKey(Hashmap *hashmap, void *key) { return true; }

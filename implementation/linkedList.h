@@ -20,6 +20,7 @@ struct LinkedList {
   void (*addLinkedListNode)(LinkedList *linkedList, LinkedListNode *node);
   void (*showLinkedList)(LinkedList *linkedList);
   void (*deleteLinkedListNode)(LinkedList *linkedList, LinkedListNode *node);
+  void* (*getLinkedListNode)(LinkedList *linkedList, LinkedListNode *node);
 };
 LinkedListNode *newLinkedListNode(void *value);
 LinkedList *newLinkedList();
@@ -28,4 +29,5 @@ HashmapNode *newHashmapNode(void *key, void *value);
 void addLinkedListNode(LinkedList *linkedList, LinkedListNode *node);
 void showLinkedList(LinkedList *linkedList);
 void deleteLinkedListNode(LinkedList *linkedList, LinkedListNode *node);
+void* getLinkedListNode(LinkedList *linkedList, LinkedListNode *node);
 #endif

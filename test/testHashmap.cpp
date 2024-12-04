@@ -16,30 +16,60 @@ TEST(HashmapTest, HandleHashmapAddElement) {
     values[i] = i * 120;
     hashmap->hashmapPut(hashmap, (int *)&keys[i], (int *)&values[i]);
   }
-  for (int i = 0; i < 32 / 2; i++) {
-    LinkedList *listT = &((LinkedList *)(hashmap->array))[i];
-    // assert(listT->deleteLinkedListNode != NULL);
-    assert(listT->showLinkedList != NULL);
-    printf("\n------ I:%i------\n", i);
-    listT->showLinkedList(listT);
-    printf("\n-------------\n", i);
+  for (int i = 0; i < HASHMAP_SIZE; i++) {
+    std::cout << "inside here" << std::endl;
+    LinkedList *listT = ((LinkedList *)(hashmap->array)[i]);
+    LinkedListNode *lln = (LinkedListNode *)listT->head;
+    HashmapNode *hn = (HashmapNode *)lln->element;
+    std::cout << hn << std::endl;
+    ASSERT_EQ(*(int *)hn->key, keys[i]);
+    ASSERT_EQ(*(int *)hn->value, values[i]);
   }
-  // for (int i = 0; i < 32 / 2; i++) {
-  //   LinkedList *listT = &((LinkedList *)hashmap->array)[i];
-  //   // assert(listT->deleteLinkedListNode != NULL);
-  //   assert(listT->showLinkedList != NULL);
-  //   printf("\n------ I:%i------\n", i);
-  //   listT->showLinkedList(listT);
-  //   printf("\n-------------\n", i);
+}
+TEST(HashmapTest, HandleHashmapRemoveElement) {
+  Hashmap *hashmap = newHashmap((char *)"number", (char *)"number");
+  int HASHMAP_SIZE = 32;
+  int keys[HASHMAP_SIZE];
+  int values[HASHMAP_SIZE];
+  for (int i = 0; i < HASHMAP_SIZE; i++) {
+    keys[i] = i;
+    values[i] = i * 120;
+    hashmap->hashmapPut(hashmap, (int *)&keys[i], (int *)&values[i]);
+  }
+  for (int i = 0; i < HASHMAP_SIZE; i++) {
+    hashmap->hashmapRemove(hashmap, (int *)&keys[i]);
+  }
+  // for (int i = 0; i < HASHMAP_SIZE / 2; i++) {
+  //   hashmap->hashmapRemove(hashmap, (int *)&keys[i]);
   // }
+
+  for (int i = 0; i < HASHMAP_SIZE / 2; i++) {
+    LinkedList *listT = ((LinkedList *)(hashmap->array)[i]);
+    EXPECT_TRUE(listT->head == NULL);
+  }
   // for (int i = 0; i < HASHMAP_SIZE; i++) {
   //   std::cout << "inside here" << std::endl;
-  //   LinkedList ll = ((LinkedList *)hashmap->array)[0];
-  //   LinkedListNode *lln = (LinkedListNode *)ll.head;
-  //   HashmapNode *hn = (HashmapNode *)lln->element;
-  //   std::cout << hn << std::endl;
-  //   ASSERT_EQ(*(int *)hn->key, keys[i]);
-  //   ASSERT_EQ(*(int *)hn->value, values[i]);
+  //   LinkedList *listT = ((LinkedList *)(hashmap->array)[i]);
+  //   ASSERT_TRUE(listT != NULL);
+  //   LinkedListNode *lln = (LinkedListNode *)listT->head;
+  //   ASSERT_TRUE(lln == NULL);
   // }
 }
-// TEST()
+TEST(HashmapTest, HandleGetElement) {
+
+  Hashmap *hashmap = newHashmap((char *)"number", (char *)"number");
+  int HASHMAP_SIZE = 32;
+  int keys[HASHMAP_SIZE];
+  int values[HASHMAP_SIZE];
+  for (int i = 0; i < HASHMAP_SIZE; i++) {
+    keys[i] = i;
+    values[i] = i * 120;
+    hashmap->hashmapPut(hashmap, (int *)&keys[i], (int *)&values[i]);
+  }
+  for (int i = 0; i < HASHMAP_SIZE; i++) {
+    keys[i] = i;
+    values[i] = i * 120;
+    int value = hashmap->hashmapGet(hashmap, (int *)&keys[i]);
+    ASSERT_TRUE(value == values[i]);
+  }
+}

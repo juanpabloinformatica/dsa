@@ -22,6 +22,24 @@ TEST(TestLinkedList, HandleAddElementLinkedList) {
   }
   EXPECT_TRUE(arrayIndex == ARRAY_LENGTH);
 }
+TEST(TestLinkedList, HandleGetElement) {
+  LinkedList *linkedList = newLinkedList();
+  const int ARRAY_LENGTH = 30;
+  int elements[ARRAY_LENGTH];
+  for (int i = 0; i < ARRAY_LENGTH; i++) {
+    elements[i] = i;
+    LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
+    linkedList->addLinkedListNode(linkedList, lLNode);
+  }
+  for (int i = 0; i < ARRAY_LENGTH; i++) {
+    elements[i] = i;
+    LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
+    LinkedListNode *lln =
+        (LinkedListNode *)(linkedList->getLinkedListNode(linkedList, lLNode));
+    HashmapNode*hln = (HashmapNode*)(lln->element);
+    ASSERT_TRUE(*(int*)hln->);
+  }
+}
 // TEST(TestLinkedList, HandleRemoveElementLinkedList) {
 //   //
 //   LinkedList *linkedList = newLinkedList();

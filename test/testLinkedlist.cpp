@@ -22,22 +22,47 @@ TEST(TestLinkedList, HandleAddElementLinkedList) {
   }
   EXPECT_TRUE(arrayIndex == ARRAY_LENGTH);
 }
-TEST(TestLinkedList, HandleGetElement) {
+// normal keep a integer value instead of hashmapValue
+// TEST(TestLinkedList, HandleGetElementFromNormalNode) {
+//   LinkedList *linkedList = newLinkedList();
+//   const int ARRAY_LENGTH = 30;
+//   int elements[ARRAY_LENGTH];
+//   for (int i = 0; i < ARRAY_LENGTH; i++) {
+//     elements[i] = i;
+//     LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
+//     linkedList->addLinkedListNode(linkedList, lLNode);
+//   }
+//   for (int i = 0; i < ARRAY_LENGTH; i++) {
+//     elements[i] = i;
+//     LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
+//     LinkedListNode *lln =
+//         (LinkedListNode *)(linkedList->getLinkedListNode(linkedList, lLNode));
+//     int value = *(int *)(lln->element);
+//     ASSERT_TRUE(value == elements[i]);
+//   }
+// }
+TEST(TestLinkedList, HandleGetElementFromHashmapNode) {
   LinkedList *linkedList = newLinkedList();
   const int ARRAY_LENGTH = 30;
-  int elements[ARRAY_LENGTH];
+  int keys[ARRAY_LENGTH];
+  int values[ARRAY_LENGTH];
   for (int i = 0; i < ARRAY_LENGTH; i++) {
-    elements[i] = i;
-    LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
+    keys[i] = i;
+    values[i] = i * 120;
+    HashmapNode *hNode = newHashmapNode((int *)&keys[i], (int *)&values[i]);
+    LinkedListNode *lLNode = newLinkedListNode(hNode);
     linkedList->addLinkedListNode(linkedList, lLNode);
   }
   for (int i = 0; i < ARRAY_LENGTH; i++) {
-    elements[i] = i;
-    LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
+    HashmapNode *hNode = newHashmapNode((int *)&keys[i], (int *)&values[i]);
+    LinkedListNode *lLNode = newLinkedListNode(hNode);
     LinkedListNode *lln =
         (LinkedListNode *)(linkedList->getLinkedListNode(linkedList, lLNode));
-    HashmapNode*hln = (HashmapNode*)(lln->element);
-    ASSERT_TRUE(*(int*)hln->);
+    HashmapNode *hn = ((HashmapNode *)lln->element);
+    int key = *(int *)(hn->key);
+    int value = *(int *)(hn->value);
+    ASSERT_TRUE(key == keys[i]);
+    ASSERT_TRUE(value == values[i]);
   }
 }
 // TEST(TestLinkedList, HandleRemoveElementLinkedList) {

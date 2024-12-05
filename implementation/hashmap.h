@@ -28,10 +28,10 @@ struct Hashmap {
   int counter;
   void (*hashmapPut)(Hashmap *hashmap, void *key, void *value);
   // void *(*hashmapGet)(Hashmap *hashmap, void *key);
-  int (*hashmapGet)(Hashmap *hashmap, void *key);
+  void* (*hashmapGet)(Hashmap *hashmap, void *key);
   void (*hashmapRemove)(Hashmap *hashmap, void *key);
   bool (*hashmapContainsKey)(Hashmap *hashmap, void *key);
-  bool (*hashmapContainsValue)(Hashmap *hashmap, void *value);
+  // bool (*hashmapContainsValue)(Hashmap *hashmap, void *value);
 };
 
 Hashmap *newHashmap(char *keyType, char *valueType);
@@ -39,10 +39,10 @@ Hashmap *newHashmap(char *keyType, char *valueType);
 int hashFunction(Hashmap *hashmap, void *key);
 void hashmapPut(Hashmap *hashmap, void *key, void *value);
 // void* hashmapGet(Hashmap *hashmap, void *key);
-int hashmapGet(Hashmap *hashmap, void *key);
+void* hashmapGet(Hashmap *hashmap, void *key);
 void hashmapRemove(Hashmap *hashmap, void *key);
 bool hashmapContainsKey(Hashmap *hashmap, void *key);
-bool hashmapContainsValue(Hashmap *hashmap, void *value);
+// bool hashmapContainsValue(Hashmap *hashmap, void *value);
 void destroyHashmap(Hashmap *hashmap);
 // void destroyHashmapNode(HashmapNode *hashmapNode);
 #endif

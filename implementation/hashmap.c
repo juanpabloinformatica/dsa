@@ -11,7 +11,7 @@ Hashmap *newHashmap(char *keyType, char *valueType) {
   ptrHashmap->hashmapGet = hashmapGet;
   ptrHashmap->hashmapRemove = hashmapRemove;
   ptrHashmap->hashmapContainsKey = hashmapContainsKey;
-  ptrHashmap->hashmapContainsValue = hashmapContainsValue;
+  // ptrHashmap->hashmapContainsValue = hashmapContainsValue;
 
   return ptrHashmap;
 }
@@ -20,6 +20,7 @@ int hashFunction(Hashmap *hashmap, void *key) {
          strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0);
   if (strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0) {
     int sum = 0;
+    // this should be done also with recursion
     while (*(char *)key) {
       sum += *(char *)key;
       key++;
@@ -53,16 +54,20 @@ void hashmapPut(Hashmap *hashmap, void *key, void *value) {
 //   free(hashmapNode->value);
 //   free(hashmapNode);
 // }
-int hashmapGet(Hashmap *hashmap, void *key) {
-  int hashmapLength = sizeof(hashmap->array) / sizeof(hashmap->array[0]);
-  bool keyExist = false;
-  HashmapNode *hashmapNode = NULL;
+void *hashmapGet(Hashmap *hashmap, void *key) {
+  // int hashmapArrayLength = sizeof(hashmap->array) /
+  // sizeof(hashmap->array[0]); bool keyExist = false; HashmapNode *hashmapNode
+  // = NULL;
   int keyIndex = hashFunction(hashmap, key);
   LinkedList *linkedList = ((LinkedList *)hashmap->array[keyIndex]);
   if (linkedList != NULL) {
-    linkedList->getLinkedListNode(key);
+    printf("linkedList exist");
+    HashmapNode *hashmapNode = newHashmapNode(key, NULL);
+    LinkedListNode *lLHNode = newLinkedListNode(hashmapNode);
+    LinkedListNode *lln = linkedList->getLinkedListNode(linkedList, lLHNode);
+    return lln;
   }
-  return -1;
+  return NULL;
 }
 void hashmapRemove(Hashmap *hashmap, void *key) {
   int hashmapLength = sizeof(hashmap->array) / sizeof(hashmap->array[0]);
@@ -76,8 +81,11 @@ void hashmapRemove(Hashmap *hashmap, void *key) {
     linkedList->deleteLinkedListNode(linkedList, lLNode);
   }
 }
-bool hashmapContainsKey(Hashmap *hashmap, void *key) { return true; }
-bool hashmapContainsValue(Hashmap *hashmap, void *element) { return true; }
+bool hashmapContainsKey(Hashmap *hashmap, void *key) {
+  LinkedListNode *gottenNode = hashmap->hashmapGet(hashmap, key);
+  return (gottenNode != NULL) ? true : false;
+}
+// bool hashmapContainsValue(Hashmap *hashmap, void *element) { return true; }
 void destroyHashmap(Hashmap *hashmap) {
   free(hashmap->keyType);
   free(hashmap->valueType);

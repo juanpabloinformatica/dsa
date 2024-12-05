@@ -9,7 +9,7 @@
   - Stack [X]
   - Queue [X]
   - Linked-list [x]
-  - HashMap []
+  - HashMap [X]
   - Trees
     - Bst
   - Graphs
@@ -22,6 +22,7 @@
   - In c and them c++ in a oop approach
 
 - I will jump to solve some problems
+
   - leetcode
   - Read this book
   - Following france website
@@ -31,3 +32,5 @@
 
 - Doing everything now by tdd approach, need to try new things and i think this is good for showing a good work.
 - In the linkedList try to fix the remove function put all the cases in just one function keeping in mind when u are removing the head.
+- Finally done hashmap
+- But still free everything

@@ -1,4 +1,5 @@
 #include "linkedList.h"
+#include <string.h>
 
 LinkedListNode *newLinkedListNode(void *value) {
   LinkedListNode *ptrLinkedListNode =
@@ -50,33 +51,44 @@ static void _showHashmapList(LinkedListNode *linkedListNode) {
   }
   _showHashmapList(linkedListNode->next);
 }
-static void *_getNode(LinkedListNode *tmpHead, LinkedListNode *node) {
+static void *_getNode(LinkedListNode *tmpHead, LinkedListNode *node,
+                      char *type) {
   if (tmpHead == NULL) {
     return NULL;
   }
-
-  HashmapNode *hnh = (HashmapNode *)tmpHead->element;
-  HashmapNode *hnn = (HashmapNode *)node->element;
-  if (*(int *)hnh->key == *(int *)node->element) {
-    return tmpHead;
+  if (strcmp(type, "hashmap") == 0) {
+    HashmapNode *hnh = (HashmapNode *)tmpHead->element;
+    HashmapNode *hnn = (HashmapNode *)node->element;
+    if (*(int *)hnh->key == *(int *)hnn->key) {
+      return tmpHead;
+    }
+  } else if (strcmp(type, "number") == 0) {
+    if (*(int *)tmpHead->element == *(int *)node->element) {
+      return tmpHead;
+    }
+  } else {
+    return NULL;
   }
 
   tmpHead = tmpHead->next;
-  _getNode(tmpHead, node);
-  return NULL;
+  _getNode(tmpHead, node, type);
 }
 void *getLinkedListNode(LinkedList *linkedList,
                         LinkedListNode *linkedListNode) {
-  bool isHashmapNode = false;
-  bool isNormalNode = true;
+  bool isHashmapNode = true;
+  bool isNormalNode = false;
 
   if (isHashmapNode == true) {
-    HashmapNode *gHmn = _getNode(linkedList->head, linkedListNode);
-    return gHmn;
+    // HashmapNode *gHmn = _getNode(linkedList->head, linkedListNode,
+    // "hashmap");
+    LinkedListNode *ln = _getNode(linkedList->head, linkedListNode, "hashmap");
+    return ln;
   }
-  if(isNormalNode==true){
-    LinkedListNode*
+  if (isNormalNode == true) {
+    LinkedListNode *ln = _getNode(linkedList->head, linkedListNode, "number");
+    return ln;
   }
+  return NULL;
 }
 void showLinkedList(LinkedList *linkedList) {
   // i do this wrapper to been able to execute the recursion.

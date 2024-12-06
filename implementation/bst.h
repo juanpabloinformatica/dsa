@@ -18,16 +18,21 @@ struct Bst {
   void *(*removeMaxBstNode)(Bst *bst);
   void *(*findMin)(Bst *bst);
   void *(*findMax)(Bst *bst);
+  void *(*prettyPrintBst)(Bst*bst);
 };
+
 BstNode *newBstNode(void *value);
 Bst *newBst(void);
+// if void it can not accumulate
 void addBstNode(Bst *bst, BstNode *bstNode);
 void *removeBstNode(Bst *bst, BstNode *bstNode);
 void *removeMinBstNode(Bst *bst);
 void *removeMaxBstNode(Bst *bst);
 void *findMin(Bst *bst);
 void *findMax(Bst *bst);
+void prettyPrintBst(Bst*bst);
 void destroyBst(Bst *bst);
 void destroyBstNode(BstNode *bstNode);
+
 
 #endif

@@ -19,37 +19,39 @@ Bst *newBst(void) {
   ptrBst->findMax = findMax;
   return ptrBst;
 }
-static BstNode* _addNode(BstNode *bstRoot, BstNode *bstNode){
-    if(bstRoot==NULL){
-        return NULL;
+static BstNode *_addNode(BstNode *bstRoot, BstNode *bstNode) {
+  if (bstRoot == NULL) {
+    return NULL;
+  }
+  // testing with integers
+  if (*(int *)bstNode->value < *(int *)bstRoot->value) {
+    printf("\nnode value  < root value\n");
+    if (bstRoot->left == NULL) {
+      bstRoot->left = bstNode;
+      return bstRoot;
+    } else {
+      bstRoot->left = _addNode(bstRoot->left, bstNode);
+      return bstRoot;
     }
-    // testing with integers
-    if (*(int*)bstNode->value<*(int*)bstRoot->value){
-        printf("\nEntering <\n");
-        if (bstRoot->left==NULL) {
-            bstRoot->left = bstNode;
-            return NULL;
-        }else{
-            bstRoot->left = _addNode(bstRoot->left,bstNode);
-        }
-    }else if(*(int*)bstNode->value > *(int*)bstRoot->value){
-        printf("\nEntering >\n");
-        if (bstRoot->right==NULL) {
-            bstRoot->right = bstNode;
-            return NULL;
-        }else{
-            bstRoot->right = _addNode(bstRoot->right,bstNode);
-        }
+  } else if (*(int *)bstNode->value > *(int *)bstRoot->value) {
+    printf("\nnode value  > root value\n");
+    if (bstRoot->right == NULL) {
+      bstRoot->right = bstNode;
+      return bstRoot;
+    } else {
+      bstRoot->right = _addNode(bstRoot->right, bstNode);
+      return bstRoot;
     }
+  }
 }
 
-void addBstNode(Bst *bst, BstNode *bstNode){
-    // not autocompletition but well
-   if (bst->root==NULL) {
-       bst->root= bstNode;
-       return;
-   }
-   _addNode(bst->root,bstNode);
+void addBstNode(Bst *bst, BstNode *bstNode) {
+  // not autocompletition but well
+  if (bst->root == NULL) {
+    bst->root = bstNode;
+    return;
+  }
+  _addNode(bst->root, bstNode);
 }
 void *removeBstNode(Bst *bst, BstNode *bstNode) {}
 void *removeMinBstNode(Bst *bst) {}

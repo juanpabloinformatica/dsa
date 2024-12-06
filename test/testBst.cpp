@@ -1,4 +1,5 @@
 #include "gtest/gtest.h"
+#include <iostream>
 extern "C" {
 #include "../implementation/bst.h"
 }
@@ -23,11 +24,11 @@ TEST(BstTest, HandleCreationBstNode) {
 }
 
 TEST(BstTest, HandleAddElement) {
-  Bst *bst = newBst();
-  int tempValue = 10;
-  int *ptrTempValue = &tempValue;
-  BstNode *bstNode = newBstNode(ptrTempValue);
-  bst->addBstNode(bst, bstNode);
+  // Bst *bst = newBst();
+  // int tempValue = 10;
+  // int *ptrTempValue = &tempValue;
+  // BstNode *bstNode = newBstNode(ptrTempValue);
+  // bst->addBstNode(bst, bstNode);
   /* std::cout<< *(int*)bst->root->value <<std::endl; */
   /* ASSERT_TRUE(*(int *)bst->root->value == tempValue); */
   /* // for more than one value */
@@ -41,21 +42,27 @@ TEST(BstTest, HandleAddElement) {
   // test for check is working well
   // root = 10
   // [20,5,9,25,6]
-  // root->right = 20 | root->left=5 | root->left->right=9 | root->right->right=25 | root->left->right->right = 6
+  // root->right = 20 | root->left=5 | root->left->right=9 |
+  // root->right->right=25 | root->left->right->right = 6
   //
-  int testArrayLength = 5;
-  int testArray[testArrayLength] = {20,5,9,25,6};
-  for(int i = 0;i<testArrayLength;i++){
-      testArray[i] = i;
-      BstNode* bstNode = newBstNode((int*)&testArray[i]);
-      bst->addBstNode(bst,bstNode);
+  Bst *bst = newBst();
+  int tempValue = 10;
+  int *ptrTempValue = &tempValue;
+  BstNode *bstNode = newBstNode(ptrTempValue);
+  bst->addBstNode(bst, bstNode);
+  const int testArrayLength = 5;
+  int testArray[testArrayLength] = {20, 5, 9, 25, 6};
+  for (int i = 0; i < testArrayLength; i++) {
+    BstNode *bstNode = newBstNode((int *)&testArray[i]);
+    bst->addBstNode(bst, bstNode);
+    // std::cout << "\nROOT _ ADDRESS" << bst->root << std::endl;
   }
-  ASSERT_TRUE(*(int*)bst->root->value==10);
-  /* ASSERT_TRUE(*(int*)bst->root->right->value == 20); */
-  /* ASSERT_TRUE(*(int*)bst->root->left->value == 5); */
-  /* ASSERT_TRUE(*(int*)bst->root->left->right->value == 9); */
-  /* ASSERT_TRUE(*(int*)bst->root->right->right->value == 25); */
-  /* ASSERT_TRUE(*(int*)bst->root->left->right->right->value == 25); */
+  ASSERT_TRUE(*(int *)bst->root->value == 10);
+  ASSERT_TRUE(*(int *)bst->root->right->value == 20);
+  ASSERT_TRUE(*(int *)bst->root->left->value == 5);
+  ASSERT_TRUE(*(int *)bst->root->left->right->value == 9);
+  ASSERT_TRUE(*(int *)bst->root->right->right->value == 25);
+  ASSERT_TRUE(*(int *)bst->root->left->right->left->value == 6);
 }
 // TEST(BstTest,HandleRemoveElement){
 //

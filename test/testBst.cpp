@@ -17,9 +17,9 @@ TEST(BstTest, HandleCreationBstNode) {
   int *ptrValue = &value;
   BstNode *bst = newBstNode(ptrValue);
   ASSERT_TRUE(bst != NULL);
-  ASSERT_TRUE(bst->value != NULL);
+  ASSERT_TRUE(bst->value == ptrValue);
   ASSERT_TRUE(bst->left == NULL);
-  ASSERT_TRUE(bst->right != NULL);
+  ASSERT_TRUE(bst->right == NULL);
 }
 
 TEST(BstTest, HandleAddElement) {

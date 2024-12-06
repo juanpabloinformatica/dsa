@@ -2,6 +2,7 @@
 
 int main(void) {
 
+  Bst *bst = newBst();
   // int element0 = 0;
   // int element1 = 1;
   // int element2 = 2;

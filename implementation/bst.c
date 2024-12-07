@@ -31,7 +31,6 @@ static BstNode *_addNode(BstNode *bstRoot, BstNode *bstNode) {
       return bstRoot;
     } else {
       bstRoot->left = _addNode(bstRoot->left, bstNode);
-      return bstRoot;
     }
   } else if (*(int *)bstNode->value > *(int *)bstRoot->value) {
     printf("\nnode value  > root value\n");
@@ -56,7 +55,46 @@ void addBstNode(Bst *bst, BstNode *bstNode) {
 void *removeBstNode(Bst *bst, BstNode *bstNode) {}
 void *removeMinBstNode(Bst *bst) {}
 void *removeMaxBstNode(Bst *bst) {}
-void *findMin(Bst *bst) {}
-void *findMax(Bst *bst) {}
+
+static void _findMin(BstNode *root, BstNode **min) {
+  // considering the value is an int
+  if (root == NULL) {
+    return;
+  }
+  if (*(int *)root->value < *(int *)(*min)->value) {
+    printf("\nRoot: %i is less than min: %i\n", *(int *)root->value,
+           *(int *)(*min)->value);
+    *min = root;
+  }
+  _findMin(root->left, min);
+  _findMin(root->right, min);
+
+  // return min;
+}
+BstNode **findMin(Bst *bst) {
+  BstNode **min = &(bst->root);
+  _findMin(bst->root, min);
+  return min;
+}
+
+static void _findMax(BstNode *root, BstNode **max) {
+  // considering the value is an int
+  if (root == NULL) {
+    return;
+  }
+  if (*(int *)root->value > *(int *)(*max)->value) {
+    printf("\nRoot: %i is less than min: %i\n", *(int *)root->value,
+           *(int *)(*max)->value);
+    *max = root;
+  }
+  _findMax(root->left, max);
+  _findMax(root->right, max);
+  // return min;
+}
+BstNode **findMax(Bst *bst) {
+  BstNode **min = &(bst->root);
+  _findMax(bst->root, min);
+  return min;
+}
 void destroyBst(Bst *bst) {}
 void destroyBstNode(BstNode *bstNode) {}

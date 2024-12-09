@@ -77,8 +77,8 @@ TEST(BstTest, HandleFindMin) {
     bst->addBstNode(bst, bstNode);
   }
   BstNode *bstNode = newBstNode((int *)&testArray[0]);
-  BstNode **minNode = bst->findMin(bst);
-  ASSERT_EQ(*(int *)(*minNode)->value, 5);
+  BstNode *minNode = bst->findMin(bst);
+  ASSERT_EQ(*(int *)minNode->value, 5);
 }
 
 TEST(BstTest, HandleFindMax) {
@@ -90,6 +90,46 @@ TEST(BstTest, HandleFindMax) {
     bst->addBstNode(bst, bstNode);
   }
   BstNode *bstNode = newBstNode((int *)&testArray[0]);
-  BstNode **maxNode = bst->findMax(bst);
-  ASSERT_EQ(*(int *)(*maxNode)->value, 25);
+  BstNode *maxNode = bst->findMax(bst);
+  ASSERT_EQ(*(int *)maxNode->value, 25);
+}
+TEST(BstTest, HandleBstRemoveLeaft) {
+  Bst *bst = newBst();
+  const int testArrayLength = 7;
+  int testArray[testArrayLength] = {50, 30, 70, 20, 40, 60, 80};
+  for (int i = 0; i < testArrayLength; i++) {
+    BstNode *bstNode = newBstNode((int *)&testArray[i]);
+    bst->addBstNode(bst, bstNode);
+  }
+  BstNode *bstNode = newBstNode((int *)&testArray[3]);
+  bst->removeBstNode(bst, bstNode);
+  // ASSERT_TRUE(*(int *)bst->root->left->left->value == 20);
+  ASSERT_TRUE(bst->root->left->left == NULL);
+  // bst->inorderBstTraversal(bst);
+}
+TEST(BstTest, HandleBstRemoveNodeWithOneChild) {
+  Bst *bst = newBst();
+  const int testArrayLength = 7;
+  int testArray[testArrayLength] = {50, 30, 70, 20, 40, 80};
+  for (int i = 0; i < testArrayLength; i++) {
+    BstNode *bstNode = newBstNode((int *)&testArray[i]);
+    bst->addBstNode(bst, bstNode);
+  }
+  BstNode *bstNode = newBstNode((int *)&testArray[2]);
+  bst->removeBstNode(bst, bstNode);
+  // ASSERT_TRUE(*(int *)bst->root->left->left->value == 20);
+  ASSERT_TRUE(*(int *)bst->root->right->value == 80);
+  bst->inorderBstTraversal(bst);
+}
+TEST(BstTest, HandleInorderTraversal) {
+  Bst *bst = newBst();
+  const int testArrayLength = 7;
+  int testArray[testArrayLength] = {50, 30, 70, 20, 40, 60, 80};
+  for (int i = 0; i < testArrayLength; i++) {
+    BstNode *bstNode = newBstNode((int *)&testArray[i]);
+    bst->addBstNode(bst, bstNode);
+  }
+  // bst->inorderBstTraversal(bst);
+  // std::string resultStringTest = "\n20->30->40->50->60->70->80->\n";
+  // std::cout << resultStringTest << std::endl;
 }

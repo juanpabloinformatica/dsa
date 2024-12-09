@@ -34,3 +34,4 @@
 - In the linkedList try to fix the remove function put all the cases in just one function keeping in mind when u are removing the head.
 - Finally done hashmap
 - But still free everything
+- Neede to be refactored I know it will be done eventually

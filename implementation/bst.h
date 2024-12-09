@@ -13,26 +13,28 @@ typedef struct Bst Bst;
 struct Bst {
   BstNode *root;
   void (*addBstNode)(Bst *bst, BstNode *bstNode);
-  void *(*removeBstNode)(Bst *bst, BstNode *bstNode);
-  void *(*removeMinBstNode)(Bst *bst);
-  void *(*removeMaxBstNode)(Bst *bst);
-  BstNode **(*findMin)(Bst *bst);
-  BstNode **(*findMax)(Bst *bst);
+  void (*removeBstNode)(Bst *bst, BstNode *bstNode);
+  void (*removeMinBstNode)(Bst *bst);
+  void (*removeMaxBstNode)(Bst *bst);
+  BstNode *(*findMin)(Bst *bst);
+  BstNode *(*findMax)(Bst *bst);
   void *(*prettyPrintBst)(Bst *bst);
+  void (*inorderBstTraversal)(Bst *bst);
 };
 
 BstNode *newBstNode(void *value);
 Bst *newBst(void);
 // if void it can not accumulate
 void addBstNode(Bst *bst, BstNode *bstNode);
-void *removeBstNode(Bst *bst, BstNode *bstNode);
-void *removeMinBstNode(Bst *bst);
-void *removeMaxBstNode(Bst *bst);
+void removeBstNode(Bst *bst, BstNode *bstNode);
+void removeMinBstNode(Bst *bst);
+void removeMaxBstNode(Bst *bst);
 // BstNode *findMin(Bst *bst);
-BstNode **findMin(Bst *bst);
-BstNode **findMax(Bst *bst);
+BstNode *findMin(Bst *bst);
+BstNode *findMax(Bst *bst);
 void prettyPrintBst(Bst *bst);
 void destroyBst(Bst *bst);
 void destroyBstNode(BstNode *bstNode);
+void inorderBstTraversal(Bst *bst);
 
 #endif

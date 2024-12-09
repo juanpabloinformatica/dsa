@@ -17,6 +17,7 @@ Bst *newBst(void) {
   ptrBst->removeMaxBstNode = removeMaxBstNode;
   ptrBst->findMin = findMin;
   ptrBst->findMax = findMax;
+  ptrBst->inorderBstTraversal = inorderBstTraversal;
   return ptrBst;
 }
 static BstNode *_addNode(BstNode *bstRoot, BstNode *bstNode) {
@@ -52,9 +53,57 @@ void addBstNode(Bst *bst, BstNode *bstNode) {
   }
   _addNode(bst->root, bstNode);
 }
-void *removeBstNode(Bst *bst, BstNode *bstNode) {}
-void *removeMinBstNode(Bst *bst) {}
-void *removeMaxBstNode(Bst *bst) {}
+static void _removeNode(BstNode *antRoot, BstNode *root, BstNode *node) {
+  if (root == NULL) {
+    return;
+  }
+  if (*(int *)root->value == *(int *)node->value) {
+    if (root->left == NULL && root->right == NULL) {
+      if (*(int *)antRoot->left->value == *(int *)node->value) {
+        antRoot->left = NULL;
+      } else if (*(int *)antRoot->right->value == *(int *)node->value) {
+        antRoot->right = NULL;
+      }
+      free(root);
+      root = NULL;
+    } else if (root->left != NULL || root->right != NULL) {
+      if (root->left != NULL) {
+        if (*(int *)antRoot->left->value == *(int *)root->value) {
+          antRoot->left = root->left;
+        } else if (*(int *)antRoot->right->value == *(int *)root->value) {
+          antRoot->right = root->left;
+        }
+      } else {
+        if (*(int *)antRoot->left->value == *(int *)root->value) {
+          antRoot->left = root->right;
+        } else if (*(int *)antRoot->right->value == *(int *)root->value) {
+          antRoot->right = root->right;
+        }
+      }
+      free(root);
+      root = NULL;
+    }
+
+    // if (root->left != NULL || root->right != NULL) {
+    //   if()
+    // }
+  }
+  if (root != NULL) {
+    _removeNode(root, root->left, node);
+    // root->left = NULL;
+  }
+  if (root != NULL) {
+    _removeNode(root, root->right, node);
+    // root->right=NULL;
+  }
+}
+void removeBstNode(Bst *bst, BstNode *bstNode) {
+  BstNode *antRoot = NULL;
+  _removeNode(antRoot, bst->root, bstNode);
+}
+
+void removeMinBstNode(Bst *bst) {}
+void removeMaxBstNode(Bst *bst) {}
 
 static void _findMin(BstNode *root, BstNode **min) {
   // considering the value is an int
@@ -71,10 +120,10 @@ static void _findMin(BstNode *root, BstNode **min) {
 
   // return min;
 }
-BstNode **findMin(Bst *bst) {
+BstNode *findMin(Bst *bst) {
   BstNode **min = &(bst->root);
   _findMin(bst->root, min);
-  return min;
+  return *min;
 }
 
 static void _findMax(BstNode *root, BstNode **max) {
@@ -91,10 +140,22 @@ static void _findMax(BstNode *root, BstNode **max) {
   _findMax(root->right, max);
   // return min;
 }
-BstNode **findMax(Bst *bst) {
+BstNode *findMax(Bst *bst) {
   BstNode **min = &(bst->root);
   _findMax(bst->root, min);
-  return min;
+  return *min;
+}
+static void _inorder(BstNode *root) {
+  if (root == NULL) {
+    return;
+  }
+  _inorder(root->left);
+  printf("%i -> ", *(int *)root->value);
+  _inorder(root->right);
+}
+void inorderBstTraversal(Bst *bst) {
+  _inorder(bst->root);
+  printf("\n");
 }
 void destroyBst(Bst *bst) {}
 void destroyBstNode(BstNode *bstNode) {}

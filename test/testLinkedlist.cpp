@@ -13,7 +13,7 @@ TEST(TestLinkedList, HandleAddElementLinkedList) {
   for (int i = 0; i < ARRAY_LENGTH; i++) {
     elements[i] = i;
     LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
-    linkedList->addLinkedListNode(linkedList, lLNode);
+    linkedList->addLinkedList(linkedList, lLNode);
   }
   int arrayIndex = 0;
   while (linkedList->head != NULL) {
@@ -51,7 +51,7 @@ TEST(TestLinkedList, HandleGetElementFromHashmapNode) {
     values[i] = i * 120;
     HashmapNode *hNode = newHashmapNode((int *)&keys[i], (int *)&values[i]);
     LinkedListNode *lLNode = newLinkedListNode(hNode);
-    linkedList->addLinkedListNode(linkedList, lLNode);
+    linkedList->addLinkedList(linkedList, lLNode);
   }
   for (int i = 0; i < ARRAY_LENGTH; i++) {
     HashmapNode *hNode = newHashmapNode((int *)&keys[i], (int *)&values[i]);
@@ -73,20 +73,20 @@ TEST(TestLinkedList, HandleGetElementFromHashmapNode) {
 //   for (int i = 0; i < ARRAY_LENGTH; i++) {
 //     elements[i] = i;
 //     LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
-//     linkedList->addLinkedListNode(linkedList, lLNode);
+//     linkedList->addLinkedList(linkedList, lLNode);
 //   }
-//   std::cout << "First linkedList\n";
+//   std::cout << "First linkedLst\n";
 //   linkedList->showLinkedList(linkedList);
 //   // for (int i = 0; i < ARRAY_LENGTH; i++) {
 //   //   LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
-//   //   linkedList->deleteLinkedListNode(linkedList, lLNode);
+//   //   linkedList->deleteLinkedList(linkedList, lLNode);
 //   //   // ASSERT_EQ(*(int *)linkedList->head->element, i + 1);
 //   //   std::cout << "\nI:" << i << std::endl;
 //   //   linkedList->showLinkedList(linkedList);
 //   // }
 //   LinkedListNode *lLNode =
 //       newLinkedListNode((int *)&elements[ARRAY_LENGTH - 1]);
-//   linkedList->deleteLinkedListNode(linkedList, lLNode);
+//   linkedList->deleteLinkedList(linkedList, lLNode);
 //   std::cout << "\nFinal result\n";
 //   linkedList->showLinkedList(linkedList);
 //   // linkedList->showLinkedList(linkedList);

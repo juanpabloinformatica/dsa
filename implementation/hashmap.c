@@ -39,14 +39,14 @@ void hashmapPut(Hashmap *hashmap, void *key, void *value) {
     LinkedList *list = newLinkedList();
     HashmapNode *hashmapNode = newHashmapNode(key, value);
     LinkedListNode *node = newLinkedListNode(hashmapNode);
-    list->addLinkedListNode(list, node);
+    list->addLinkedList(list, node);
     hashmap->array[getIndex] = list;
   } else {
     LinkedList *list = hashmap->array[getIndex];
     HashmapNode *hashmapNode = newHashmapNode(key, value);
     LinkedListNode *node = newLinkedListNode(hashmapNode);
-    list->addLinkedListNode(list, node);
-    list->showLinkedList(list);
+    list->addLinkedList(list, node);
+    list->showLinkedListNode(list);
   }
 }
 // void destroyHashmapNode(HashmapNode *hashmapNode) {
@@ -61,7 +61,7 @@ void *hashmapGet(Hashmap *hashmap, void *key) {
   int keyIndex = hashFunction(hashmap, key);
   LinkedList *linkedList = ((LinkedList *)hashmap->array[keyIndex]);
   if (linkedList != NULL) {
-    printf("linkedList exist");
+    ////////printf("linkedList exist");
     HashmapNode *hashmapNode = newHashmapNode(key, NULL);
     LinkedListNode *lLHNode = newLinkedListNode(hashmapNode);
     LinkedListNode *lln = linkedList->getLinkedListNode(linkedList, lLHNode);
@@ -78,7 +78,7 @@ void hashmapRemove(Hashmap *hashmap, void *key) {
   if (linkedList != NULL) {
     HashmapNode *hashmapNode = newHashmapNode(key, NULL);
     LinkedListNode *lLNode = newLinkedListNode(hashmapNode);
-    linkedList->deleteLinkedListNode(linkedList, lLNode);
+    linkedList->deleteLinkedList(linkedList, lLNode);
   }
 }
 bool hashmapContainsKey(Hashmap *hashmap, void *key) {
@@ -87,6 +87,7 @@ bool hashmapContainsKey(Hashmap *hashmap, void *key) {
 }
 // bool hashmapContainsValue(Hashmap *hashmap, void *element) { return true; }
 void destroyHashmap(Hashmap *hashmap) {
+  int x;
   free(hashmap->keyType);
   free(hashmap->valueType);
   free(hashmap);

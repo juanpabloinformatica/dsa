@@ -1,0 +1,59 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Ddsa_EXPORTS",
+      "-g",
+      "-fPIC",
+      "-c",
+      "-o",
+      "CMakeFiles/dsa.dir/implementation/dsa.c.o",
+      "/home/jppm/Documents/dsa/implementation/dsa.c"
+    ],
+    "directory": "/home/jppm/Documents/dsa/build",
+    "file": "/home/jppm/Documents/dsa/implementation/dsa.c",
+    "output": "/home/jppm/Documents/dsa/build/CMakeFiles/dsa.dir/implementation/dsa.c.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Ddsa_EXPORTS",
+      "-g",
+      "-fPIC",
+      "-c",
+      "-o",
+      "CMakeFiles/dsa.dir/implementation/hashmap.c.o",
+      "/home/jppm/Documents/dsa/implementation/hashmap.c"
+    ],
+    "directory": "/home/jppm/Documents/dsa/build",
+    "file": "/home/jppm/Documents/dsa/implementation/hashmap.c",
+    "output": "/home/jppm/Documents/dsa/build/CMakeFiles/dsa.dir/implementation/hashmap.c.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-g",
+      "-std=gnu++14",
+      "-c",
+      "-o",
+      "CMakeFiles/dsaTest.dir/test/testHashmap.cpp.o",
+      "/home/jppm/Documents/dsa/test/testHashmap.cpp"
+    ],
+    "directory": "/home/jppm/Documents/dsa/build",
+    "file": "/home/jppm/Documents/dsa/test/testHashmap.cpp",
+    "output": "/home/jppm/Documents/dsa/build/CMakeFiles/dsaTest.dir/test/testHashmap.cpp.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g",
+      "-c",
+      "-o",
+      "CMakeFiles/dsaRun.dir/implementation/dsa.c.o",
+      "/home/jppm/Documents/dsa/implementation/dsa.c"
+    ],
+    "directory": "/home/jppm/Documents/dsa/build",
+    "file": "/home/jppm/Documents/dsa/implementation/dsa.c",
+    "output": "/home/jppm/Documents/dsa/build/CMakeFiles/dsaRun.dir/implementation/dsa.c.o"
+  }
+]

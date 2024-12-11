@@ -37,9 +37,9 @@ int main(void) {
   // // linkedList->addNode(linkedList, nextNextNext);
   // // linkedList->head =
   // //     linkedList->deleteNode(NULL, linkedList->head, (void *)nextValue);
-  // // printf("\nAddress at the beginning: %p", linkedList->head);
+  //// // printf("\nAddress at the beginning: %p", linkedList->head);
   // // linkedList->showLinkedList(linkedList->head);
-  // // printf("\nAddress at the end: %p", linkedList->head);
+  //// // printf("\nAddress at the end: %p", linkedList->head);
   // // // both are the same because before i was passing the linked list so it
   // // // was
   // // // // // creating another variable with the same linkedlist address but
@@ -81,17 +81,17 @@ int main(void) {
   // // dynamic->addElement(dynamic, &element17);
   // // dynamic->showArray(dynamic);
   // // // int elementGetPos13 = *(int *)dynamic->getElement(dynamic, 13);
-  // // // printf("ELEMENT GET: %d", elementGetPos13);
+  //// // // printf("ELEMENT GET: %d", elementGetPos13);
   // // // dynamic->setElement(dynamic, 13, &elemaent0);
   // // // dynamic->showArray(dynamic);
   // // for (int i = 0; i < 10; i++) {
   // //   dynamic->removeElementFront(dynamic, dynamic->counter);
   // // }
-  // // printf("\nAfter removing some characters:\n  ");
+  //// // printf("\nAfter removing some characters:\n  ");
   // // dynamic->showArray(dynamic);
   // // destroyDynamicArray(dynamic);
   // // // // ------------- Testing stack ------------------
-  // // printf("\n TESTING STACK\n");
+  //// // printf("\n TESTING STACK\n");
   // Stack *stack = newStack();
   // stack->push(stack, &element0);
   // stack->push(stack, &element1);
@@ -100,13 +100,13 @@ int main(void) {
   // stack->push(stack, &element4);
   // stack->dynamicArray->showArray(stack->dynamicArray);
   // while (stack->stackIsEmpty(stack) == false) {""
-  //   printf("\nElement: %d", *(int *)stack->pop(stack));
+  ////   printf("\nElement: %d", *(int *)stack->pop(stack));
   // }
   // destroyStack(stack);
-  // printf("\n");
+  ////printf("\n");
   // // ------------ end testing queue -----------------
   // // ------------ Testing queue ----------------
-  // printf("[QUEUE] Testing queue\n");
+  //// printf("[QUEUE] Testing queue\n");
   // Queue *queue = newQueue();
   // queue->enqueue(queue, &element0);
   // // queue->dynamicArray->showArray(queue->dynamicArray);
@@ -120,7 +120,7 @@ int main(void) {
   // // queue->dynamicArray->showArray(queue->dynamicArray);
   // while (queue->queueIsEmpty(queue) == false) {
   //   void *value = queue->dequeue(queue);
-  //   printf("\n[QUEUE] Element: %d ", *(int *)value);
+  ////   printf("\n[QUEUE] Element: %d ", *(int *)value);
   //   free(value);
   // }
   // queue->dynamicArray->showArray(queue->dynamicArray);
@@ -140,20 +140,20 @@ int main(void) {
     hashmap->hashmapPut(hashmap, &keys[i], keyValue);
     // assert(listt->head != null);
     // assert(listt->addlinkedlistnode != null);
-    // printf("\npointer of the array in %d index:\t%p", i, &keys[i]);
+    //// printf("\npointer of the array in %d index:\t%p", i, &keys[i]);
   }
   for (int i = 0; i < 32 / 2; i++) {
     LinkedList *listT = ((LinkedList *)(hashmap->array)[i]);
-    // assert(listT->deleteLinkedListNode != NULL);
-    assert(listT->showLinkedList != NULL);
-    printf("\n------ I:%i------\n", i);
-    listT->showLinkedList(listT);
-    printf("\n-------------\n", i);
+    // assert(listT->deleteLinkedList != NULL);
+    assert(listT->showLinkedListNode != NULL);
+    ////printf("\n------ I:%i------\n", i);
+    listT->showLinkedListNode(listT);
+    //printf("\n-------------\n", i);
   }
 
-  //   printf("\nvalue: %d", *(int *)(hashmap->array[i]));
+  ////   printf("\nvalue: %d", *(int *)(hashmap->array[i]));
   // }
-  printf("\n%p", hashmap);
+  ////printf("\n%p", hashmap);
   // Hashmap *hashmap2 = newHashmap("string", "string");
   // hashmap2->hashmapPut(hashmap2, "hola", "daniel");
   // hashmap2->hashmapPut(hashmap2, "carola", "miguel");

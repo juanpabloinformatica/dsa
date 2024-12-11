@@ -1,5 +1,6 @@
-#ifndef __LINKED_LIST__
-#define __LINKED_LIST__
+#pragma once
+// #ifndef __LINKED_LIST__
+// #define __LINKED_LIST__
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -17,17 +18,17 @@ struct LinkedListNode {
 typedef struct LinkedList LinkedList;
 struct LinkedList {
   LinkedListNode *head;
-  void (*addLinkedListNode)(LinkedList *linkedList, LinkedListNode *node);
-  void (*showLinkedList)(LinkedList *linkedList);
-  void (*deleteLinkedListNode)(LinkedList *linkedList, LinkedListNode *node);
+  void (*addLinkedList)(LinkedList *linkedList, LinkedListNode *node);
+  void (*showLinkedListNode)(LinkedList *linkedList);
+  void (*deleteLinkedList)(LinkedList *linkedList, LinkedListNode *node);
   void* (*getLinkedListNode)(LinkedList *linkedList, LinkedListNode *node);
 };
 LinkedListNode *newLinkedListNode(void *value);
 LinkedList *newLinkedList();
 HashmapNode *newHashmapNode(void *key, void *value);
 // RECURSIVE
-void addLinkedListNode(LinkedList *linkedList, LinkedListNode *node);
-void showLinkedList(LinkedList *linkedList);
-void deleteLinkedListNode(LinkedList *linkedList, LinkedListNode *node);
+void addLinkedList(LinkedList *linkedList, LinkedListNode *node);
+void showLinkedListNode(LinkedList *linkedList);
+void deleteLinkedList(LinkedList *linkedList, LinkedListNode *node);
 void* getLinkedListNode(LinkedList *linkedList, LinkedListNode *node);
-#endif
+// #endif

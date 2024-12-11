@@ -26,15 +26,17 @@ static BstNode *_addNode(BstNode *bstRoot, BstNode *bstNode) {
   }
   // testing with integers
   if (*(int *)bstNode->value < *(int *)bstRoot->value) {
-    printf("\nnode value  < root value\n");
+
+    //printf("\nnode value  < root value\n");
     if (bstRoot->left == NULL) {
       bstRoot->left = bstNode;
       return bstRoot;
     } else {
       bstRoot->left = _addNode(bstRoot->left, bstNode);
+      return bstRoot;
     }
   } else if (*(int *)bstNode->value > *(int *)bstRoot->value) {
-    printf("\nnode value  > root value\n");
+    //printf("\nnode value  > root value\n");
     if (bstRoot->right == NULL) {
       bstRoot->right = bstNode;
       return bstRoot;
@@ -111,8 +113,8 @@ static void _findMin(BstNode *root, BstNode **min) {
     return;
   }
   if (*(int *)root->value < *(int *)(*min)->value) {
-    printf("\nRoot: %i is less than min: %i\n", *(int *)root->value,
-           *(int *)(*min)->value);
+    //printf("\nRoot: %i is less than min: %i\n", *(int *)root->value,
+      //     *(int *)(*min)->value);
     *min = root;
   }
   _findMin(root->left, min);
@@ -132,8 +134,8 @@ static void _findMax(BstNode *root, BstNode **max) {
     return;
   }
   if (*(int *)root->value > *(int *)(*max)->value) {
-    printf("\nRoot: %i is less than min: %i\n", *(int *)root->value,
-           *(int *)(*max)->value);
+    ////printf("\nRoot: %i is less than min: %i\n", *(int *)root->value,
+           /* *(int *)(*max)->value); */
     *max = root;
   }
   _findMax(root->left, max);
@@ -150,12 +152,12 @@ static void _inorder(BstNode *root) {
     return;
   }
   _inorder(root->left);
-  printf("%i -> ", *(int *)root->value);
+   printf("%i -> ", *(int *)root->value);
   _inorder(root->right);
 }
 void inorderBstTraversal(Bst *bst) {
   _inorder(bst->root);
-  printf("\n");
+  ////printf("\n");
 }
 void destroyBst(Bst *bst) {}
 void destroyBstNode(BstNode *bstNode) {}

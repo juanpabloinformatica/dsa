@@ -17,11 +17,11 @@ TEST(HashmapTest, HandleHashmapAddElement) {
     hashmap->hashmapPut(hashmap, (int *)&keys[i], (int *)&values[i]);
   }
   for (int i = 0; i < HASHMAP_SIZE; i++) {
-    std::cout << "inside here" << std::endl;
+    // std::cout << "inside here" << std::endl;
     LinkedList *listT = ((LinkedList *)(hashmap->array)[i]);
     LinkedListNode *lln = (LinkedListNode *)listT->head;
     HashmapNode *hn = (HashmapNode *)lln->element;
-    std::cout << hn << std::endl;
+    // std::cout << hn << std::endl;
     ASSERT_EQ(*(int *)hn->key, keys[i]);
     ASSERT_EQ(*(int *)hn->value, values[i]);
   }

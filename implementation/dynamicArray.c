@@ -63,9 +63,9 @@ void showArray(DynamicArray *dynamicArray, int i, int size) {
     return;
   }
   if (i == size - 1) {
-    printf("%i\n", ((int *)dynamicArray->array)[i]);
+    //printf("%i\n", ((int *)dynamicArray->array)[i]);
   } else {
-    printf("%i -> ", ((int *)dynamicArray->array)[i]);
+    //printf("%i -> ", ((int *)dynamicArray->array)[i]);
   }
   showArray(dynamicArray, ++i, size);
 }

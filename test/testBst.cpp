@@ -109,10 +109,11 @@ TEST(BstTest, HandleBstRemoveLeaft) {
 }
 TEST(BstTest, HandleBstRemoveNodeWithOneChild) {
   Bst *bst = newBst();
-  const int testArrayLength = 7;
+  const int testArrayLength = 6;
   int testArray[testArrayLength] = {50, 30, 70, 20, 40, 80};
   for (int i = 0; i < testArrayLength; i++) {
     BstNode *bstNode = newBstNode((int *)&testArray[i]);
+    std::cout << *(int *)bstNode->value << std::endl;
     bst->addBstNode(bst, bstNode);
   }
   BstNode *bstNode = newBstNode((int *)&testArray[2]);

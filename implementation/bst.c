@@ -26,7 +26,6 @@ static BstNode *_addNode(BstNode *bstRoot, BstNode *bstNode) {
   }
   // testing with integers
   if (*(int *)bstNode->value < *(int *)bstRoot->value) {
-
     //printf("\nnode value  < root value\n");
     if (bstRoot->left == NULL) {
       bstRoot->left = bstNode;
@@ -55,6 +54,13 @@ void addBstNode(Bst *bst, BstNode *bstNode) {
   }
   _addNode(bst->root, bstNode);
 }
+static BstNode* _getBstNodeSuccesor(BstNode*root){
+  if(root==NULL){
+    return NULL;
+  }
+  _getBstNodeSuccesor(root->right);
+  return root;
+}
 static void _removeNode(BstNode *antRoot, BstNode *root, BstNode *node) {
   if (root == NULL) {
     return;
@@ -68,7 +74,7 @@ static void _removeNode(BstNode *antRoot, BstNode *root, BstNode *node) {
       }
       free(root);
       root = NULL;
-    } else if (root->left != NULL || root->right != NULL) {
+    } else if ((root->left != NULL && root->right == NULL)||(root->left == NULL && root->right != NULL)) {
       if (root->left != NULL) {
         if (*(int *)antRoot->left->value == *(int *)root->value) {
           antRoot->left = root->left;
@@ -84,23 +90,37 @@ static void _removeNode(BstNode *antRoot, BstNode *root, BstNode *node) {
       }
       free(root);
       root = NULL;
+    }else if(root->left!=NULL && root->right!=NULL){
+      if (*(int *)antRoot->left->value == *(int*)node->value) {
+        BstNode* tmpNodeRightChild = node->right;
+        BstNode* sucessorNode = _getBstNodeSuccesor(node->left);
+        sucessorNode->right = tmpNodeRightChild;
+        antRoot->left = sucessorNode;
+      } else if (*(int *)antRoot->right->value == *(int*)node->value) {
+        BstNode* tmpNodeRightChild = node->right;
+        BstNode* sucessorNode = _getBstNodeSuccesor(node->left);
+        sucessorNode->right = tmpNodeRightChild;
+        antRoot->right = sucessorNode;
+      }
+      free(root);
+      root = NULL;
     }
-
-    // if (root->left != NULL || root->right != NULL) {
-    //   if()
-    // }
   }
   if (root != NULL) {
     _removeNode(root, root->left, node);
-    // root->left = NULL;
   }
   if (root != NULL) {
     _removeNode(root, root->right, node);
-    // root->right=NULL;
   }
 }
 void removeBstNode(Bst *bst, BstNode *bstNode) {
   BstNode *antRoot = NULL;
+  if(*(int*)bst->root->value == *(int*)bstNode){
+        BstNode* tmpNodeRightChild = bst->root->right;
+        BstNode* sucessorNode = _getBstNodeSuccesor(bst->root->left);
+        sucessorNode->right = tmpNodeRightChild;
+        antRoot->right = sucessorNode;
+  }
   _removeNode(antRoot, bst->root, bstNode);
 }
 

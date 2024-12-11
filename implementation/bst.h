@@ -35,6 +35,8 @@ BstNode *findMax(Bst *bst);
 void prettyPrintBst(Bst *bst);
 void destroyBst(Bst *bst);
 void destroyBstNode(BstNode *bstNode);
+// inorder traversal
+// left child => parent => right child
 void inorderBstTraversal(Bst *bst);
 
 #endif

@@ -30,8 +30,16 @@
 - I will recheck linkedlist but this time everything recursive as I tried but
   Testing everything.
 
-- Doing everything now by tdd approach, need to try new things and i think this is good for showing a good work.
-- In the linkedList try to fix the remove function put all the cases in just one function keeping in mind when u are removing the head.
+- Doing everything now by tdd approach, need to try new things and i think this
+  is good for showing a good work.
+
+- In the linkedList try to fix the remove function put all the cases in just one
+  function keeping in mind when u are removing the head.
+
 - Finally done hashmap
+
 - But still free everything
+
 - Neede to be refactored I know it will be done eventually
+
+- Need to refactor all the code, and remove for and whiles, only let for testing

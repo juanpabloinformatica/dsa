@@ -11,20 +11,21 @@ Hashmap *newHashmap(char *keyType, char *valueType) {
   ptrHashmap->hashmapGet = hashmapGet;
   ptrHashmap->hashmapRemove = hashmapRemove;
   ptrHashmap->hashmapContainsKey = hashmapContainsKey;
-  // ptrHashmap->hashmapContainsValue = hashmapContainsValue;
-
   return ptrHashmap;
+}
+static int _stringGetSum(int sum, char *key) {
+  if (!*(char *)key) {
+    return 0;
+  }
+  sum+=*(char*)key;
+  _stringGetSum(sum, key+1);
+  return sum;
 }
 int hashFunction(Hashmap *hashmap, void *key) {
   assert(strcmp(hashmap->keyType, HASHMAP_TYPE_NUMBER) == 0 ||
          strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0);
   if (strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0) {
-    int sum = 0;
-    // this should be done also with recursion
-    while (*(char *)key) {
-      sum += *(char *)key;
-      key++;
-    }
+    int sum = _stringGetSum(0, key);
     return sum % MODULE_FACTOR;
   } else {
     int keyNumber = *(int *)key;
@@ -61,7 +62,6 @@ void *hashmapGet(Hashmap *hashmap, void *key) {
   int keyIndex = hashFunction(hashmap, key);
   LinkedList *linkedList = ((LinkedList *)hashmap->array[keyIndex]);
   if (linkedList != NULL) {
-    ////////printf("linkedList exist");
     HashmapNode *hashmapNode = newHashmapNode(key, NULL);
     LinkedListNode *lLHNode = newLinkedListNode(hashmapNode);
     LinkedListNode *lln = linkedList->getLinkedListNode(linkedList, lLHNode);
@@ -87,7 +87,6 @@ bool hashmapContainsKey(Hashmap *hashmap, void *key) {
 }
 // bool hashmapContainsValue(Hashmap *hashmap, void *element) { return true; }
 void destroyHashmap(Hashmap *hashmap) {
-  int x;
   free(hashmap->keyType);
   free(hashmap->valueType);
   free(hashmap);

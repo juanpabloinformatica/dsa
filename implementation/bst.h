@@ -1,8 +1,9 @@
 #ifndef __BST__
 #define __BST__
+#include <stdbool.h>
 #include <stdlib.h>
 
-// then problably i use wrapper and stuffs
+typedef enum {NOCHILD, ONECHILD, TWOCHILDREN}  NodeDeletionType;
 typedef struct BstNode BstNode;
 struct BstNode {
   void *value;

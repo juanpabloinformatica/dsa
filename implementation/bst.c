@@ -62,6 +62,7 @@ static BstNode *_getBstNodeSuccesor(BstNode *root) {
   _getBstNodeSuccesor(root->right);
   return root;
 }
+
 static NodeDeletionType _getNodeDeletionType(BstNode*node){
   if(node->left == NULL && node->right==NULL)
     return NOCHILD;
@@ -71,18 +72,24 @@ static NodeDeletionType _getNodeDeletionType(BstNode*node){
 }
 static void _setAntNodeAndNode(BstNode **antNode, BstNode **node,
                                BstNode *targetNode, bool* ptrFound) {
-  if (*node == NULL && *ptrFound==false) {
+  if (*node == NULL) {
     return;
   }
-  if(*(int*)(*node)->value==*(int*)targetNode->value){
+  // in here once he found it, it should not move anymore
+  if (*(int *)(*node)->value == *(int *)targetNode->value) {
     *ptrFound = true;
+  } else {
+    if (*ptrFound == false && (*node) != NULL) {
+      *antNode = *node;
+      *node = (*node)->left;
+      _setAntNodeAndNode(antNode, node, targetNode, ptrFound);
+    }
+    if (*ptrFound == false && (*node) != NULL) {
+      *antNode = *node;
+      *node = (*node)->right;
+      _setAntNodeAndNode(antNode, node, targetNode, ptrFound);
+    }
   }
-  *antNode = *node;
-  *node = (*node)->left;
-  _setAntNodeAndNode(antNode, node, targetNode, ptrFound);
-  *antNode = *node;
-  *node = (*node)->right;
-  _setAntNodeAndNode(antNode, node, targetNode, ptrFound);
 }
 void removeBstNode(Bst *bst, BstNode *targetNode) {
   // I will have to modified where the bst->root, so if i create

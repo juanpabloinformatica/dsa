@@ -105,10 +105,10 @@ TEST(BstTest, HandleBstRemoveLeaft) {
   std::cout << "\nWorking deleting node with 0 child in normal bst" << std::endl;
   std::cout << "\nBefore" << std::endl;
   bst->inorderBstTraversal(bst);
-  // bst->removeBstNode(bst, bstNode);
-  // std::cout << "\nAfter" << std::endl;
-  // bst->inorderBstTraversal(bst);
-  // // ASSERT_TRUE(*(int *)bst->root->left->left->value == 20);
+  bst->removeBstNode(bst, bstNode);
+  std::cout << "\nAfter" << std::endl;
+  bst->inorderBstTraversal(bst);
+  // ASSERT_TRUE(*(int *)bst->root->left->left->value == 20);
   // ASSERT_TRUE(bst->root->left->left == NULL);
 
   // Bst *bst2 = newBst();

@@ -1,4 +1,5 @@
 #include "bst.h"
+#include <assert.h>
 #include <stdio.h>
 
 BstNode *newBstNode(void *value) {
@@ -71,52 +72,93 @@ static NodeDeletionType _getNodeDeletionType(BstNode*node){
   return TWOCHILDREN;
 }
 static void _setAntNodeAndNode(BstNode **antNode, BstNode **node,
-                               BstNode *targetNode, bool* ptrFound) {
-  if (*node == NULL) {
+                               BstNode *tmpNode, BstNode *targetNode,
+                               bool *ptrFound) {
+  if (tmpNode == NULL) {
     return;
   }
   // in here once he found it, it should not move anymore
-  if (*(int *)(*node)->value == *(int *)targetNode->value) {
+  if (*(int *)tmpNode->value == *(int *)targetNode->value) {
+    *node = tmpNode;
     *ptrFound = true;
-  } else {
-    if (*ptrFound == false && (*node) != NULL) {
-      *antNode = *node;
-      *node = (*node)->left;
-      _setAntNodeAndNode(antNode, node, targetNode, ptrFound);
-    }
-    if (*ptrFound == false && (*node) != NULL) {
-      *antNode = *node;
-      *node = (*node)->right;
-      _setAntNodeAndNode(antNode, node, targetNode, ptrFound);
-    }
+  }
+  if (*ptrFound == false) {
+    *antNode = tmpNode;
+    *node = tmpNode->left;
+    _setAntNodeAndNode(antNode, node, tmpNode->left, targetNode, ptrFound);
+  }
+  if (*ptrFound == false) {
+    *antNode = tmpNode;
+    *node = tmpNode->right;
+    _setAntNodeAndNode(antNode, node, tmpNode->right, targetNode, ptrFound);
   }
 }
+static void _removeNoChildNode(BstNode* antNode,BstNode**node){
+  if (antNode != NULL) {
+    BstNode *antNodeChildToAttachTo =
+        (*(int *)antNode->left->value == *(int *)(*node)->value)
+            ? antNode->left
+            : antNode->right;
+    antNodeChildToAttachTo = NULL;
+  }
+  free((*node));
+  (*node) = NULL;
+  return;
+}
+static void _removeOneChildNode(BstNode* antNode,BstNode**node){
+
+    BstNode *sonToKeep = ((*node)->left != NULL) ? (*node)->left : (*node)->right;
+  if(antNode!=NULL){
+    BstNode *antNodeChildToAttachTo =
+        (*(int *)antNode->left->value == *(int *)(*node)->value) ? antNode->left
+                                                              : antNode->right;
+    antNodeChildToAttachTo = sonToKeep;
+    free((*node));
+    (*node) = NULL;
+  }else{
+    antNode = *node;
+    *node = sonToKeep;
+    free(antNode);
+    antNode = NULL;
+  }
+  return;
+}
+static void _removeTwoChildrenNodes(BstNode* antNode,BstNode**node){
+
+}
 void removeBstNode(Bst *bst, BstNode *targetNode) {
+  assert(targetNode != NULL);
   // I will have to modified where the bst->root, so if i create
   // another variable, if i remove the root, the bst->root will remind pointing
   // where it should not so for that I will pass the the &bst->root
-  BstNode* node = bst->root;
-  BstNode* antNode = NULL ;
+  BstNode *node = NULL;
+  BstNode *antNode = NULL;
   bool found = false;
   bool *ptrFound = &found;
   /*set the node and his antNode, and a global variable to stop recursion*/
-  _setAntNodeAndNode(&antNode,&node,targetNode,ptrFound);
-  /*Once we have both nodes, we can check what kind of deletion we have to make*/
-
+  _setAntNodeAndNode(&antNode, &node, bst->root, targetNode, ptrFound);
+  if (antNode != NULL) {
+    printf("\nANT_NODE: %i", *(int *)antNode->value);
+  } else {
+    printf("\nANT_NODE: NULL");
+  }
+  printf("\nNODE: %i",*(int*)node->value);
+  /*Once we have both nodes, we can check what kind of deletion we have to
+   * make*/
+  /*If this, then there is no node to delete*/
+  assert(node != NULL);
   NodeDeletionType nodeDeletionType = _getNodeDeletionType(node);
-
-  /*Now we can do a switch and do the deletion depending the type*/
-  /* switch (nodeDeletionType) { */
-  /* case NOCHILD: */
-  /*   _removeNoChildNode(antNode,node); */
-  /*   break; */
-  /* case ONECHILD: */
-  /*   _removeOneChildNode(antNode,node); */
-  /*   break; */
-  /* case TWOCHILDEN: */
-  /*   _removeTwoChildrenNode(antNode,node); */
-  /*   break; */
-  /* } */
+  switch (nodeDeletionType) {
+  case NOCHILD:
+    _removeNoChildNode(antNode, &node);
+    break;
+  case ONECHILD:
+    _removeOneChildNode(antNode, &node);
+    break;
+  case TWOCHILDREN:
+    _removeTwoChildrenNodes(antNode, &node);
+    break;
+  }
   /* BstNode *antRoot = NULL; */
   /* _removeNode(antRoot, &bst->root, bstNode); */
 }

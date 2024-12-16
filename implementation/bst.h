@@ -1,8 +1,13 @@
 #ifndef __BST__
 #define __BST__
+#include <stdbool.h>
+// #define debug_print(FMT, ARGS...) do { \
+//     if (DEBUG) \
+//         fprintf(stderr, "%s:%d " FMT "\n", __FUNCTION__, __LINE__, ## ARGS); \
+//     } while (0)
 #include <stdlib.h>
-
-// then problably i use wrapper and stuffs
+#define DEBUG
+typedef enum {NOCHILD, ONECHILD, TWOCHILDREN}  NodeDeletionType;
 typedef struct BstNode BstNode;
 struct BstNode {
   void *value;

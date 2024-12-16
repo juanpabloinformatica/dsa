@@ -38,7 +38,7 @@
 
 - Finally done hashmap
 
-- But still free everything
+- **But still free everything**
 
 - Neede to be refactored I know it will be done eventually
 

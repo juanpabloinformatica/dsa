@@ -22,6 +22,7 @@ Bst *newBst(void) {
   return ptrBst;
 }
 // I will also change this
+// I will clean this function as well but for the moment is well.
 static BstNode *_addNode(BstNode *bstRoot, BstNode *bstNode) {
   if (bstRoot == NULL) {
     return NULL;
@@ -56,7 +57,7 @@ void addBstNode(Bst *bst, BstNode *bstNode) {
   }
   _addNode(bst->root, bstNode);
 }
-static BstNode *_getBstNodeSuccesor(BstNode *root) {
+static BstNode *_getBstNodeInorderSuccesor(BstNode *root) {
   if (root == NULL) {
     return NULL;
   }
@@ -131,6 +132,7 @@ static void _removeOneChildNode(BstNode *antNode, BstNode *node,
     free(node);
     node = NULL;
   } else {
+    assert(*root!=NULL);
     antNode = *root;
     if ((*root)->left != NULL) {
       *root = (*root)->left;
@@ -143,7 +145,18 @@ static void _removeOneChildNode(BstNode *antNode, BstNode *node,
   return;
 }
 static void _removeTwoChildrenNodes(BstNode *antNode, BstNode *node,
-                                    BstNode **root) {}
+                                    BstNode **root) {
+
+  /* So what is needed to do */
+  /* I will sketch what is supposed to be done */
+  BstNode* sucessor;
+  if(antNode!=NULL){
+    if (antNode->left != NULL &&
+        *(int *)antNode->left->value == *(int *)node->value) {
+       _getBstNodeInorderSuccesor(node->left,&sucessor);
+       sucessor->right = node->right;
+    }
+}
 void removeBstNode(Bst *bst, BstNode *targetNode) {
   assert(targetNode != NULL);
   // I will have to modified where the bst->root, so if i create
@@ -167,6 +180,7 @@ void removeBstNode(Bst *bst, BstNode *targetNode) {
     _removeNoChildNode(antNode, node, &bst->root);
     break;
   case ONECHILD:
+    assert(bst->root!=NULL);
     _removeOneChildNode(antNode, node, &bst->root);
     break;
   case TWOCHILDREN:

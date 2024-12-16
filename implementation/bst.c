@@ -64,10 +64,10 @@ static BstNode *_getBstNodeSuccesor(BstNode *root) {
   return root;
 }
 
-static NodeDeletionType _getNodeDeletionType(BstNode*node){
-  if(node->left == NULL && node->right==NULL)
+static NodeDeletionType _getNodeDeletionType(BstNode *node) {
+  if (node->left == NULL && node->right == NULL)
     return NOCHILD;
-  if(node->left!=NULL || node->right !=NULL)
+  if (node->left != NULL || node->right != NULL)
     return ONECHILD;
   return TWOCHILDREN;
 }
@@ -93,56 +93,74 @@ static void _setAntNodeAndNode(BstNode **antNode, BstNode **node,
     _setAntNodeAndNode(antNode, node, tmpNode->right, targetNode, ptrFound);
   }
 }
-static void _removeNoChildNode(BstNode* antNode,BstNode**node){
+static void _removeNoChildNode(BstNode *antNode, BstNode *node,
+                               BstNode **root) {
+
+#ifdef DEBUG
+  printf("\nNODE --> %i", *(int *)node->value);
+  /* printf("\nANT_NODE --> %i", *(int *)antNode->value); */
+  /* printf("\nANT_NODE_LEFT --> %i", *(int *)antNode->left->value); */
+#endif
   if (antNode != NULL) {
-    BstNode *antNodeChildToAttachTo =
-        (*(int *)antNode->left->value == *(int *)(*node)->value)
-            ? antNode->left
-            : antNode->right;
-    antNodeChildToAttachTo = NULL;
+    if (antNode->left != NULL &&
+        *(int *)antNode->left->value == *(int *)node->value) {
+      antNode->left = NULL;
+    } else {
+      antNode->right = NULL;
+    }
+    free(node);
+    node = NULL;
+  } else {
+    printf("I enter here");
+    free(*root);
+    *root = NULL;
   }
-  free((*node));
-  (*node) = NULL;
   return;
 }
-static void _removeOneChildNode(BstNode* antNode,BstNode**node){
+static void _removeOneChildNode(BstNode *antNode, BstNode *node,
+                                BstNode **root) {
 
-    BstNode *sonToKeep = ((*node)->left != NULL) ? (*node)->left : (*node)->right;
-  if(antNode!=NULL){
-    BstNode *antNodeChildToAttachTo =
-        (*(int *)antNode->left->value == *(int *)(*node)->value) ? antNode->left
-                                                              : antNode->right;
-    antNodeChildToAttachTo = sonToKeep;
-    free((*node));
-    (*node) = NULL;
-  }else{
-    antNode = *node;
-    *node = sonToKeep;
+  if (antNode != NULL) {
+    if (node->left != NULL) {
+      if (*(int *)antNode->left->value == *(int *)node->value) {
+        antNode->left = node->left;
+      } else {
+        antNode->right = node->left;
+      }
+    } else {
+      if (*(int *)antNode->left->value == *(int *)node->value) {
+        antNode->left = node->right;
+      } else {
+        antNode->right = node->right;
+      }
+    }
+    free(node);
+    node = NULL;
+  } else {
+    antNode = *root;
+    if ((*root)->left != NULL) {
+      *root = (*root)->left;
+    } else {
+      *root = (*root)->right;
+    }
     free(antNode);
     antNode = NULL;
   }
   return;
 }
-static void _removeTwoChildrenNodes(BstNode* antNode,BstNode**node){
-
-}
+static void _removeTwoChildrenNodes(BstNode *antNode, BstNode *node,
+                                    BstNode **root) {}
 void removeBstNode(Bst *bst, BstNode *targetNode) {
   assert(targetNode != NULL);
   // I will have to modified where the bst->root, so if i create
-  // another variable, if i remove the root, the bst->root will remind pointing
-  // where it should not so for that I will pass the the &bst->root
+  // another variable, if i remove the root, the bst->root will remind
+  // pointing where it should not so for that I will pass the the &bst->root
   BstNode *node = NULL;
   BstNode *antNode = NULL;
   bool found = false;
   bool *ptrFound = &found;
   /*set the node and his antNode, and a global variable to stop recursion*/
   _setAntNodeAndNode(&antNode, &node, bst->root, targetNode, ptrFound);
-  if (antNode != NULL) {
-    printf("\nANT_NODE: %i", *(int *)antNode->value);
-  } else {
-    printf("\nANT_NODE: NULL");
-  }
-  printf("\nNODE: %i",*(int*)node->value);
   /*Once we have both nodes, we can check what kind of deletion we have to
    * make*/
   /*If this, then there is no node to delete*/
@@ -150,13 +168,15 @@ void removeBstNode(Bst *bst, BstNode *targetNode) {
   NodeDeletionType nodeDeletionType = _getNodeDeletionType(node);
   switch (nodeDeletionType) {
   case NOCHILD:
-    _removeNoChildNode(antNode, &node);
+    assert(bst->root->left == antNode);
+    /*In case is the root the one I need to move*/
+    _removeNoChildNode(antNode, node, &bst->root);
     break;
   case ONECHILD:
-    _removeOneChildNode(antNode, &node);
+    _removeOneChildNode(antNode, node, &bst->root);
     break;
   case TWOCHILDREN:
-    _removeTwoChildrenNodes(antNode, &node);
+    _removeTwoChildrenNodes(antNode, node, &bst->root);
     break;
   }
   /* BstNode *antRoot = NULL; */
@@ -176,8 +196,6 @@ static void _findMin(BstNode *root, BstNode **min) {
     //      *(int *)(*min)->value);
     //
     *min = root;
-
-
   }
   _findMin(root->left, min);
   _findMin(root->right, min);

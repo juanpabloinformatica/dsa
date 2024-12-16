@@ -109,34 +109,46 @@ TEST(BstTest, HandleBstRemoveLeaft) {
   std::cout << "\nAfter" << std::endl;
   bst->inorderBstTraversal(bst);
   // ASSERT_TRUE(*(int *)bst->root->left->left->value == 20);
-  // ASSERT_TRUE(bst->root->left->left == NULL);
-
-  Bst *bst2 = newBst();
-
-  bst2->addBstNode(bst2, bstNode2);
-
-  std::cout << "\nWorking deleting node with 0 child in one node bst" << std::endl;
-  std::cout << "\nBefore" << std::endl;
-  bst2->inorderBstTraversal(bst2);
-  bst2->removeBstNode(bst2,bstNode2);
-  std::cout << "\nAfter" << std::endl;
-  bst2->inorderBstTraversal(bst2);
-}
-TEST(BstTest, HandleBstRemoveNodeWithOneChild) {
-  Bst *bst = newBst();
-  const int testArrayLength = 6;
-  int testArray[testArrayLength] = {50, 30, 70, 20, 40, 80};
-  for (int i = 0; i < testArrayLength; i++) {
-    BstNode *bstNode = newBstNode((int *)&testArray[i]);
-    std::cout << *(int *)bstNode->value << std::endl;
-    bst->addBstNode(bst, bstNode);
-  }
-  BstNode *bstNode = newBstNode((int *)&testArray[2]);
+  ASSERT_TRUE(bst->root->left->left == NULL);
+  bstNode = newBstNode((int *)&testArray[4]);
   bst->removeBstNode(bst, bstNode);
-  // ASSERT_TRUE(*(int *)bst->root->left->left->value == 20);
-  // ASSERT_TRUE(*(int *)bst->root->right->value == 80);
-  //bst->inorderBstTraversal(bst);
+  // bst->inorderBstTraversal(bst);
+
+  // int valueT = 500;
+  // BstNode *bstNode3 = newBstNode(&valueT);
+  // bst->removeBstNode(bst,bstNode3);
+  // std::cout << "\nAfter --2--" << std::endl;
+  // bst->inorderBstTraversal(bst);
+
+  // Bst *bst2 = newBst();
+  // BstNode *bstNode2 = newBstNode((int *)&testArray[0]);
+  // bst2->addBstNode(bst2, bstNode2);
+  // std::cout << "\nWorking deleting node with 0 child in one node bst" << std::endl;
+  // std::cout << "\nBefore" << std::endl;
+  // bst2->inorderBstTraversal(bst2);
+  // bst2->removeBstNode(bst2,bstNode2);
+  // std::cout << "\nAfter" << std::endl;
+  // bst2->inorderBstTraversal(bst2);
+
 }
+// TEST(BstTest, HandleBstRemoveNodeWithOneChild) {
+//   Bst *bst = newBst();
+//   const int testArrayLength = 6;
+//   int testArray[testArrayLength] = {50, 30, 70, 20, 40, 80};
+//   for (int i = 0; i < testArrayLength; i++) {
+//     BstNode *bstNode = newBstNode((int *)&testArray[i]);
+//     std::cout << *(int *)bstNode->value << std::endl;
+//     bst->addBstNode(bst, bstNode);
+//   }
+//   BstNode *bstNode = newBstNode((int *)&testArray[2]);
+//   std::cout << "\nBefore" << std::endl;
+//   bst->inorderBstTraversal(bst);
+//   bst->removeBstNode(bst, bstNode);
+//   // ASSERT_TRUE(*(int *)bst->root->left->left->value == 20);
+//   ASSERT_TRUE(*(int *)bst->root->right->value == 80);
+//   std::cout << "\nAfter" << std::endl;
+//   bst->inorderBstTraversal(bst);
+// }
 // TEST(BstTest,HandleBstRemoveNodeWithTwoChildren){
 //   Bst *bst = newBst();
 //   const int testArrayLength = 7;

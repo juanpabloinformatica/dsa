@@ -93,14 +93,9 @@ static void _setAntNodeAndNode(BstNode **antNode, BstNode **node,
     _setAntNodeAndNode(antNode, node, tmpNode->right, targetNode, ptrFound);
   }
 }
+// this method is working
 static void _removeNoChildNode(BstNode *antNode, BstNode *node,
                                BstNode **root) {
-
-#ifdef DEBUG
-  printf("\nNODE --> %i", *(int *)node->value);
-  /* printf("\nANT_NODE --> %i", *(int *)antNode->value); */
-  /* printf("\nANT_NODE_LEFT --> %i", *(int *)antNode->left->value); */
-#endif
   if (antNode != NULL) {
     if (antNode->left != NULL &&
         *(int *)antNode->left->value == *(int *)node->value) {
@@ -111,7 +106,6 @@ static void _removeNoChildNode(BstNode *antNode, BstNode *node,
     free(node);
     node = NULL;
   } else {
-    printf("I enter here");
     free(*root);
     *root = NULL;
   }
@@ -168,7 +162,7 @@ void removeBstNode(Bst *bst, BstNode *targetNode) {
   NodeDeletionType nodeDeletionType = _getNodeDeletionType(node);
   switch (nodeDeletionType) {
   case NOCHILD:
-    assert(bst->root->left == antNode);
+    /* assert(bst->root->left == antNode); */
     /*In case is the root the one I need to move*/
     _removeNoChildNode(antNode, node, &bst->root);
     break;

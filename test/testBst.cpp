@@ -160,14 +160,14 @@ TEST(BstTest, HandleBstRemoveNodeWithOneChild) {
   // deleting 30
   BstNode *bstNode = newBstNode((int *)&testArray[1]);
   bst->removeBstNode(bst, bstNode);
-  ASSERT_TRUE(*(int*)bst->root->left->value == testArray[3]);
+  ASSERT_TRUE(*(int *)bst->root->left->value == testArray[3]);
   std::cout << "Deleting 30" << std::endl;
   bst->inorderBstTraversal(bst);
 
   // deleting 70
   bstNode = newBstNode((int *)&testArray[2]);
   bst->removeBstNode(bst, bstNode);
-  ASSERT_TRUE(*(int*)bst->root->right->value == testArray[4]);
+  ASSERT_TRUE(*(int *)bst->root->right->value == testArray[4]);
   std::cout << "Deleting 70" << std::endl;
   bst->inorderBstTraversal(bst);
 
@@ -180,7 +180,7 @@ TEST(BstTest, HandleBstRemoveNodeWithOneChild) {
   // deleting 50
   bstNode = newBstNode((int *)&testArray[0]);
   bst->removeBstNode(bst, bstNode);
-  ASSERT_TRUE(*(int*)bst->root->value == testArray[4]);
+  ASSERT_TRUE(*(int *)bst->root->value == testArray[4]);
   std::cout << "Deleting 50" << std::endl;
   bst->inorderBstTraversal(bst);
 
@@ -191,18 +191,58 @@ TEST(BstTest, HandleBstRemoveNodeWithOneChild) {
   std::cout << "Deleting Root 60" << std::endl;
   bst->inorderBstTraversal(bst);
 }
-// TEST(BstTest,HandleBstRemoveNodeWithTwoChildren){
-//   Bst *bst = newBst();
-//   const int testArrayLength = 7;
-//   int testArray[testArrayLength] = {50, 30, 70, 20, 40,60, 80};
-//   for (int i = 0; i < testArrayLength; i++) {
-//     BstNode *bstNode = newBstNode((int *)&testArray[i]);
-//     std::cout << *(int *)bstNode->value << std::endl;
-//     bst->addBstNode(bst, bstNode);
-//   }
-//   BstNode *bstNode = newBstNode((int *)&testArray[0]);
-//   bst->removeBstNode(bst, bstNode);
-// }
+TEST(BstTest, HandleBstRemoveNodeWithTwoChildren) {
+  Bst *bst = newBst();
+  const int testArrayLength = 11;
+  int testArray[testArrayLength] = {50, 30, 70, 20, 40, 25, 60, 80, 75, 85, 82};
+  for (int i = 0; i < testArrayLength; i++) {
+    BstNode *bstNode = newBstNode((int *)&testArray[i]);
+    std::cout << *(int *)bstNode->value << std::endl;
+    bst->addBstNode(bst, bstNode);
+  }
+  std::cout << "Initial tree state" << std::endl;
+  bst->inorderBstTraversal(bst);
+
+  // deleting 30
+  ASSERT_TRUE(*(int *)bst->root->left->value == 30);
+  BstNode *bstNode = newBstNode((int *)&testArray[1]);
+  bst->removeBstNode(bst, bstNode);
+  ASSERT_TRUE(*(int *)bst->root->left->value == 25);
+  std::cout << "Deleting 30" << std::endl;
+  bst->inorderBstTraversal(bst);
+  // deleting 70
+  bstNode = newBstNode((int *)&testArray[2]);
+  bst->removeBstNode(bst, bstNode);
+  ASSERT_TRUE(*(int *)bst->root->right->value == 60);
+  std::cout << "Deleting 70" << std::endl;
+  bst->inorderBstTraversal(bst);
+  // deleting 80
+  bstNode = newBstNode((int *)&testArray[7]);
+  bst->removeBstNode(bst, bstNode);
+  ASSERT_TRUE(*(int *)bst->root->right->right->value == 75);
+  std::cout << "Deleting 80" << std::endl;
+  bst->inorderBstTraversal(bst);
+  // deleting 85
+  bstNode = newBstNode((int *)&testArray[9]);
+  bst->removeBstNode(bst, bstNode);
+  ASSERT_TRUE(*(int *)bst->root->right->right->right->value == 82);
+  std::cout << "Deleting 82" << std::endl;
+  bst->inorderBstTraversal(bst);
+  // deleting 25
+  bstNode = newBstNode((int *)&testArray[5]);
+  bst->removeBstNode(bst, bstNode);
+  ASSERT_TRUE(*(int *)bst->root->left->value == 20);
+  std::cout << "Deleting 25" << std::endl;
+  bst->inorderBstTraversal(bst);
+  // deleting 70
+  // bstNode = newBstNode((int *)&testArray[2]);
+  // bst->removeBstNode(bst, bstNode);
+  // ASSERT_TRUE(*(int *)bst->root->right->value == 60);
+  // std::cout << "Deleting 70" << std::endl;
+  // bst->inorderBstTraversal(bst);
+  // BstNode *bstNode = newBstNode((int *)&testArray[1]);
+  // bst->removeBstNode(bst, bstNode);
+}
 // TEST(BstTest, HandleInorderTraversal) {
 //   Bst *bst = newBst();
 //   const int testArrayLength = 7;

@@ -57,13 +57,6 @@ void addBstNode(Bst *bst, BstNode *bstNode) {
   }
   _addNode(bst->root, bstNode);
 }
-static BstNode *_getBstNodeInorderSuccesor(BstNode *root) {
-  if (root == NULL) {
-    return NULL;
-  }
-  /* _getBstNodeSuccesor(root->right); */
-  return root;
-}
 
 static NodeDeletionType _getNodeDeletionType(BstNode *node) {
   if (node->left == NULL && node->right == NULL)
@@ -133,7 +126,7 @@ static void _removeOneChildNode(BstNode *antNode, BstNode *node,
     free(node);
     node = NULL;
   } else {
-    assert(*root!=NULL);
+    assert(*root != NULL);
     antNode = *root;
     if ((*root)->left != NULL) {
       *root = (*root)->left;
@@ -146,53 +139,68 @@ static void _removeOneChildNode(BstNode *antNode, BstNode *node,
   return;
 }
 
-static void _setSucessor(BstNode** parentSucessor,BstNode**sucessor,BstNode* tmpNode){
-  if(tmpNode==NULL){
+static void _setSucessor(BstNode **parentSucessor, BstNode **sucessor,
+                         BstNode *tmpNode) {
+  if (tmpNode == NULL) {
     return;
   }
-  if(tmpNode->right!=NULL){
-    *parentSucessor=tmpNode;
-    *sucessor=tmpNode->right;
+  if (tmpNode->right != NULL) {
+    *parentSucessor = tmpNode;
+    *sucessor = tmpNode->right;
   }
-  tmpNode=tmpNode->right;
-  _setSucessor(parentSucessor,sucessor,tmpNode);
+  tmpNode = tmpNode->right;
+  _setSucessor(parentSucessor, sucessor, tmpNode);
 }
-static void _removeSucessorFromParent(BstNode** parentSucessor){
-(*parentSucessor)->right = NULL;
+static void _removeSucessorFromParent(BstNode **parentSucessor) {
+  (*parentSucessor)->right = NULL;
 }
 // this will be the left child of the node to delete
-static BstNode* _sucessorHandler(BstNode* bstNode){
-  // I can do in this same function gets the parent
-  BstNode* sucessor = bstNode;
-  BstNode* parentSucessor = NULL;
-  _setSucessor(&parentSucessor,&sucessor,bstNode);
-  _removeSucessorFromParent(&parentSucessor);
-  return sucessor;
-}
+/* static BstNode *_sucessorHandler(BstNode *bstNode) { */
+/*   // I can do in this same function gets the parent */
+/*   BstNode *parentSucessor = bstNode; */
+/*   BstNode *sucessor = bstNode->left; */
+/*   _setSucessor(&parentSucessor, &sucessor, bstNode->left); */
+/*   _removeSucessorFromParent(&parentSucessor); */
+/*   return sucessor; */
+/* } */
 
+static void _sucessorHandler(BstNode **parentSucessor, BstNode **sucessor,
+                             BstNode *bstNode) {
+  // I can do in this same function gets the parent
+  _setSucessor(parentSucessor, sucessor, bstNode->left);
+  /* _removeSucessorFromParent(&parentSucessor); */
+  /* return sucessor; */
+}
 static void _removeTwoChildrenNodes(BstNode *antNode, BstNode *node,
                                     BstNode **root) {
 
   /* So what is needed to do */
   /* I will sketch what is supposed to be done */
-  BstNode* sucessor;
-  if(antNode!=NULL){
-    sucessor= _sucessorHandler(node->left);
-    sucessor->left = node->left;
+  BstNode *parentSucessor = node;
+  BstNode *sucessor = node->left;
+  _sucessorHandler(&parentSucessor, &sucessor, node);
+  if (antNode != NULL) {
+    // i will improve this reall
+    sucessor->left=(node->left==sucessor)?NULL:node->left;
     sucessor->right = node->right;
+    if(parentSucessor!=node){
+      _removeSucessorFromParent(&parentSucessor);
+    }else{
+      parentSucessor->left=NULL;
+    }
     if (antNode->left != NULL &&
         *(int *)antNode->left->value == *(int *)node->value) {
-      antNode->left=sucessor;
-    }else{
-      antNode->right=sucessor;
+      antNode->left = sucessor;
+    } else {
+      antNode->right = sucessor;
     }
-  }else{
-    antNode=*root;
+  } else {
+    antNode = *root;
     sucessor = (*root)->left;
-    sucessor->right=(*root)->right;
-    *root=sucessor;
+    sucessor->right = (*root)->right;
+    *root = sucessor;
     free(antNode);
-    antNode=NULL;
+    antNode = NULL;
   }
 }
 
@@ -219,7 +227,7 @@ void removeBstNode(Bst *bst, BstNode *targetNode) {
     _removeNoChildNode(antNode, node, &bst->root);
     break;
   case ONECHILD:
-    assert(bst->root!=NULL);
+    assert(bst->root != NULL);
     _removeOneChildNode(antNode, node, &bst->root);
     break;
   case TWOCHILDREN:

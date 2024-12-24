@@ -111,7 +111,8 @@ static void _removeOneChildNode(BstNode *antNode, BstNode *node,
 
   if (antNode != NULL) {
     if (node->left != NULL) {
-      if (*(int *)antNode->left->value == *(int *)node->value) {
+      if (antNode->left != NULL &&
+          *(int *)antNode->left->value == *(int *)node->value) {
         antNode->left = node->left;
       } else {
         antNode->right = node->left;
@@ -181,26 +182,39 @@ static void _removeTwoChildrenNodes(BstNode *antNode, BstNode *node,
   _sucessorHandler(&parentSucessor, &sucessor, node);
   if (antNode != NULL) {
     // i will improve this reall
-    sucessor->left=(node->left==sucessor)?NULL:node->left;
+    sucessor->left = (node->left == sucessor) ? NULL : node->left;
     sucessor->right = node->right;
-    if(parentSucessor!=node){
-      _removeSucessorFromParent(&parentSucessor);
-    }else{
-      parentSucessor->left=NULL;
-    }
     if (antNode->left != NULL &&
         *(int *)antNode->left->value == *(int *)node->value) {
       antNode->left = sucessor;
     } else {
       antNode->right = sucessor;
     }
+    _removeSucessorFromParent(&parentSucessor);
+    free(node);
+    node = NULL;
+    /* free(parentSucessor); */
+    /* parentSucessor = NULL; */
   } else {
-    antNode = *root;
-    sucessor = (*root)->left;
-    sucessor->right = (*root)->right;
-    *root = sucessor;
-    free(antNode);
-    antNode = NULL;
+    // I think the  mistake is that the sucessor is a local pointer ones
+    // the function ends it dissapear
+    if ((*root)->left == parentSucessor) {
+      antNode = *root;
+      sucessor->left = (node->left == sucessor) ? NULL : node->left;
+      sucessor->right = node->right;
+      *root = sucessor;
+      _removeSucessorFromParent(&parentSucessor);
+      /* free(parentSucessor); */
+      /* parentSucessor = NULL; */
+      free(node);
+      node = NULL;
+    } else {
+      antNode = *root;
+      (*root)->left->right = (*root)->right;
+      (*root) = (*root)->left;
+      free(antNode);
+      antNode = NULL;
+    }
   }
 }
 

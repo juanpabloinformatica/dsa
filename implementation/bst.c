@@ -1,4 +1,5 @@
 #include "bst.h"
+#include <assert.h>
 #include <stdio.h>
 
 BstNode *newBstNode(void *value) {
@@ -20,6 +21,8 @@ Bst *newBst(void) {
   ptrBst->inorderBstTraversal = inorderBstTraversal;
   return ptrBst;
 }
+// I will also change this
+// I will clean this function as well but for the moment is well.
 static BstNode *_addNode(BstNode *bstRoot, BstNode *bstNode) {
   if (bstRoot == NULL) {
     return NULL;
@@ -54,18 +57,12 @@ void addBstNode(Bst *bst, BstNode *bstNode) {
   }
   _addNode(bst->root, bstNode);
 }
-static BstNode *_getBstNodeSuccesor(BstNode *root) {
-  if (root == NULL) {
-    return NULL;
-  }
-  _getBstNodeSuccesor(root->right);
-  return root;
-}
 
 static NodeDeletionType _getNodeDeletionType(BstNode *node) {
   if (node->left == NULL && node->right == NULL)
     return NOCHILD;
-  if (node->left != NULL || node->right != NULL)
+  if ((node->left != NULL && node->right == NULL) ||
+      (node->left == NULL && node->right != NULL))
     return ONECHILD;
   return TWOCHILDREN;
 }
@@ -114,7 +111,8 @@ static void _removeOneChildNode(BstNode *antNode, BstNode *node,
 
   if (antNode != NULL) {
     if (node->left != NULL) {
-      if (*(int *)antNode->left->value == *(int *)node->value) {
+      if (antNode->left != NULL &&
+          *(int *)antNode->left->value == *(int *)node->value) {
         antNode->left = node->left;
       } else {
         antNode->right = node->left;
@@ -129,6 +127,7 @@ static void _removeOneChildNode(BstNode *antNode, BstNode *node,
     free(node);
     node = NULL;
   } else {
+    assert(*root != NULL);
     antNode = *root;
     if ((*root)->left != NULL) {
       *root = (*root)->left;
@@ -140,9 +139,87 @@ static void _removeOneChildNode(BstNode *antNode, BstNode *node,
   }
   return;
 }
+
+static void _setSucessor(BstNode **parentSucessor, BstNode **sucessor,
+                         BstNode *tmpNode) {
+  if (tmpNode == NULL) {
+    return;
+  }
+  if (tmpNode->right != NULL) {
+    *parentSucessor = tmpNode;
+    *sucessor = tmpNode->right;
+  }
+  tmpNode = tmpNode->right;
+  _setSucessor(parentSucessor, sucessor, tmpNode);
+}
+static void _removeSucessorFromParent(BstNode **parentSucessor) {
+  (*parentSucessor)->right = NULL;
+}
+// this will be the left child of the node to delete
+/* static BstNode *_sucessorHandler(BstNode *bstNode) { */
+/*   // I can do in this same function gets the parent */
+/*   BstNode *parentSucessor = bstNode; */
+/*   BstNode *sucessor = bstNode->left; */
+/*   _setSucessor(&parentSucessor, &sucessor, bstNode->left); */
+/*   _removeSucessorFromParent(&parentSucessor); */
+/*   return sucessor; */
+/* } */
+
+static void _sucessorHandler(BstNode **parentSucessor, BstNode **sucessor,
+                             BstNode *bstNode) {
+  // I can do in this same function gets the parent
+  _setSucessor(parentSucessor, sucessor, bstNode->left);
+  /* _removeSucessorFromParent(&parentSucessor); */
+  /* return sucessor; */
+}
 static void _removeTwoChildrenNodes(BstNode *antNode, BstNode *node,
-                                    BstNode **root) {}
+                                    BstNode **root) {
+
+  /* So what is needed to do */
+  /* I will sketch what is supposed to be done */
+  BstNode *parentSucessor = node;
+  BstNode *sucessor = node->left;
+  _sucessorHandler(&parentSucessor, &sucessor, node);
+  if (antNode != NULL) {
+    // i will improve this reall
+    sucessor->left = (node->left == sucessor) ? NULL : node->left;
+    sucessor->right = node->right;
+    if (antNode->left != NULL &&
+        *(int *)antNode->left->value == *(int *)node->value) {
+      antNode->left = sucessor;
+    } else {
+      antNode->right = sucessor;
+    }
+    _removeSucessorFromParent(&parentSucessor);
+    free(node);
+    node = NULL;
+    /* free(parentSucessor); */
+    /* parentSucessor = NULL; */
+  } else {
+    // I think the  mistake is that the sucessor is a local pointer ones
+    // the function ends it dissapear
+    if ((*root)->left == parentSucessor) {
+      antNode = *root;
+      sucessor->left = (node->left == sucessor) ? NULL : node->left;
+      sucessor->right = node->right;
+      *root = sucessor;
+      _removeSucessorFromParent(&parentSucessor);
+      /* free(parentSucessor); */
+      /* parentSucessor = NULL; */
+      free(node);
+      node = NULL;
+    } else {
+      antNode = *root;
+      (*root)->left->right = (*root)->right;
+      (*root) = (*root)->left;
+      free(antNode);
+      antNode = NULL;
+    }
+  }
+}
+
 void removeBstNode(Bst *bst, BstNode *targetNode) {
+  assert(targetNode != NULL);
   // I will have to modified where the bst->root, so if i create
   // another variable, if i remove the root, the bst->root will remind
   // pointing where it should not so for that I will pass the the &bst->root
@@ -155,6 +232,7 @@ void removeBstNode(Bst *bst, BstNode *targetNode) {
   /*Once we have both nodes, we can check what kind of deletion we have to
    * make*/
   /*If this, then there is no node to delete*/
+  assert(node != NULL);
   NodeDeletionType nodeDeletionType = _getNodeDeletionType(node);
   switch (nodeDeletionType) {
   case NOCHILD:
@@ -163,6 +241,7 @@ void removeBstNode(Bst *bst, BstNode *targetNode) {
     _removeNoChildNode(antNode, node, &bst->root);
     break;
   case ONECHILD:
+    assert(bst->root != NULL);
     _removeOneChildNode(antNode, node, &bst->root);
     break;
   case TWOCHILDREN:
@@ -182,8 +261,6 @@ static void _findMin(BstNode *root, BstNode **min) {
     return;
   }
   if (*(int *)root->value < *(int *)(*min)->value) {
-    // printf("\nRoot: %i is less than min: %i\n", *(int *)root->value,
-    //      *(int *)(*min)->value);
     *min = root;
   }
   _findMin(root->left, min);
@@ -203,8 +280,6 @@ static void _findMax(BstNode *root, BstNode **max) {
     return;
   }
   if (*(int *)root->value > *(int *)(*max)->value) {
-    ////printf("\nRoot: %i is less than min: %i\n", *(int *)root->value,
-    /* *(int *)(*max)->value); */
     *max = root;
   }
   _findMax(root->left, max);

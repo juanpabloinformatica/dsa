@@ -23,48 +23,43 @@ Bst *newBst(void) {
 }
 // I will also change this
 // I will clean this function as well but for the moment is well.
-static BstNode *_addNode(BstNode *bstRoot, BstNode *bstNode) {
+static BstNode *_addNode(BstNode *bstRoot, BstNode *bstNode, BstNode **root) {
+  // Case the tree is empty
+  if (*root == NULL) {
+    *root = bstNode;
+    return NULL;
+  }
   if (bstRoot == NULL) {
     return NULL;
   }
   // testing with integers
   if (*(int *)bstNode->value < *(int *)bstRoot->value) {
-    // printf("\nnode value  < root value\n");
-    if (bstRoot->left == NULL) {
-      bstRoot->left = bstNode;
-      return bstRoot;
-    } else {
-      bstRoot->left = _addNode(bstRoot->left, bstNode);
+    if (bstRoot->left != NULL) {
+      bstRoot->left = _addNode(bstRoot->left, bstNode, root);
       return bstRoot;
     }
-  } else if (*(int *)bstNode->value > *(int *)bstRoot->value) {
-    // printf("\nnode value  > root value\n");
-    if (bstRoot->right == NULL) {
-      bstRoot->right = bstNode;
-      return bstRoot;
-    } else {
-      bstRoot->right = _addNode(bstRoot->right, bstNode);
+    bstRoot->left = bstNode;
+    return bstRoot;
+  }
+  if (*(int *)bstNode->value > *(int *)bstRoot->value) {
+    if (bstRoot->right != NULL) {
+      bstRoot->right = _addNode(bstRoot->right, bstNode, root);
       return bstRoot;
     }
+    bstRoot->right = bstNode;
+    return bstRoot;
   }
 }
-
 void addBstNode(Bst *bst, BstNode *bstNode) {
-  // not autocompletition but well
-  if (bst->root == NULL) {
-    bst->root = bstNode;
-    return;
-  }
-  _addNode(bst->root, bstNode);
+  _addNode(bst->root, bstNode, &bst->root);
 }
 
 static NodeDeletionType _getNodeDeletionType(BstNode *node) {
   if (node->left == NULL && node->right == NULL)
     return NOCHILD;
-  if ((node->left != NULL && node->right == NULL) ||
-      (node->left == NULL && node->right != NULL))
-    return ONECHILD;
-  return TWOCHILDREN;
+  if (node->left != NULL && node->right != NULL)
+    return TWOCHILDREN;
+  return ONECHILD;
 }
 static void _setAntNodeAndNode(BstNode **antNode, BstNode **node,
                                BstNode *tmpNode, BstNode *targetNode,
@@ -76,6 +71,7 @@ static void _setAntNodeAndNode(BstNode **antNode, BstNode **node,
   if (*(int *)tmpNode->value == *(int *)targetNode->value) {
     *node = tmpNode;
     *ptrFound = true;
+    return;
   }
   if (*ptrFound == false) {
     *antNode = tmpNode;
@@ -91,52 +87,47 @@ static void _setAntNodeAndNode(BstNode **antNode, BstNode **node,
 // this method is working
 static void _removeNoChildNode(BstNode *antNode, BstNode *node,
                                BstNode **root) {
-  if (antNode != NULL) {
-    if (antNode->left != NULL &&
-        *(int *)antNode->left->value == *(int *)node->value) {
-      antNode->left = NULL;
-    } else {
-      antNode->right = NULL;
-    }
-    free(node);
-    node = NULL;
-  } else {
+  if (antNode == NULL) {
     free(*root);
     *root = NULL;
+    return;
   }
-  return;
+  if (antNode->left != NULL &&
+      *(int *)antNode->left->value == *(int *)node->value) {
+    antNode->left = NULL;
+  } else {
+    antNode->right = NULL;
+  }
+  free(node);
+  node = NULL;
 }
 static void _removeOneChildNode(BstNode *antNode, BstNode *node,
                                 BstNode **root) {
+  assert(*root != NULL);
 
-  if (antNode != NULL) {
-    if (node->left != NULL) {
-      if (antNode->left != NULL &&
-          *(int *)antNode->left->value == *(int *)node->value) {
-        antNode->left = node->left;
-      } else {
-        antNode->right = node->left;
-      }
-    } else {
-      if (*(int *)antNode->left->value == *(int *)node->value) {
-        antNode->left = node->right;
-      } else {
-        antNode->right = node->right;
-      }
-    }
-    free(node);
-    node = NULL;
-  } else {
-    assert(*root != NULL);
+  if (antNode == NULL) {
     antNode = *root;
-    if ((*root)->left != NULL) {
-      *root = (*root)->left;
-    } else {
-      *root = (*root)->right;
-    }
+    (*root) = ((*root)->left != NULL) ? (*root)->left : (*root)->right;
     free(antNode);
     antNode = NULL;
+    return;
   }
+  if (node->left != NULL) {
+    if (antNode->left != NULL &&
+        *(int *)antNode->left->value == *(int *)node->value) {
+      antNode->left = node->left;
+    } else {
+      antNode->right = node->left;
+    }
+  } else {
+    if (*(int *)antNode->left->value == *(int *)node->value) {
+      antNode->left = node->right;
+    } else {
+      antNode->right = node->right;
+    }
+  }
+  free(node);
+  node = NULL;
   return;
 }
 
@@ -155,22 +146,9 @@ static void _setSucessor(BstNode **parentSucessor, BstNode **sucessor,
 static void _removeSucessorFromParent(BstNode **parentSucessor) {
   (*parentSucessor)->right = NULL;
 }
-// this will be the left child of the node to delete
-/* static BstNode *_sucessorHandler(BstNode *bstNode) { */
-/*   // I can do in this same function gets the parent */
-/*   BstNode *parentSucessor = bstNode; */
-/*   BstNode *sucessor = bstNode->left; */
-/*   _setSucessor(&parentSucessor, &sucessor, bstNode->left); */
-/*   _removeSucessorFromParent(&parentSucessor); */
-/*   return sucessor; */
-/* } */
-
 static void _sucessorHandler(BstNode **parentSucessor, BstNode **sucessor,
                              BstNode *bstNode) {
-  // I can do in this same function gets the parent
   _setSucessor(parentSucessor, sucessor, bstNode->left);
-  /* _removeSucessorFromParent(&parentSucessor); */
-  /* return sucessor; */
 }
 static void _removeTwoChildrenNodes(BstNode *antNode, BstNode *node,
                                     BstNode **root) {
@@ -206,8 +184,6 @@ static void _removeTwoChildrenNodes(BstNode *antNode, BstNode *node,
       _removeSucessorFromParent(&parentSucessor);
       /* free(parentSucessor); */
       /* parentSucessor = NULL; */
-      free(node);
-      node = NULL;
     } else {
       antNode = *root;
       (*root)->left->right = (*root)->right;

@@ -48,5 +48,5 @@ TEST(DynamicArrayTest, HandleDeletingElementsFront) {
 }
 
 TEST(DynamicArrayTest, HandleDeletingElementsBack) {
-  DynamicArray *dynamicArray = newDynamicArray();
+  // DynamicArray *dynamicArray = newDynamicArray();
 }

@@ -33,11 +33,13 @@ void addElement(DynamicArray *dynamicArray, void *element) {
   dynamicArray->counter++;
 }
 void setElement(DynamicArray *dynamicArray, int position, void *element) {
+  assert(element != NULL);
   // this case we are testing with ints
   ((int *)dynamicArray->array)[position] = *(int *)element;
 }
 // Recursive functions
 void removeElementFront(DynamicArray *dynamicArray, int position) {
+  assert(position >= 0 && position <= dynamicArray->size - 1);
 
   if (position == dynamicArray->counter) {
     dynamicArray->counter--;
@@ -49,6 +51,7 @@ void removeElementFront(DynamicArray *dynamicArray, int position) {
   // update they array reducing it
 }
 void removeElementBack(DynamicArray *dynamicArray, int position) {
+  assert(position >= 0 && position <= dynamicArray->size - 1);
   if (position == dynamicArray->counter) {
     dynamicArray->bottomIndex++;
     return;
@@ -63,9 +66,9 @@ void showArray(DynamicArray *dynamicArray, int i, int size) {
     return;
   }
   if (i == size - 1) {
-    //printf("%i\n", ((int *)dynamicArray->array)[i]);
+    // printf("%i\n", ((int *)dynamicArray->array)[i]);
   } else {
-    //printf("%i -> ", ((int *)dynamicArray->array)[i]);
+    // printf("%i -> ", ((int *)dynamicArray->array)[i]);
   }
   showArray(dynamicArray, ++i, size);
 }

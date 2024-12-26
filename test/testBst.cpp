@@ -50,8 +50,8 @@ TEST(BstTest, HandleAddElement) {
   int *ptrTempValue = &tempValue;
   BstNode *bstNode = newBstNode(ptrTempValue);
   bst->addBstNode(bst, bstNode);
-  const int testArrayLength = 5;
-  int testArray[testArrayLength] = {20, 5, 9, 25, 6};
+  const int testArrayLength = 6;
+  int testArray[testArrayLength] = {20, 5, 9, 25, 6,50};
   for (int i = 0; i < testArrayLength; i++) {
     BstNode *bstNode = newBstNode((int *)&testArray[i]);
     bst->addBstNode(bst, bstNode);
@@ -63,6 +63,7 @@ TEST(BstTest, HandleAddElement) {
   ASSERT_TRUE(*(int *)bst->root->left->right->value == 9);
   ASSERT_TRUE(*(int *)bst->root->right->right->value == 25);
   ASSERT_TRUE(*(int *)bst->root->left->right->left->value == 6);
+  ASSERT_TRUE(*(int *)bst->root->right->right->right->value == 50);
 }
 // TEST(BstTest,HandleRemoveElement){
 //
@@ -76,7 +77,7 @@ TEST(BstTest, HandleFindMin) {
     BstNode *bstNode = newBstNode((int *)&testArray[i]);
     bst->addBstNode(bst, bstNode);
   }
-  BstNode *bstNode = newBstNode((int *)&testArray[0]);
+  // BstNode *bstNode = newBstNode((int *)&testArray[0]);
   BstNode *minNode = bst->findMin(bst);
   ASSERT_EQ(*(int *)minNode->value, 5);
 }
@@ -89,7 +90,7 @@ TEST(BstTest, HandleFindMax) {
     BstNode *bstNode = newBstNode((int *)&testArray[i]);
     bst->addBstNode(bst, bstNode);
   }
-  BstNode *bstNode = newBstNode((int *)&testArray[0]);
+  // BstNode *bstNode = newBstNode((int *)&testArray[0]);
   BstNode *maxNode = bst->findMax(bst);
   ASSERT_EQ(*(int *)maxNode->value, 25);
 }

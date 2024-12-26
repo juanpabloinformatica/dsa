@@ -1,6 +1,9 @@
 #include "hashmap.h"
 #include <stdint.h>
 Hashmap *newHashmap(char *keyType, char *valueType) {
+  assert(strcmp(keyType, "number") == 0 || strcmp(keyType, "string") == 0);
+  assert(strcmp(valueType, "number") == 0 || strcmp(valueType, "string") == 0);
+
   Hashmap *ptrHashmap = (Hashmap *)malloc(sizeof(Hashmap));
   ptrHashmap->keyType = (char *)malloc(sizeof(char) * strlen(keyType));
   ptrHashmap->valueType = (char *)malloc(sizeof(char) * strlen(valueType));
@@ -17,11 +20,13 @@ static int _stringGetSum(int sum, char *key) {
   if (!*(char *)key) {
     return 0;
   }
-  sum+=*(char*)key;
-  _stringGetSum(sum, key+1);
+  sum += *(char *)key;
+  _stringGetSum(sum, key + 1);
   return sum;
 }
 int hashFunction(Hashmap *hashmap, void *key) {
+  assert(hashmap != NULL);
+  assert(hashmap->hashmapContainsKey(hashmap, key) == true);
   assert(strcmp(hashmap->keyType, HASHMAP_TYPE_NUMBER) == 0 ||
          strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0);
   if (strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0) {
@@ -33,6 +38,9 @@ int hashFunction(Hashmap *hashmap, void *key) {
   }
 }
 void hashmapPut(Hashmap *hashmap, void *key, void *value) {
+  assert(hashmap != NULL);
+  assert(key != NULL);
+  assert(value != NULL);
   assert(strcmp(hashmap->keyType, HASHMAP_TYPE_NUMBER) == 0 ||
          strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0);
   int getIndex = hashFunction(hashmap, key);
@@ -70,9 +78,8 @@ void *hashmapGet(Hashmap *hashmap, void *key) {
   return NULL;
 }
 void hashmapRemove(Hashmap *hashmap, void *key) {
-  int hashmapLength = sizeof(hashmap->array) / sizeof(hashmap->array[0]);
-  bool keyExist = false;
-  HashmapNode *hashmapNode = NULL;
+  assert(hashmap != NULL);
+  assert(hashmap->hashmapContainsKey(hashmap, key) == true);
   int keyIndex = hashFunction(hashmap, key);
   LinkedList *linkedList = ((LinkedList *)(hashmap->array)[keyIndex]);
   if (linkedList != NULL) {
@@ -82,6 +89,7 @@ void hashmapRemove(Hashmap *hashmap, void *key) {
   }
 }
 bool hashmapContainsKey(Hashmap *hashmap, void *key) {
+  assert(hashmap != NULL);
   LinkedListNode *gottenNode = hashmap->hashmapGet(hashmap, key);
   return (gottenNode != NULL) ? true : false;
 }

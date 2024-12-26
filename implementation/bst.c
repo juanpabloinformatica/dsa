@@ -49,8 +49,11 @@ static BstNode *_addNode(BstNode *bstRoot, BstNode *bstNode, BstNode **root) {
     bstRoot->right = bstNode;
     return bstRoot;
   }
+  return NULL;
 }
 void addBstNode(Bst *bst, BstNode *bstNode) {
+  assert(bst != NULL);
+  assert(bstNode != NULL);
   _addNode(bst->root, bstNode, &bst->root);
 }
 
@@ -223,6 +226,9 @@ void removeBstNode(Bst *bst, BstNode *targetNode) {
   case TWOCHILDREN:
     _removeTwoChildrenNodes(antNode, node, &bst->root);
     break;
+  default:
+    exit(1);
+    break;
   }
   /* BstNode *antRoot = NULL; */
   /* _removeNode(antRoot, &bst->root, bstNode); */
@@ -245,6 +251,7 @@ static void _findMin(BstNode *root, BstNode **min) {
   // return min;
 }
 BstNode *findMin(Bst *bst) {
+  assert(bst != NULL);
   BstNode **min = &(bst->root);
   _findMin(bst->root, min);
   return *min;
@@ -263,6 +270,7 @@ static void _findMax(BstNode *root, BstNode **max) {
   // return min;
 }
 BstNode *findMax(Bst *bst) {
+  assert(bst != NULL);
   BstNode **min = &(bst->root);
   _findMax(bst->root, min);
   return *min;
@@ -275,9 +283,6 @@ static void _inorder(BstNode *root) {
   printf("%i -> ", *(int *)root->value);
   _inorder(root->right);
 }
-void inorderBstTraversal(Bst *bst) {
-  _inorder(bst->root);
-  ////printf("\n");
-}
+void inorderBstTraversal(Bst *bst) { _inorder(bst->root); }
 void destroyBst(Bst *bst) {}
 void destroyBstNode(BstNode *bstNode) {}

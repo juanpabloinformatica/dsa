@@ -8,9 +8,9 @@ struct Queue {
   bool (*queueIsEmpty)(Queue *queue);
   void (*enqueue)(Queue *queue, void *element);
   void *(*dequeue)(Queue *queue);
-  int (*queueSize)();
+  int (*queueSize)(Queue *queue);
 };
-Queue *newQueue();
+Queue *newQueue(void);
 bool queueIsEmpty(Queue *queue);
 void enqueue(Queue *queue, void *element);
 void *dequeue(Queue *queue);

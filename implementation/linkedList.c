@@ -24,7 +24,7 @@ LinkedList *newLinkedList() {
   ptrLinkedList->head = NULL;
   ptrLinkedList->addLinkedList = addLinkedList;
   ptrLinkedList->showLinkedListNode = showLinkedListNode;
-  ptrLinkedList->deleteLinkedList = deleteLinkedList;
+  ptrLinkedList->deleteLinkedListNode = deleteLinkedListNode;
   ptrLinkedList->getLinkedListNode = getLinkedListNode;
 
   return ptrLinkedList;
@@ -34,9 +34,9 @@ static void _showNormalList(LinkedListNode *linkedListNode) {
     return;
   }
   if (linkedListNode->next == NULL) {
-    // printf("%i  ", *(int *)linkedListNode->element);
+    printf("%i  ", *(int *)linkedListNode->element);
   } else {
-    // printf("%i -> ", *(int *)linkedListNode->element);
+    printf("%i -> ", *(int *)linkedListNode->element);
   }
   _showNormalList(linkedListNode->next);
 }
@@ -45,11 +45,11 @@ static void _showHashmapList(LinkedListNode *linkedListNode) {
   if (linkedListNode == NULL) {
     return;
   }
-  /* HashmapNode *hn = (HashmapNode *)linkedListNode->element; */
+  HashmapNode *hn = (HashmapNode *)linkedListNode->element;
   if (linkedListNode->next == NULL) {
-    // printf("[%i,%i]  ", *(int *)hn->key, *(int *)hn->value);
+    printf("[%i,%i]  ", *(int *)hn->key, *(int *)hn->value);
   } else {
-    // printf("[%i,%i] -> ", *(int *)hn->key, *(int *)hn->value);
+    printf("[%i,%i] -> ", *(int *)hn->key, *(int *)hn->value);
   }
   _showHashmapList(linkedListNode->next);
 }
@@ -138,7 +138,7 @@ static void _deleteNode(LinkedListNode *tmpHead, LinkedListNode *antHead,
   if (*(int *)(*head)->element == *(int *)node->element) {
     antHead = *head;
     *head = (*head)->next;
-    free(antHead);
+    destroyNode(antHead);
     return;
   }
   if (tmpHead == NULL) {
@@ -148,38 +148,37 @@ static void _deleteNode(LinkedListNode *tmpHead, LinkedListNode *antHead,
     if (antHead != NULL) {
       antHead->next = tmpHead->next;
     }
-    free(tmpHead);
+    destroyNode(tmpHead);
     return;
   }
   antHead = tmpHead;
   tmpHead = tmpHead->next;
   _deleteNode(tmpHead, antHead, node, head);
 }
-void deleteLinkedList(LinkedList *linkedList, LinkedListNode *node) {
+void deleteLinkedListNode(LinkedList *linkedList, LinkedListNode *node) {
   LinkedListNode *antHead = NULL;
   _deleteNode(linkedList->head, antHead, node, &linkedList->head);
 }
 
-HashmapNode *getHashmapNode(LinkedListNode *node, void *key) {
-  // I will do it iterative by now but then I do it recursively
-  LinkedListNode *tmpNode = node;
-  HashmapNode *hashmapNode;
-  for (; tmpNode->next != NULL; tmpNode = tmpNode->next) {
-    // only for integers working
-    hashmapNode = (HashmapNode *)(tmpNode->element);
-    if (*(int *)hashmapNode->key == *(int *)key) {
-      return hashmapNode;
-    }
+void destroyHashmapNode(HashmapNode *hashmapNode) {
+  free(hashmapNode);
+  hashmapNode = NULL;
+}
+void destroyNode(LinkedListNode *linkedListNode) {
+  free(linkedListNode);
+  linkedListNode = NULL;
+}
+static void _destroyNodes(LinkedListNode *antTmpHead, LinkedListNode *tmpHead) {
+  if (tmpHead == NULL) {
+    return;
   }
-  hashmapNode = (HashmapNode *)(tmpNode->element);
-  if (*(int *)hashmapNode->key == *(int *)key) {
-    return hashmapNode;
-  }
-  return NULL;
+  destroyNode(antTmpHead);
+  antTmpHead = tmpHead;
+  _destroyNodes(antTmpHead, tmpHead->next);
 }
 
-void destroyHashmapNode(HashmapNode *hashmapNode) {
-  free(hashmapNode->key);
-  free(hashmapNode->value);
-  free(hashmapNode);
+void destroyLinkedList(LinkedList *linkedList) {
+  _destroyNodes(linkedList->head, linkedList->head->next);
+  free(linkedList);
+  linkedList = NULL;
 }

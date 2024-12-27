@@ -91,8 +91,10 @@ static void _setAntNodeAndNode(BstNode **antNode, BstNode **node,
 static void _removeNoChildNode(BstNode *antNode, BstNode *node,
                                BstNode **root) {
   if (antNode == NULL) {
-    free(*root);
-    *root = NULL;
+    /* free(*root); */
+    /* *root = NULL; */
+    /* destroyBstNode(*root); */
+    destroyBstRoot(root);
     return;
   }
   if (antNode->left != NULL &&
@@ -101,8 +103,9 @@ static void _removeNoChildNode(BstNode *antNode, BstNode *node,
   } else {
     antNode->right = NULL;
   }
-  free(node);
-  node = NULL;
+  destroyBstNode(node);
+  /* free(node); */
+  /* node = NULL; */
 }
 static void _removeOneChildNode(BstNode *antNode, BstNode *node,
                                 BstNode **root) {
@@ -111,8 +114,10 @@ static void _removeOneChildNode(BstNode *antNode, BstNode *node,
   if (antNode == NULL) {
     antNode = *root;
     (*root) = ((*root)->left != NULL) ? (*root)->left : (*root)->right;
-    free(antNode);
-    antNode = NULL;
+    destroyBstNode(antNode);
+
+    /* free(antNode); */
+    /* antNode = NULL; */
     return;
   }
   if (node->left != NULL) {
@@ -129,8 +134,9 @@ static void _removeOneChildNode(BstNode *antNode, BstNode *node,
       antNode->right = node->right;
     }
   }
-  free(node);
-  node = NULL;
+  destroyBstNode(node);
+  /* free(node); */
+  /* node = NULL; */
   return;
 }
 
@@ -172,8 +178,10 @@ static void _removeTwoChildrenNodes(BstNode *antNode, BstNode *node,
       antNode->right = sucessor;
     }
     _removeSucessorFromParent(&parentSucessor);
-    free(node);
-    node = NULL;
+    destroyBstNode(node);
+    /* free(node); */
+    /* destroyBstNode(node); */
+    /* node = NULL; */
     /* free(parentSucessor); */
     /* parentSucessor = NULL; */
   } else {
@@ -185,14 +193,16 @@ static void _removeTwoChildrenNodes(BstNode *antNode, BstNode *node,
       sucessor->right = node->right;
       *root = sucessor;
       _removeSucessorFromParent(&parentSucessor);
+      destroyBstNode(antNode);
       /* free(parentSucessor); */
       /* parentSucessor = NULL; */
     } else {
       antNode = *root;
       (*root)->left->right = (*root)->right;
       (*root) = (*root)->left;
-      free(antNode);
-      antNode = NULL;
+      destroyBstNode(antNode);
+      /* free(antNode); */
+      /* antNode = NULL; */
     }
   }
 }
@@ -234,8 +244,14 @@ void removeBstNode(Bst *bst, BstNode *targetNode) {
   /* _removeNode(antRoot, &bst->root, bstNode); */
 }
 
-void removeMinBstNode(Bst *bst) {}
-void removeMaxBstNode(Bst *bst) {}
+void removeMinBstNode(Bst *bst) {
+  assert(bst != NULL);
+  bst->removeBstNode(bst, bst->findMin(bst));
+}
+void removeMaxBstNode(Bst *bst) {
+  assert(bst != NULL);
+  bst->removeBstNode(bst, bst->findMax(bst));
+}
 
 static void _findMin(BstNode *root, BstNode **min) {
   // considering the value is an int
@@ -284,5 +300,26 @@ static void _inorder(BstNode *root) {
   _inorder(root->right);
 }
 void inorderBstTraversal(Bst *bst) { _inorder(bst->root); }
-void destroyBst(Bst *bst) {}
-void destroyBstNode(BstNode *bstNode) {}
+static void _destroyBstNodes(BstNode *tmpHead) {
+  if (tmpHead == NULL) {
+    return;
+  }
+  _destroyBstNodes(tmpHead->left);
+  _destroyBstNodes(tmpHead->right);
+  free(tmpHead);
+  tmpHead = NULL;
+  return;
+}
+void destroyBst(Bst *bst) {
+  _destroyBstNodes(bst->root);
+  destroyBstNode(bst->root);
+  free(bst);
+}
+void destroyBstRoot(BstNode **root) {
+  free(*root);
+  *root = NULL;
+}
+void destroyBstNode(BstNode *bstNode) {
+  free(bstNode);
+  bstNode = NULL;
+}

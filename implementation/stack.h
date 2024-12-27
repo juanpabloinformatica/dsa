@@ -16,7 +16,7 @@ struct Stack {
   bool (*stackIsEmpty)(Stack *stack);
 };
 
-Stack *newStack();
+Stack *newStack(void);
 void push(Stack *stack, void *element);
 void* pop(Stack *stack);
 void peek(Stack *stack);

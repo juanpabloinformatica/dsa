@@ -21,7 +21,7 @@ struct DynamicArray {
   void (*showArray)(DynamicArray *dynamicArray, int i, int size);
 };
 
-DynamicArray *newDynamicArray();
+DynamicArray *newDynamicArray(void);
 void addElement(DynamicArray *dynamicArray, void *element);
 void setElement(DynamicArray *dynamicArray, int postion, void *element);
 void removeElementFront(DynamicArray *dynamicArray, int position);

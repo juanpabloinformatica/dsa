@@ -26,8 +26,8 @@ void *pop(Stack *stack) {
   return topElementPopped;
 }
 void peek(Stack *stack) {
-  // printf("\nTOP: %d", *(int *)stack->dynamicArray->getElement(
-  /* stack->dynamicArray, stack->dynamicArray->counter)); */
+  printf("%d\n", *(int *)(stack->dynamicArray->getElement(
+                     stack->dynamicArray, stack->dynamicArray->counter)));
 }
 bool stackIsEmpty(Stack *stack) {
   assert(stack != NULL);
@@ -37,4 +37,5 @@ void destroyStack(Stack *stack) {
   assert(stack != NULL);
   destroyDynamicArray(stack->dynamicArray);
   free(stack);
+  stack = NULL;
 }

@@ -10,11 +10,12 @@
 #include "queue.h"
 #include "stack.h"
 #include "bst.h"
+#include "graph.h"
 
-typedef struct HashMap HashMap;
-typedef struct Stack Stack;
-typedef struct Queue Queue;
-typedef struct BstNode BstNode;
-typedef struct Bst Bst;
-typedef struct Graph Graph;
+// typedef struct HashMap HashMap;
+// typedef struct Stack Stack;
+// typedef struct Queue Queue;
+// typedef struct BstNode BstNode;
+// typedef struct Bst Bst;
+// typedef struct Graph Graph;
 #endif

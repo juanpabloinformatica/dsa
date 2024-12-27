@@ -1,4 +1,5 @@
 #include "hashmap.h"
+#include "linkedList.h"
 #include <stdint.h>
 Hashmap *newHashmap(char *keyType, char *valueType) {
   assert(strcmp(keyType, "number") == 0 || strcmp(keyType, "string") == 0);
@@ -44,49 +45,45 @@ void hashmapPut(Hashmap *hashmap, void *key, void *value) {
   assert(strcmp(hashmap->keyType, HASHMAP_TYPE_NUMBER) == 0 ||
          strcmp(hashmap->keyType, HASHMAP_TYPE_STRING) == 0);
   int getIndex = hashFunction(hashmap, key);
-  if (hashmap->array[getIndex] == NULL) {
-    LinkedList *list = newLinkedList();
-    HashmapNode *hashmapNode = newHashmapNode(key, value);
-    LinkedListNode *node = newLinkedListNode(hashmapNode);
-    list->addLinkedList(list, node);
-    hashmap->array[getIndex] = list;
-  } else {
+  if (hashmap->array[getIndex] != NULL) {
     LinkedList *list = hashmap->array[getIndex];
     HashmapNode *hashmapNode = newHashmapNode(key, value);
     LinkedListNode *node = newLinkedListNode(hashmapNode);
     list->addLinkedList(list, node);
     list->showLinkedListNode(list);
+    return;
   }
+  LinkedList *list = newLinkedList();
+  HashmapNode *hashmapNode = newHashmapNode(key, value);
+  LinkedListNode *node = newLinkedListNode(hashmapNode);
+  list->addLinkedList(list, node);
+  hashmap->array[getIndex] = list;
 }
-// void destroyHashmapNode(HashmapNode *hashmapNode) {
-//   free(hashmapNode->key);
-//   free(hashmapNode->value);
-//   free(hashmapNode);
-// }
 void *hashmapGet(Hashmap *hashmap, void *key) {
+  assert(hashmap->hashmapContainsKey(hashmap, key) == true);
   // int hashmapArrayLength = sizeof(hashmap->array) /
   // sizeof(hashmap->array[0]); bool keyExist = false; HashmapNode *hashmapNode
   // = NULL;
   int keyIndex = hashFunction(hashmap, key);
   LinkedList *linkedList = ((LinkedList *)hashmap->array[keyIndex]);
-  if (linkedList != NULL) {
-    HashmapNode *hashmapNode = newHashmapNode(key, NULL);
-    LinkedListNode *lLHNode = newLinkedListNode(hashmapNode);
-    LinkedListNode *lln = linkedList->getLinkedListNode(linkedList, lLHNode);
-    return lln;
-  }
-  return NULL;
+  /* if (linkedList != NULL) { */
+  HashmapNode *hashmapNode = newHashmapNode(key, NULL);
+  LinkedListNode *lLHNode = newLinkedListNode(hashmapNode);
+  LinkedListNode *lln = linkedList->getLinkedListNode(linkedList, lLHNode);
+  return lln;
+  /* } */
+  /* return NULL; */
 }
 void hashmapRemove(Hashmap *hashmap, void *key) {
   assert(hashmap != NULL);
   assert(hashmap->hashmapContainsKey(hashmap, key) == true);
   int keyIndex = hashFunction(hashmap, key);
   LinkedList *linkedList = ((LinkedList *)(hashmap->array)[keyIndex]);
-  if (linkedList != NULL) {
-    HashmapNode *hashmapNode = newHashmapNode(key, NULL);
-    LinkedListNode *lLNode = newLinkedListNode(hashmapNode);
-    linkedList->deleteLinkedList(linkedList, lLNode);
-  }
+  /* if (linkedList != NULL) { */
+  HashmapNode *hashmapNode = newHashmapNode(key, NULL);
+  LinkedListNode *lLNode = newLinkedListNode(hashmapNode);
+  linkedList->deleteLinkedListNode(linkedList, lLNode);
+  /* } */
 }
 bool hashmapContainsKey(Hashmap *hashmap, void *key) {
   assert(hashmap != NULL);
@@ -94,7 +91,15 @@ bool hashmapContainsKey(Hashmap *hashmap, void *key) {
   return (gottenNode != NULL) ? true : false;
 }
 // bool hashmapContainsValue(Hashmap *hashmap, void *element) { return true; }
+void _destroyHashmapLists(void *array[], int arraySize, int i) {
+  if (i == arraySize - 1) {
+    return;
+  }
+  destroyLinkedList((LinkedList *)(array[i]));
+  _destroyHashmapLists(array, arraySize, ++i);
+}
 void destroyHashmap(Hashmap *hashmap) {
+  _destroyHashmapLists(hashmap->array, ARRAY_MAX_SIZE, 0);
   free(hashmap->keyType);
   free(hashmap->valueType);
   free(hashmap);

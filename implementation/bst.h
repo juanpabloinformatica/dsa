@@ -2,9 +2,6 @@
 #define __BST__
 #include <stdbool.h>
 #include <stdlib.h>
-// #define ANTNODE_CHILD_TO_ATTACH(n) (((n->left) != NULL) ? n->left : n->right)
-// #define NODE_CHILD_TO_GET(n) ((((n)->left) != NULL) ? (n)->left : (n)->right)
-// #define NODE_EQUALS(n1, n2) ((n1 == n2) ? true : false)
 
 typedef enum { NOCHILD, ONECHILD, TWOCHILDREN } NodeDeletionType;
 typedef struct BstNode BstNode;
@@ -39,6 +36,7 @@ BstNode *findMax(Bst *bst);
 void prettyPrintBst(Bst *bst);
 void destroyBst(Bst *bst);
 void destroyBstNode(BstNode *bstNode);
+void destroyBstRoot(BstNode **bstNode);
 // inorder traversal
 // left child => parent => right child
 void inorderBstTraversal(Bst *bst);

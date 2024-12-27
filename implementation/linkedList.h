@@ -20,15 +20,17 @@ struct LinkedList {
   LinkedListNode *head;
   void (*addLinkedList)(LinkedList *linkedList, LinkedListNode *node);
   void (*showLinkedListNode)(LinkedList *linkedList);
-  void (*deleteLinkedList)(LinkedList *linkedList, LinkedListNode *node);
-  void* (*getLinkedListNode)(LinkedList *linkedList, LinkedListNode *node);
+  void (*deleteLinkedListNode)(LinkedList *linkedList, LinkedListNode *node);
+  void *(*getLinkedListNode)(LinkedList *linkedList, LinkedListNode *node);
 };
 LinkedListNode *newLinkedListNode(void *value);
-LinkedList *newLinkedList();
+LinkedList *newLinkedList(void);
 HashmapNode *newHashmapNode(void *key, void *value);
 // RECURSIVE
 void addLinkedList(LinkedList *linkedList, LinkedListNode *node);
 void showLinkedListNode(LinkedList *linkedList);
-void deleteLinkedList(LinkedList *linkedList, LinkedListNode *node);
-void* getLinkedListNode(LinkedList *linkedList, LinkedListNode *node);
+void deleteLinkedListNode(LinkedList *linkedList, LinkedListNode *node);
+void *getLinkedListNode(LinkedList *linkedList, LinkedListNode *node);
+void destroyLinkedList(LinkedList* linkedList);
+void destroyNode(LinkedListNode* node);
 // #endif

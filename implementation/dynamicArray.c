@@ -5,8 +5,9 @@ DynamicArray *newDynamicArray() {
   ptrArray->counter = 0;
   ptrArray->bottomIndex = 0;
   ptrArray->size = DYNAMICARRAYCAP;
-  // ptrArray->array = malloc(sizeof(void *) * ptrArray->size);
-  ptrArray->array = malloc(sizeof(int *) * ptrArray->size);
+  ptrArray->array = malloc(sizeof(void *) * (long unsigned int)ptrArray->size);
+  /* ptrArray->array = malloc(sizeof(int) * ptrArray->size); */
+  /* ptrArray->array = (void *)malloc(sizeof(int) * ptrArray->size); */
   ptrArray->addElement = addElement;
   ptrArray->setElement = setElement;
   ptrArray->removeElementFront = removeElementFront;
@@ -27,7 +28,8 @@ void addElement(DynamicArray *dynamicArray, void *element) {
     dynamicArray->size = dynamicArray->size * 2;
     // as we are using integers in this example
     dynamicArray->array =
-        realloc(dynamicArray->array, sizeof(int) * dynamicArray->size);
+        realloc(dynamicArray->array,
+                sizeof(int) * (long unsigned int)dynamicArray->size);
   }
   ((int *)dynamicArray->array)[dynamicArray->counter] = *(int *)element;
   dynamicArray->counter++;
@@ -66,14 +68,16 @@ void showArray(DynamicArray *dynamicArray, int i, int size) {
     return;
   }
   if (i == size - 1) {
-    // printf("%i\n", ((int *)dynamicArray->array)[i]);
+    printf("%i\n", ((int *)dynamicArray->array)[i]);
   } else {
-    // printf("%i -> ", ((int *)dynamicArray->array)[i]);
+    printf("%i -> ", ((int *)dynamicArray->array)[i]);
   }
   showArray(dynamicArray, ++i, size);
 }
 // Destruying everything
 void destroyDynamicArray(DynamicArray *dynamicArray) {
   free(dynamicArray->array);
+  dynamicArray->array = NULL;
   free(dynamicArray);
+  dynamicArray = NULL;
 }

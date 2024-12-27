@@ -43,4 +43,5 @@ void destroyQueue(Queue *queue) {
   assert(queue != NULL);
   destroyDynamicArray(queue->dynamicArray);
   free(queue);
+  queue = NULL;
 }

@@ -36,7 +36,8 @@ TEST(TestLinkedList, HandleAddElementLinkedList) {
 //     elements[i] = i;
 //     LinkedListNode *lLNode = newLinkedListNode((int *)&elements[i]);
 //     LinkedListNode *lln =
-//         (LinkedListNode *)(linkedList->getLinkedListNode(linkedList, lLNode));
+//         (LinkedListNode *)(linkedList->getLinkedListNode(linkedList,
+//         lLNode));
 //     int value = *(int *)(lln->element);
 //     ASSERT_TRUE(value == elements[i]);
 //   }
@@ -53,6 +54,7 @@ TEST(TestLinkedList, HandleGetElementFromHashmapNode) {
     LinkedListNode *lLNode = newLinkedListNode(hNode);
     linkedList->addLinkedList(linkedList, lLNode);
   }
+  linkedList->showLinkedListNode(linkedList);
   for (int i = 0; i < ARRAY_LENGTH; i++) {
     HashmapNode *hNode = newHashmapNode((int *)&keys[i], (int *)&values[i]);
     LinkedListNode *lLNode = newLinkedListNode(hNode);

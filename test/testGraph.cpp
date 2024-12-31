@@ -72,3 +72,15 @@ TEST_F(GraphTest, HandleGraphAdjacent) {
   ASSERT_TRUE(results[3] == false);
   ASSERT_TRUE(results[4] == false);
 }
+TEST_F(GraphTest, HandleGraphNeighbors) {
+  Vertex *ptrVertexArray = (Vertex *)malloc(sizeof(Vertex*) * NUMBER_VERTICES);
+  ptrVertexArray[0] = *(graph->vertices[0]);
+  ptrVertexArray[1] = *(graph->vertices[1]);
+  ASSERT_TRUE(*(int *)(ptrVertexArray[0].value) == 0);
+  ASSERT_TRUE(*(int *)(ptrVertexArray[1].value) == 4);
+  // graph->graphNeighbors(graph, graph->vertices[0], &ptrVertexArray);
+  // Vertex neighbor1 = ptrVertexArray[0];
+  // Vertex neighbor2 = ptrVertexArray[1];
+  // ASSERT_TRUE(*(int *)(neighbor1.value) == 1);
+  // ASSERT_TRUE(*(int *)(neighbor2.value) == 4);
+}

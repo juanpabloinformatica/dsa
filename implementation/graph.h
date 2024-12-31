@@ -30,7 +30,9 @@ struct Graph {
 
   bool (*graphAdjacent)(Graph *graph, Vertex *vertex1, Vertex *Vertex2);
   // this should return vertices
-  DynamicArray *(*graphNeighbors)(Graph *graph, Vertex *vertex);
+  // DynamicArray *(*graphNeighbors)(Graph *graph, Vertex *vertex);
+  // Vertex **(*graphNeighbors)(Graph *graph, Vertex *vertex);
+  void (*graphNeighbors)(Graph *graph, Vertex *vertex, Vertex **neighbors);
   void (*graphAddVertex)(Graph *graph, Vertex *vertex);
   void (*graphAddEdge)(Graph *graph, Edge *edge, void *value);
   void (*graphRemoveEdge)(Graph *graph, Edge *edge);
@@ -46,7 +48,9 @@ Vertex *newVertex(void *value);
 Edge *newEdge(Vertex *vertexS, Vertex *vertexD, void *value);
 bool graphAdjacent(Graph *graph, Vertex *vertex1, Vertex *Vertex2);
 // this should return vertices
-DynamicArray *graphNeighbors(Graph *graph, Vertex *vertex);
+// DynamicArray *graphNeighbors(Graph *graph, Vertex *vertex);
+// Vertex **graphNeighbors(Graph *graph, Vertex *vertex);
+void graphNeighbors(Graph *graph, Vertex *vertex, Vertex **neighbors);
 void graphAddVertex(Graph *graph, Vertex *vertex);
 void graphAddEdge(Graph *graph, Edge *edge, void *value);
 void graphRemoveEdge(Graph *graph, Edge *edge);
@@ -55,7 +59,7 @@ void graphSetVertexValue(Graph *graph, Vertex *vertex, void *value);
 void *graphGetEdgeValue(Graph *graph, Edge *edge);
 void graphSetEdgeValue(Graph *graph, Edge *edge, void *value);
 void destroyGraph(Graph *graph);
-void destroyVertex(Vertex* vertex);
-void destroyEdge(Edge* edge);
+void destroyVertex(Vertex *vertex);
+void destroyEdge(Edge *edge);
 
 #endif

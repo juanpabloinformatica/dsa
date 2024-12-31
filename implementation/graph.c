@@ -28,10 +28,11 @@ Graph *newGraph(Vertex *verticesP[], Edge *edgesP[]) {
 
 static void _adjacentVertex(Edge *tmpEdge, Edge *edges[], int i, int edgeSize,
                             bool *ptrFound) {
-  if (i == edgeSize) {
+  if (i == edgeSize || *ptrFound == true) {
     return;
   }
 
+  // As I am using both sides, I should compare with an or for the inverse order
   if (*(int *)(edges[i]->destination->value) ==
           *(int *)(tmpEdge->destination->value) &&
       (*(int *)(edges[i]->source->value) == *(int *)(tmpEdge->source->value))) {
@@ -49,7 +50,26 @@ bool graphAdjacent(Graph *graph, Vertex *vertex1, Vertex *vertex2) {
   return found;
 }
 // this should return vertices
-DynamicArray *graphNeighbors(Graph *graph, Vertex *vertex) {}
+static void _getNeighbors(Vertex *vertex, Edge *edges[], int iE, int edgeSize,
+                          Vertex **neighbors, int iN) {
+  if (iE == edgeSize - 1) {
+    return;
+  }
+  if (*(int *)(edges[iE]->source->value) == *(int *)(vertex->value)) {
+    neighbors[iN++] = edges[iE]->destination;
+  }
+  _getNeighbors(vertex, edges, ++iE, edgeSize, neighbors, iN);
+}
+void graphNeighbors(Graph *graph, Vertex *vertex, Vertex **neighbors) {
+  // dangerous, I need to do this all dynamic after
+  // I will clean all of this i think
+  /* Vertex *ptrVertexArray = (Vertex *)malloc(sizeof(Vertex) *
+   * NUMBER_VERTICES); */
+
+  _getNeighbors(vertex, graph->edges, 0, NUMBER_EDGES, neighbors, 0);
+  // for been able to destroy outside the scope of the file
+  return;
+}
 void graphAddVertex(Graph *graph, Vertex *vertex) {}
 void graphAddEdge(Graph *graph, Edge *edge, void *value) {}
 void graphRemoveEdge(Graph *graph, Edge *edge) {}

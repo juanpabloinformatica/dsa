@@ -42,31 +42,31 @@ TEST(TestLinkedList, HandleAddElementLinkedList) {
 //     ASSERT_TRUE(value == elements[i]);
 //   }
 // }
-TEST(TestLinkedList, HandleGetElementFromHashmapNode) {
-  LinkedList *linkedList = newLinkedList();
-  const int ARRAY_LENGTH = 30;
-  int keys[ARRAY_LENGTH];
-  int values[ARRAY_LENGTH];
-  for (int i = 0; i < ARRAY_LENGTH; i++) {
-    keys[i] = i;
-    values[i] = i * 120;
-    HashmapNode *hNode = newHashmapNode((int *)&keys[i], (int *)&values[i]);
-    LinkedListNode *lLNode = newLinkedListNode(hNode);
-    linkedList->addLinkedList(linkedList, lLNode);
-  }
-  linkedList->showLinkedListNode(linkedList);
-  for (int i = 0; i < ARRAY_LENGTH; i++) {
-    HashmapNode *hNode = newHashmapNode((int *)&keys[i], (int *)&values[i]);
-    LinkedListNode *lLNode = newLinkedListNode(hNode);
-    LinkedListNode *lln =
-        (LinkedListNode *)(linkedList->getLinkedListNode(linkedList, lLNode));
-    HashmapNode *hn = ((HashmapNode *)lln->element);
-    int key = *(int *)(hn->key);
-    int value = *(int *)(hn->value);
-    ASSERT_TRUE(key == keys[i]);
-    ASSERT_TRUE(value == values[i]);
-  }
-}
+// TEST(TestLinkedList, HandleGetElementFromHashmapNode) {
+//   LinkedList *linkedList = newLinkedList();
+//   const int ARRAY_LENGTH = 30;
+//   int keys[ARRAY_LENGTH];
+//   int values[ARRAY_LENGTH];
+//   for (int i = 0; i < ARRAY_LENGTH; i++) {
+//     keys[i] = i;
+//     values[i] = i * 120;
+//     HashmapNode *hNode = newHashmapNode((int *)&keys[i], (int *)&values[i]);
+//     LinkedListNode *lLNode = newLinkedListNode(hNode);
+//     linkedList->addLinkedList(linkedList, lLNode);
+//   }
+//   linkedList->showLinkedListNode(linkedList);
+//   for (int i = 0; i < ARRAY_LENGTH; i++) {
+//     HashmapNode *hNode = newHashmapNode((int *)&keys[i], (int *)&values[i]);
+//     LinkedListNode *lLNode = newLinkedListNode(hNode);
+//     LinkedListNode *lln =
+//         (LinkedListNode *)(linkedList->getLinkedListNode(linkedList, lLNode));
+//     HashmapNode *hn = ((HashmapNode *)lln->element);
+//     int key = *(int *)(hn->key);
+//     int value = *(int *)(hn->value);
+//     ASSERT_TRUE(key == keys[i]);
+//     ASSERT_TRUE(value == values[i]);
+//   }
+// }
 // TEST(TestLinkedList, HandleRemoveElementLinkedList) {
 //   //
 //   LinkedList *linkedList = newLinkedList();

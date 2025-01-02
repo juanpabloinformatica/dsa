@@ -65,12 +65,19 @@ void graphNeighbors(Graph *graph, Vertex *vertex, Vertex **neighbors) {
   // I will clean all of this i think
   /* Vertex *ptrVertexArray = (Vertex *)malloc(sizeof(Vertex) *
    * NUMBER_VERTICES); */
-
   _getNeighbors(vertex, graph->edges, 0, NUMBER_EDGES, neighbors, 0);
   // for been able to destroy outside the scope of the file
   return;
 }
-void graphAddVertex(Graph *graph, Vertex *vertex) {}
+/* static bool _vertexExist(){ */
+
+/* } */
+void graphAddVertex(Graph *graph, Vertex *vertex) {
+  // I will use my dynamic array definitely.
+  /* if (_vertexExist() == false) { */
+
+  /* } */
+}
 void graphAddEdge(Graph *graph, Edge *edge, void *value) {}
 void graphRemoveEdge(Graph *graph, Edge *edge) {}
 void *graphGetVertexValue(Graph *graph, Vertex *vertex) {}

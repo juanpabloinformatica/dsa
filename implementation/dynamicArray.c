@@ -18,8 +18,9 @@ DynamicArray *newDynamicArray() {
 }
 // General Functions
 void *getElement(DynamicArray *dynamicArray, int position) {
-  int *element = &((int *)dynamicArray->array)[position];
-  return (void *)element;
+  /* int *element = &((int *)dynamicArray->array)[position]; */
+  void *element = (dynamicArray->array)[position];
+  return element;
 }
 void addElement(DynamicArray *dynamicArray, void *element) {
   // imagine we are using int values
@@ -29,15 +30,15 @@ void addElement(DynamicArray *dynamicArray, void *element) {
     // as we are using integers in this example
     dynamicArray->array =
         realloc(dynamicArray->array,
-                sizeof(int) * (long unsigned int)dynamicArray->size);
+                sizeof(void *) * (long unsigned int)dynamicArray->size);
   }
-  ((int *)dynamicArray->array)[dynamicArray->counter] = *(int *)element;
+  (dynamicArray->array)[dynamicArray->counter] = element;
   dynamicArray->counter++;
 }
 void setElement(DynamicArray *dynamicArray, int position, void *element) {
   assert(element != NULL);
   // this case we are testing with ints
-  ((int *)dynamicArray->array)[position] = *(int *)element;
+  (dynamicArray->array)[position] = element;
 }
 // Recursive functions
 void removeElementFront(DynamicArray *dynamicArray, int position) {
@@ -47,8 +48,7 @@ void removeElementFront(DynamicArray *dynamicArray, int position) {
     dynamicArray->counter--;
     return;
   }
-  ((int *)dynamicArray->array)[position] =
-      ((int *)dynamicArray->array)[position + 1];
+  (dynamicArray->array)[position] = (dynamicArray->array)[position + 1];
   removeElementFront(dynamicArray, ++position);
   // update they array reducing it
 }
@@ -58,8 +58,7 @@ void removeElementBack(DynamicArray *dynamicArray, int position) {
     dynamicArray->bottomIndex++;
     return;
   }
-  ((int *)dynamicArray->array)[position] =
-      ((int *)dynamicArray->array)[position + 1];
+  (dynamicArray->array)[position] = (dynamicArray->array)[position + 1];
   removeElementBack(dynamicArray, ++position);
 }
 

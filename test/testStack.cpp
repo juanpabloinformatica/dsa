@@ -25,8 +25,8 @@ TEST(StackTest, HandleStackPop) {
     elements[i] = i;
     stack->push(stack, (int *)&elements[i]);
   }
-  int *elementPoped = (int *)(stack->pop(stack));
-  ASSERT_EQ(*elementPoped, N - 1);
+  int elementPoped = *(int *)(stack->pop(stack));
+  ASSERT_EQ(elementPoped, N - 1);
 }
 
 TEST(StackTest, HandleStackIsEmpty) {
@@ -39,8 +39,8 @@ TEST(StackTest, HandleStackIsEmpty) {
   }
   int i = N - 1;
   while (stack->stackIsEmpty(stack) == false) {
-    int *elementPoped = (int *)(stack->pop(stack));
-    ASSERT_EQ(*elementPoped, i--);
+    int elementPoped = *(int *)(stack->pop(stack));
+    ASSERT_EQ(elementPoped, i--);
   }
   ASSERT_EQ(stack->dynamicArray->counter, 0);
 }

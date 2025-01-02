@@ -27,12 +27,9 @@ void *dequeue(Queue *queue) {
   assert(queue != NULL);
   assert(queue->queueIsEmpty(queue) == false);
   // we are going to return this just in case
-  void *elementInArray =
-      queue->dynamicArray->getElement(queue->dynamicArray, 0);
-  int *element = (int *)malloc(sizeof(int));
-  *element = *(int *)elementInArray;
+  void *element = queue->dynamicArray->getElement(queue->dynamicArray, 0);
   queue->dynamicArray->removeElementBack(queue->dynamicArray, 0);
-  return (void *)element;
+  return element;
 }
 
 int queueSize(Queue *queue) {

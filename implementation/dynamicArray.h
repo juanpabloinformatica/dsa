@@ -11,7 +11,7 @@ struct DynamicArray {
   int counter;
   int bottomIndex;
   int size;
-  void *array;
+  void **array;
   // int* array;
   void (*addElement)(DynamicArray *dynamicArray, void *element);
   void (*setElement)(DynamicArray *dynamicArray, int postion, void *element);

@@ -20,9 +20,22 @@ TEST(DynamicArrayTest, HandleAddingElements) {
     dynamicArray->addElement(dynamicArray, (int *)&elements[i]);
   }
   for (int i = 0; i < ARRAY_LENGTH; i++) {
-    int element = ((int *)dynamicArray->array)[i];
+    int element = *(int *)(dynamicArray->array)[i];
     ASSERT_EQ(element, i);
   }
+}
+TEST(DynamicArrayTest, HandleGettingElements) {
+  const int ARRAY_LENGTH = 30;
+  DynamicArray *dynamicArray = newDynamicArray();
+  int elements[ARRAY_LENGTH];
+  for (int i = 0; i < ARRAY_LENGTH; i++) {
+    elements[i] = i;
+    dynamicArray->addElement(dynamicArray, (int *)&elements[i]);
+  }
+  ASSERT_TRUE(*(int *)dynamicArray->getElement(dynamicArray, 0) == 0);
+  ASSERT_TRUE(*(int *)dynamicArray->getElement(dynamicArray, 1) == 1);
+  ASSERT_TRUE(*(int *)dynamicArray->getElement(dynamicArray, 2) == 2);
+  ASSERT_TRUE(*(int *)dynamicArray->getElement(dynamicArray, 3) == 3);
 }
 
 TEST(DynamicArrayTest, HandleDeletingElementsFront) {
@@ -42,11 +55,11 @@ TEST(DynamicArrayTest, HandleDeletingElementsFront) {
     testArray[i] = REMOVE_ELEMENTS + i;
   }
   for (int i = 0; i < ARRAY_LENGTH - REMOVE_ELEMENTS; i++) {
-    int element = ((int *)dynamicArray->array)[i];
+    int element = *(int *)(dynamicArray->array)[i];
     ASSERT_EQ(element, testArray[i]);
   }
 }
 
-TEST(DynamicArrayTest, HandleDeletingElementsBack) {
-  // DynamicArray *dynamicArray = newDynamicArray();
-}
+// TEST(DynamicArrayTest, HandleDeletingElementsBack) {
+//   // DynamicArray *dynamicArray = newDynamicArray();
+// }

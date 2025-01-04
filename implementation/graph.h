@@ -25,8 +25,10 @@ struct Graph {
   // I haven't implemented set so will use an array and keep  in mind different
   // values
   // DynamicArray *vertices;
-  Vertex *vertices[NUMBER_VERTICES];
-  Edge *edges[NUMBER_EDGES];
+  // Vertex *vertices[NUMBER_VERTICES];
+  // Edge *edges[NUMBER_EDGES];
+  DynamicArray *vertices;
+  DynamicArray *edges;
 
   bool (*graphAdjacent)(Graph *graph, Vertex *vertex1, Vertex *Vertex2);
   // this should return vertices
@@ -41,9 +43,9 @@ struct Graph {
   void *(*graphGetEdgeValue)(Graph *graph, Edge *edge);
   void (*graphSetEdgeValue)(Graph *graph, Edge *edge, void *value);
 };
-// Graph *newGraph(DynamicArray *vertices, DynamicArray *edges);
+Graph *newGraph(DynamicArray *vertices, DynamicArray *edges);
 // i think is the same
-Graph *newGraph(Vertex *vertices[], Edge *edges[]);
+// Graph *newGraph(Vertex *vertices[], Edge *edges[]);
 Vertex *newVertex(void *value);
 Edge *newEdge(Vertex *vertexS, Vertex *vertexD, void *value);
 bool graphAdjacent(Graph *graph, Vertex *vertex1, Vertex *Vertex2);

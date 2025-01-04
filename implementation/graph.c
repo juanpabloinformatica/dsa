@@ -1,4 +1,5 @@
 #include "graph.h"
+#include "dynamicArray.h"
 Vertex *newVertex(void *value) {
   Vertex *ptrVertex = (Vertex *)malloc(sizeof(Vertex));
   ptrVertex->value = value;
@@ -10,11 +11,19 @@ Edge *newEdge(Vertex *vertexS, Vertex *vertexD, void *value) {
   ptrEdge->destination = vertexD;
   return ptrEdge;
 }
-Graph *newGraph(Vertex *verticesP[], Edge *edgesP[]) {
+Graph *newGraph(DynamicArray *vertices, DynamicArray *edges) {
   Graph *ptrGraph = (Graph *)malloc(sizeof(Graph));
+  ptrGraph->vertices = newDynamicArray();
+  ptrGraph->edges = newDynamicArray();
+  memcpy(ptrGraph->vertices, vertices,
+         sizeof(void *) * ((DynamicArray *)vertices->array)->size);
+  memcpy(ptrGraph->edges, edges,
+         sizeof(void *) * ((DynamicArray *)edges->array)->size);
   /* ptrGraph->vertices = ptrGraph->edges = */
-  memcpy(ptrGraph->vertices, verticesP, sizeof(Vertex *) * NUMBER_VERTICES);
-  memcpy(ptrGraph->edges, edgesP, sizeof(Edge *) * NUMBER_EDGES);
+  /* memcpy(ptrGraph->vertices, verticesP, sizeof(Vertex *) * NUMBER_VERTICES);
+   */
+  /* memcpy(ptrGraph->edges, edgesP, sizeof(Edge *) * NUMBER_EDGES); */
+
   ptrGraph->graphAdjacent = graphAdjacent;
   ptrGraph->graphNeighbors = graphNeighbors;
   ptrGraph->graphAddVertex = graphAddVertex;
@@ -26,46 +35,51 @@ Graph *newGraph(Vertex *verticesP[], Edge *edgesP[]) {
   return ptrGraph;
 }
 
-static void _adjacentVertex(Edge *tmpEdge, Edge *edges[], int i, int edgeSize,
-                            bool *ptrFound) {
-  if (i == edgeSize || *ptrFound == true) {
-    return;
-  }
+/* static void _adjacentVertex(Edge *tmpEdge, Edge *edges[], int i, int
+ * edgeSize, */
+/*                             bool *ptrFound) { */
+/*   if (i == edgeSize || *ptrFound == true) { */
+/*     return; */
+/*   } */
 
-  // As I am using both sides, I should compare with an or for the inverse order
-  if (*(int *)(edges[i]->destination->value) ==
-          *(int *)(tmpEdge->destination->value) &&
-      (*(int *)(edges[i]->source->value) == *(int *)(tmpEdge->source->value))) {
-    *ptrFound = true;
-  }
-  _adjacentVertex(tmpEdge, edges, ++i, edgeSize, ptrFound);
-}
+/*   // As I am using both sides, I should compare with an or for the inverse
+ * order */
+/*   if (*(int *)(edges[i]->destination->value) == */
+/*           *(int *)(tmpEdge->destination->value) && */
+/*       (*(int *)(edges[i]->source->value) == *(int
+ * *)(tmpEdge->source->value))) { */
+/*     *ptrFound = true; */
+/*   } */
+/*   _adjacentVertex(tmpEdge, edges, ++i, edgeSize, ptrFound); */
+/* } */
 // I should use a hashmap I know proximately
 bool graphAdjacent(Graph *graph, Vertex *vertex1, Vertex *vertex2) {
-  Edge *tmpEdge = newEdge(vertex1, vertex2, NULL);
-  bool found = false;
-  bool *ptrFound = &found;
-  _adjacentVertex(tmpEdge, graph->edges, 0, NUMBER_EDGES, ptrFound);
-  destroyEdge(tmpEdge);
-  return found;
+  /* Edge *tmpEdge = newEdge(vertex1, vertex2, NULL); */
+  /* bool found = false; */
+  /* bool *ptrFound = &found; */
+  /* /1* _adjacentVertex(tmpEdge, graph->edges, 0, NUMBER_EDGES, ptrFound); *1/
+   */
+  /* destroyEdge(tmpEdge); */
+  /* return found; */
 }
 // this should return vertices
-static void _getNeighbors(Vertex *vertex, Edge *edges[], int iE, int edgeSize,
-                          Vertex **neighbors, int iN) {
-  if (iE == edgeSize - 1) {
-    return;
-  }
-  if (*(int *)(edges[iE]->source->value) == *(int *)(vertex->value)) {
-    neighbors[iN++] = edges[iE]->destination;
-  }
-  _getNeighbors(vertex, edges, ++iE, edgeSize, neighbors, iN);
-}
+/* static void _getNeighbors(Vertex *vertex, Edge *edges[], int iE, int
+ * edgeSize, */
+/*                           Vertex **neighbors, int iN) { */
+/*   if (iE == edgeSize - 1) { */
+/*     return; */
+/*   } */
+/*   if (*(int *)(edges[iE]->source->value) == *(int *)(vertex->value)) { */
+/*     neighbors[iN++] = edges[iE]->destination; */
+/*   } */
+/*   _getNeighbors(vertex, edges, ++iE, edgeSize, neighbors, iN); */
+/* } */
 void graphNeighbors(Graph *graph, Vertex *vertex, Vertex **neighbors) {
   // dangerous, I need to do this all dynamic after
   // I will clean all of this i think
   /* Vertex *ptrVertexArray = (Vertex *)malloc(sizeof(Vertex) *
    * NUMBER_VERTICES); */
-  _getNeighbors(vertex, graph->edges, 0, NUMBER_EDGES, neighbors, 0);
+  /* _getNeighbors(vertex, graph->edges, 0, NUMBER_EDGES, neighbors, 0); */
   // for been able to destroy outside the scope of the file
   return;
 }

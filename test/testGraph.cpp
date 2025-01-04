@@ -57,7 +57,7 @@ void GraphTest::preSetup(void) {
 void GraphTest::SetUp() {
   std::cout << "Setting up fixture" << std::endl;
   this->preSetup();
-  // graph = newGraph(this->vertices, this->edges);
+  graph = newGraph(this->vertices, this->edges);
 }
 void GraphTest::TearDown() {
   destroyDynamicArray(this->vertices);

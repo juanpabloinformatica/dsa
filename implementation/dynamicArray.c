@@ -1,5 +1,6 @@
 #include "dynamicArray.h"
 
+// I will change this to accpet also an array of elements.
 DynamicArray *newDynamicArray() {
   DynamicArray *ptrArray = (DynamicArray *)malloc(sizeof(DynamicArray));
   ptrArray->counter = 0;

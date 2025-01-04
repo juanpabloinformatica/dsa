@@ -66,14 +66,6 @@ void GraphTest::TearDown() {
 }
 void GraphTest::show() {
   std::cout << "Graph" << std::endl;
-  // for (int i = 0; i < NUMBER_VERTICES; i++) {
-  //   std::cout << "vertex " << std::to_string(i) << ": "
-  //             << std::to_string(*(
-  //                    int *)(((Vertex *)this->vertices->getElement(vertices,
-  //                    i))
-  //                               ->value))
-  //             << std::endl;
-  // }
   for (int i = 0; i < this->vertices->counter; i++) {
     std::cout << "vertex " << std::to_string(i) << ": "
               << std::to_string(*(
@@ -95,10 +87,15 @@ void GraphTest::show() {
 
 TEST_F(GraphTest, HandleGraphCreation) {
   show();
-  // DynamicArray *edges;
-  // ASSERT_TRUE(graph != NULL);
-  // ASSERT_TRUE(edges[0]->source == vertices[0] &&
-  // edges[0]->destination == vertices[1]);
+  ASSERT_TRUE(this->graph != NULL);
+  Vertex *edgeSource, *edgeDestination;
+  Vertex *vertex1, *vertex2;
+  edgeSource = ((Edge *)this->edges->getElement(this->edges, 0))->source;
+  edgeDestination =
+      ((Edge *)this->edges->getElement(this->edges, 0))->destination;
+  vertex1 = ((Vertex *)this->vertices->getElement(this->vertices, 0));
+  vertex2 = ((Vertex *)this->vertices->getElement(this->vertices, 1));
+  ASSERT_TRUE(edgeSource == vertex1 && edgeDestination == vertex2);
 }
 
 // TEST_F(GraphTest, HandleGraphAdjacent) {

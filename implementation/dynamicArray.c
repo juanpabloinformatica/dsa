@@ -1,14 +1,24 @@
 #include "dynamicArray.h"
+#include "string.h"
 
 // I will change this to accpet also an array of elements.
-DynamicArray *newDynamicArray() {
+static void _arrayCopy(DynamicArray *newArray, DynamicArray *passedArray) {
+  if (passedArray->size > newArray->size) {
+    realloc(newArray->array, sizeof(long) * (long)passedArray->size);
+  }
+  memcpy(newArray->array, passedArray->array,
+         sizeof(long) * (long)passedArray->size);
+  return;
+}
+DynamicArray *newDynamicArray(DynamicArray *passedArray) {
   DynamicArray *ptrArray = (DynamicArray *)malloc(sizeof(DynamicArray));
   ptrArray->counter = 0;
   ptrArray->bottomIndex = 0;
   ptrArray->size = DYNAMICARRAYCAP;
   ptrArray->array = malloc(sizeof(void *) * (long unsigned int)ptrArray->size);
-  /* ptrArray->array = malloc(sizeof(int) * ptrArray->size); */
-  /* ptrArray->array = (void *)malloc(sizeof(int) * ptrArray->size); */
+  if (passedArray != NULL) {
+    _arrayCopy(ptrArray, passedArray);
+  }
   ptrArray->addElement = addElement;
   ptrArray->setElement = setElement;
   ptrArray->removeElementFront = removeElementFront;

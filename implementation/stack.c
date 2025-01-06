@@ -2,7 +2,7 @@
 
 Stack *newStack() {
   Stack *ptrStack = (Stack *)malloc(sizeof(Stack));
-  ptrStack->dynamicArray = newDynamicArray();
+  ptrStack->dynamicArray = newDynamicArray(NULL);
   ptrStack->push = push;
   ptrStack->pop = pop;
   ptrStack->peek = peek;

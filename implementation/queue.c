@@ -2,7 +2,7 @@
 
 Queue *newQueue() {
   Queue *ptrQueue = (Queue *)malloc(sizeof(Queue));
-  ptrQueue->dynamicArray = newDynamicArray();
+  ptrQueue->dynamicArray = newDynamicArray(NULL);
   ptrQueue->queueIsEmpty = queueIsEmpty;
   ptrQueue->enqueue = enqueue;
   ptrQueue->dequeue = dequeue;

@@ -13,17 +13,8 @@ Edge *newEdge(Vertex *vertexS, Vertex *vertexD, void *value) {
 }
 Graph *newGraph(DynamicArray *vertices, DynamicArray *edges) {
   Graph *ptrGraph = (Graph *)malloc(sizeof(Graph));
-  ptrGraph->vertices = newDynamicArray();
-  ptrGraph->edges = newDynamicArray();
-  memcpy(ptrGraph->vertices, vertices,
-         sizeof(void *) * ((DynamicArray *)vertices->array)->size);
-  memcpy(ptrGraph->edges, edges,
-         sizeof(void *) * ((DynamicArray *)edges->array)->size);
-  /* ptrGraph->vertices = ptrGraph->edges = */
-  /* memcpy(ptrGraph->vertices, verticesP, sizeof(Vertex *) * NUMBER_VERTICES);
-   */
-  /* memcpy(ptrGraph->edges, edgesP, sizeof(Edge *) * NUMBER_EDGES); */
-
+  ptrGraph->vertices = newDynamicArray(vertices);
+  ptrGraph->edges = newDynamicArray(edges);
   ptrGraph->graphAdjacent = graphAdjacent;
   ptrGraph->graphNeighbors = graphNeighbors;
   ptrGraph->graphAddVertex = graphAddVertex;
@@ -35,32 +26,29 @@ Graph *newGraph(DynamicArray *vertices, DynamicArray *edges) {
   return ptrGraph;
 }
 
-/* static void _adjacentVertex(Edge *tmpEdge, Edge *edges[], int i, int
- * edgeSize, */
-/*                             bool *ptrFound) { */
-/*   if (i == edgeSize || *ptrFound == true) { */
-/*     return; */
-/*   } */
-
-/*   // As I am using both sides, I should compare with an or for the inverse
- * order */
-/*   if (*(int *)(edges[i]->destination->value) == */
-/*           *(int *)(tmpEdge->destination->value) && */
-/*       (*(int *)(edges[i]->source->value) == *(int
- * *)(tmpEdge->source->value))) { */
-/*     *ptrFound = true; */
-/*   } */
-/*   _adjacentVertex(tmpEdge, edges, ++i, edgeSize, ptrFound); */
-/* } */
+static void _adjacentVertex(Edge *tmpEdge, DynamicArray *edges, int i,
+                            int edgeSize, bool *ptrFound) {
+  if (i == edgeSize || *ptrFound == true) {
+    return;
+  }
+  // As I am using both sides, I should compare with an or for the inverse
+  // order
+  if (*(int *)(((Edge *)edges->getElement(edges, i))->destination->value) ==
+          *(int *)(tmpEdge->destination->value) &&
+      (*(int *)(((Edge *)edges->getElement(edges, i))->source->value) ==
+       *(int *)(tmpEdge->source->value))) {
+    *ptrFound = true;
+  }
+  _adjacentVertex(tmpEdge, edges, ++i, edgeSize, ptrFound);
+}
 // I should use a hashmap I know proximately
 bool graphAdjacent(Graph *graph, Vertex *vertex1, Vertex *vertex2) {
-  /* Edge *tmpEdge = newEdge(vertex1, vertex2, NULL); */
-  /* bool found = false; */
-  /* bool *ptrFound = &found; */
-  /* /1* _adjacentVertex(tmpEdge, graph->edges, 0, NUMBER_EDGES, ptrFound); *1/
-   */
-  /* destroyEdge(tmpEdge); */
-  /* return found; */
+  Edge *tmpEdge = newEdge(vertex1, vertex2, NULL);
+  bool found = false;
+  bool *ptrFound = &found;
+  _adjacentVertex(tmpEdge, graph->edges, 0, graph->edges->counter, ptrFound);
+  destroyEdge(tmpEdge);
+  return found;
 }
 // this should return vertices
 /* static void _getNeighbors(Vertex *vertex, Edge *edges[], int iE, int

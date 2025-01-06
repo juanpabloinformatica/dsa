@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 #include <string>
 void GraphTest::preSetup(void) {
-  vertices = newDynamicArray();
+  vertices = newDynamicArray(NULL);
   for (int i = 0; i < NUMBER_VERTICES; i++) {
     verticesTmp[i] = i;
   }
@@ -10,7 +10,7 @@ void GraphTest::preSetup(void) {
     Vertex *vertex = newVertex((int *)&verticesTmp[i]);
     vertices->addElement(vertices, vertex);
   }
-  edges = newDynamicArray();
+  edges = newDynamicArray(NULL);
   edges->addElement(edges,
                     newEdge((Vertex *)vertices->getElement(vertices, 0),
                             (Vertex *)vertices->getElement(vertices, 1), NULL));
@@ -98,25 +98,30 @@ TEST_F(GraphTest, HandleGraphCreation) {
   ASSERT_TRUE(edgeSource == vertex1 && edgeDestination == vertex2);
 }
 
-// TEST_F(GraphTest, HandleGraphAdjacent) {
-//   const int testAdjacents = 5;
-//   bool results[testAdjacents];
-//   results[0] =
-//       graph->graphAdjacent(graph, graph->vertices[0], graph->vertices[1]);
-//   results[1] =
-//       graph->graphAdjacent(graph, graph->vertices[2], graph->vertices[3]);
-//   results[2] =
-//       graph->graphAdjacent(graph, graph->vertices[2], graph->vertices[1]);
-//   results[3] =
-//       graph->graphAdjacent(graph, graph->vertices[0], graph->vertices[2]);
-//   results[4] =
-//       graph->graphAdjacent(graph, graph->vertices[4], graph->vertices[2]);
-//   ASSERT_TRUE(results[0] == true);
-//   ASSERT_TRUE(results[1] == true);
-//   ASSERT_TRUE(results[2] == true);
-//   ASSERT_TRUE(results[3] == false);
-//   ASSERT_TRUE(results[4] == false);
-// }
+TEST_F(GraphTest, HandleGraphAdjacent) {
+  const int testAdjacents = 5;
+  bool results[testAdjacents];
+  results[0] = graph->graphAdjacent(
+      graph, ((Vertex *)graph->vertices->getElement(graph->vertices, 0)),
+      ((Vertex *)graph->vertices->getElement(graph->vertices, 1)));
+  results[1] = graph->graphAdjacent(
+      graph, ((Vertex *)graph->vertices->getElement(graph->vertices, 2)),
+      ((Vertex *)graph->vertices->getElement(graph->vertices, 3)));
+  results[2] = graph->graphAdjacent(
+      graph, ((Vertex *)graph->vertices->getElement(graph->vertices, 2)),
+      ((Vertex *)graph->vertices->getElement(graph->vertices, 1)));
+  results[3] = graph->graphAdjacent(
+      graph, ((Vertex *)graph->vertices->getElement(graph->vertices, 0)),
+      ((Vertex *)graph->vertices->getElement(graph->vertices, 2)));
+  results[4] = graph->graphAdjacent(
+      graph, ((Vertex *)graph->vertices->getElement(graph->vertices, 4)),
+      ((Vertex *)graph->vertices->getElement(graph->vertices, 2)));
+  ASSERT_TRUE(results[0] == true);
+  ASSERT_TRUE(results[1] == true);
+  ASSERT_TRUE(results[2] == true);
+  ASSERT_TRUE(results[3] == false);
+  ASSERT_TRUE(results[4] == false);
+}
 // TEST_F(GraphTest, HandleGraphNeighbors) {
 //   // Vertex *ptrVertexArray = (Vertex *)malloc(sizeof(Vertex*) *
 //   // NUMBER_VERTICES);

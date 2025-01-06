@@ -6,14 +6,14 @@ extern "C" {
 }
 // Handling creation
 TEST(DynamicArrayTest, HandleCreation) {
-  DynamicArray *dynamicArray = newDynamicArray();
+  DynamicArray *dynamicArray = newDynamicArray(NULL);
   EXPECT_TRUE(dynamicArray != NULL);
 }
 // Handling Adding
 TEST(DynamicArrayTest, HandleAddingElements) {
   // i will continue
   const int ARRAY_LENGTH = 30;
-  DynamicArray *dynamicArray = newDynamicArray();
+  DynamicArray *dynamicArray = newDynamicArray(NULL);
   int elements[ARRAY_LENGTH];
   for (int i = 0; i < ARRAY_LENGTH; i++) {
     elements[i] = i;
@@ -26,7 +26,7 @@ TEST(DynamicArrayTest, HandleAddingElements) {
 }
 TEST(DynamicArrayTest, HandleGettingElements) {
   const int ARRAY_LENGTH = 30;
-  DynamicArray *dynamicArray = newDynamicArray();
+  DynamicArray *dynamicArray = newDynamicArray(NULL);
   int elements[ARRAY_LENGTH];
   for (int i = 0; i < ARRAY_LENGTH; i++) {
     elements[i] = i;
@@ -41,7 +41,7 @@ TEST(DynamicArrayTest, HandleGettingElements) {
 TEST(DynamicArrayTest, HandleDeletingElementsFront) {
   const int ARRAY_LENGTH = 30;
   const int REMOVE_ELEMENTS = 10;
-  DynamicArray *dynamicArray = newDynamicArray();
+  DynamicArray *dynamicArray = newDynamicArray(NULL);
   int elements[ARRAY_LENGTH];
   for (int i = 0; i < ARRAY_LENGTH; i++) {
     elements[i] = i;
@@ -61,5 +61,5 @@ TEST(DynamicArrayTest, HandleDeletingElementsFront) {
 }
 
 // TEST(DynamicArrayTest, HandleDeletingElementsBack) {
-//   // DynamicArray *dynamicArray = newDynamicArray();
+//   // DynamicArray *dynamicArray = newDynamicArray(NULL);
 // }

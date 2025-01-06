@@ -43,3 +43,19 @@
 - Neede to be refactored I know it will be done eventually
 
 - Need to refactor all the code, and remove for and whiles, only let for testing
+
+- So A lot of things to be done.
+  - DynamicArray needs some extra features
+    - Initializing array from an existing one
+    - When passing values, check for autoincrement before the
+      copy process start.
+
+
+- Then after everything seems to work
+  - I will practice Searching and sorting algorithms
+  - Greedy algorithms
+  - Two pointers and sliding window technnique
+  - Prefix sum problems
+  - Binary search
+  - Recursion
+  link: https://www.codechef.com/roadmap/data-structures-and-algorithms

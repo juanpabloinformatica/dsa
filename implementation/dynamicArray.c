@@ -4,10 +4,12 @@
 // I will change this to accpet also an array of elements.
 static void _arrayCopy(DynamicArray *newArray, DynamicArray *passedArray) {
   if (passedArray->size > newArray->size) {
-    realloc(newArray->array, sizeof(long) * (long)passedArray->size);
+    void *resultRealloc =
+        realloc(newArray->array, sizeof(long) * (long)passedArray->size);
+    assert(resultRealloc != NULL);
   }
-  memcpy(newArray->array, passedArray->array,
-         sizeof(long) * (long)passedArray->size);
+  memcpy(newArray, passedArray,
+         sizeof(DynamicArray) );
   return;
 }
 DynamicArray *newDynamicArray(DynamicArray *passedArray) {

@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #define DYNAMICARRAYCAP 10
 typedef struct DynamicArray DynamicArray;
 

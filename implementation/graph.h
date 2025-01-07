@@ -1,4 +1,5 @@
 // link to follow the adt:
+//
 // https://en.wikipedia.org/wiki/Graph_(abstract_data_type)
 #ifndef __GRAPH__
 #define __GRAPH__
@@ -34,7 +35,7 @@ struct Graph {
   // this should return vertices
   // DynamicArray *(*graphNeighbors)(Graph *graph, Vertex *vertex);
   // Vertex **(*graphNeighbors)(Graph *graph, Vertex *vertex);
-  void (*graphNeighbors)(Graph *graph, Vertex *vertex, Vertex **neighbors);
+  void (*graphNeighbors)(Graph *graph, Vertex *vertex, DynamicArray *vertexNeighbors);
   void (*graphAddVertex)(Graph *graph, Vertex *vertex);
   void (*graphAddEdge)(Graph *graph, Edge *edge, void *value);
   void (*graphRemoveEdge)(Graph *graph, Edge *edge);
@@ -52,7 +53,7 @@ bool graphAdjacent(Graph *graph, Vertex *vertex1, Vertex *Vertex2);
 // this should return vertices
 // DynamicArray *graphNeighbors(Graph *graph, Vertex *vertex);
 // Vertex **graphNeighbors(Graph *graph, Vertex *vertex);
-void graphNeighbors(Graph *graph, Vertex *vertex, Vertex **neighbors);
+void graphNeighbors(Graph *graph, Vertex *vertex, DynamicArray *vertexNeighbors);
 void graphAddVertex(Graph *graph, Vertex *vertex);
 void graphAddEdge(Graph *graph, Edge *edge, void *value);
 void graphRemoveEdge(Graph *graph, Edge *edge);

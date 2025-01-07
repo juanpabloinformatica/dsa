@@ -63,9 +63,11 @@ void GraphTest::TearDown() {
   destroyDynamicArray(this->vertices);
   destroyDynamicArray(this->edges);
   destroyGraph(this->graph);
+  std::cout << "Cleaning up fixture" << std::endl;
 }
 void GraphTest::show() {
   std::cout << "Graph" << std::endl;
+  // I need to change to this->graph->....
   for (int i = 0; i < this->vertices->counter; i++) {
     std::cout << "vertex " << std::to_string(i) << ": "
               << std::to_string(*(
@@ -73,6 +75,7 @@ void GraphTest::show() {
                                 ->value))
               << std::endl;
   }
+  // I need to change to this->graph->....
   for (int i = 0; i < this->edges->counter; i++) {
     std::cout
         << "Edge " << std::to_string(i) << ": "
@@ -122,30 +125,44 @@ TEST_F(GraphTest, HandleGraphAdjacent) {
   ASSERT_TRUE(results[3] == false);
   ASSERT_TRUE(results[4] == false);
 }
-// TEST_F(GraphTest, HandleGraphNeighbors) {
-//   // Vertex *ptrVertexArray = (Vertex *)malloc(sizeof(Vertex*) *
-//   // NUMBER_VERTICES);
-//   Vertex *ptrVertexArray[NUMBER_VERTICES];
-//   ptrVertexArray[0] = (graph->vertices[0]);
-//   ptrVertexArray[1] = (graph->vertices[1]);
-//   ASSERT_TRUE(*(int *)(ptrVertexArray[0]->value) == 0);
-//   ASSERT_TRUE(*(int *)(ptrVertexArray[1]->value) == 1);
-//   graph->graphNeighbors(graph, graph->vertices[0], ptrVertexArray);
-//   Vertex *neighbor1 = ptrVertexArray[0];
-//   Vertex *neighbor2 = ptrVertexArray[1];
-//   ASSERT_TRUE(*(int *)(neighbor1->value) == 1);
-//   ASSERT_TRUE(*(int *)(neighbor2->value) == 4);
-
-//   Vertex *ptrVertexArray2[NUMBER_VERTICES];
-//   graph->graphNeighbors(graph, graph->vertices[1], ptrVertexArray2);
-//   ASSERT_TRUE((*(int *)(ptrVertexArray2[0]->value) == 0));
-//   ASSERT_TRUE((*(int *)(ptrVertexArray2[1]->value) == 2));
-//   ASSERT_TRUE((*(int *)(ptrVertexArray2[2]->value) == 3));
-//   ASSERT_TRUE((*(int *)(ptrVertexArray2[3]->value) == 4));
-//   std::cout << "Vertex: "
-//             << std::to_string(*(int *)((graph->vertices[1])->value))
-//             << std::endl;
-//   for (int i = 0; i < NUMBER_VERTICES; i++) {
-//     std::cout << *(int *)((ptrVertexArray2[i])->value) << std::endl;
-//   }
-// }
+TEST_F(GraphTest, HandleGraphNeighbors) {
+  // Vertex *ptrVertexArray[NUMBER_VERTICES];
+  DynamicArray *vertexNeighbors = newDynamicArray(NULL);
+  graph->graphNeighbors(
+      graph, ((Vertex *)graph->vertices->getElement(graph->vertices, 0)),
+      vertexNeighbors);
+  Vertex *neighbor0 =
+      ((Vertex *)vertexNeighbors->getElement(vertexNeighbors, 0));
+  Vertex *neighbor1 =
+      ((Vertex *)vertexNeighbors->getElement(vertexNeighbors, 1));
+  ASSERT_TRUE(*(int *)(neighbor0->value) == 1);
+  ASSERT_TRUE(*(int *)(neighbor1->value) == 4);
+  destroyDynamicArray(vertexNeighbors);
+  vertexNeighbors = newDynamicArray(NULL);
+  graph->graphNeighbors(
+      graph, ((Vertex *)graph->vertices->getElement(graph->vertices, 1)),
+      vertexNeighbors);
+  neighbor0 = ((Vertex *)vertexNeighbors->getElement(vertexNeighbors, 0));
+  neighbor1 = ((Vertex *)vertexNeighbors->getElement(vertexNeighbors, 1));
+  Vertex *neighbor2 =
+      ((Vertex *)vertexNeighbors->getElement(vertexNeighbors, 2));
+  Vertex *neighbor3 =
+      ((Vertex *)vertexNeighbors->getElement(vertexNeighbors, 3));
+  ASSERT_TRUE(*(int *)(neighbor0->value) == 0);
+  ASSERT_TRUE(*(int *)(neighbor1->value) == 2);
+  ASSERT_TRUE(*(int *)(neighbor2->value) == 3);
+  ASSERT_TRUE(*(int *)(neighbor3->value) == 4);
+  destroyDynamicArray(vertexNeighbors);
+}
+TEST_F(GraphTest, HandleGraphAddVertex) {
+  const int VERTICES_VALUES_LENGTH = 10;
+  int verticesValues[VERTICES_VALUES_LENGTH];
+  for (int i = 0; i < VERTICES_VALUES_LENGTH; i++) {
+    verticesValues[i] = i + 6;
+  }
+  for (int i = 0; i < VERTICES_VALUES_LENGTH; i++) {
+    Vertex *vertex = newVertex((int *)&verticesValues[i]);
+    graph->vertices->addElement(graph->vertices, vertex);
+  }
+  // show();
+}

@@ -10,8 +10,8 @@
   - Queue [X]
   - Linked-list [x]
   - HashMap [X]
-  - Trees
-    - Bst
+  - Trees [X]
+    - Bst [X]
   - Graphs
 
 - I think i will do those on python,
@@ -46,9 +46,9 @@
 
 - So A lot of things to be done.
   - DynamicArray needs some extra features
-    - Initializing array from an existing one
+    - Initializing array from an existing one [X]
     - When passing values, check for autoincrement before the
-      copy process start.
+      copy process start. [X]
 
 
 - Then after everything seems to work
@@ -59,3 +59,5 @@
   - Binary search
   - Recursion
   link: https://www.codechef.com/roadmap/data-structures-and-algorithms
+
+- After that maybe will be nice to make all the dsa concurrent save.

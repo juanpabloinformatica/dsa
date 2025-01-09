@@ -19,6 +19,7 @@ typedef struct Edge Edge;
 struct Edge {
   Vertex *source;
   Vertex *destination;
+  void *edgeValue;
 };
 typedef struct Graph Graph;
 struct Graph {
@@ -35,9 +36,10 @@ struct Graph {
   // this should return vertices
   // DynamicArray *(*graphNeighbors)(Graph *graph, Vertex *vertex);
   // Vertex **(*graphNeighbors)(Graph *graph, Vertex *vertex);
-  void (*graphNeighbors)(Graph *graph, Vertex *vertex, DynamicArray *vertexNeighbors);
+  void (*graphNeighbors)(Graph *graph, Vertex *vertex,
+                         DynamicArray *vertexNeighbors);
   void (*graphAddVertex)(Graph *graph, Vertex *vertex);
-  void (*graphAddEdge)(Graph *graph, Edge *edge, void *value);
+  void (*graphAddEdge)(Graph *graph, Edge *edge);
   void (*graphRemoveEdge)(Graph *graph, Edge *edge);
   void *(*graphGetVertexValue)(Graph *graph, Vertex *vertex);
   void (*graphSetVertexValue)(Graph *graph, Vertex *vertex, void *value);
@@ -53,9 +55,10 @@ bool graphAdjacent(Graph *graph, Vertex *vertex1, Vertex *Vertex2);
 // this should return vertices
 // DynamicArray *graphNeighbors(Graph *graph, Vertex *vertex);
 // Vertex **graphNeighbors(Graph *graph, Vertex *vertex);
-void graphNeighbors(Graph *graph, Vertex *vertex, DynamicArray *vertexNeighbors);
+void graphNeighbors(Graph *graph, Vertex *vertex,
+                    DynamicArray *vertexNeighbors);
 void graphAddVertex(Graph *graph, Vertex *vertex);
-void graphAddEdge(Graph *graph, Edge *edge, void *value);
+void graphAddEdge(Graph *graph, Edge *edge);
 void graphRemoveEdge(Graph *graph, Edge *edge);
 void *graphGetVertexValue(Graph *graph, Vertex *vertex);
 void graphSetVertexValue(Graph *graph, Vertex *vertex, void *value);

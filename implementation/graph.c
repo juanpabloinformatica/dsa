@@ -74,17 +74,51 @@ void graphNeighbors(Graph *graph, Vertex *vertex,
 
 /* } */
 void graphAddVertex(Graph *graph, Vertex *vertex) {
-  // I will use my dynamic array definitely.
-  /* if (_vertexExist() == false) { */
-
-  /* } */
+  graph->vertices->addElement(graph->vertices, vertex);
 }
-void graphAddEdge(Graph *graph, Edge *edge, void *value) {}
-void graphRemoveEdge(Graph *graph, Edge *edge) {}
+void graphAddEdge(Graph *graph, Edge *edge) {
+  graph->edges->addElement(graph->edges, edge);
+}
+/* void **array; */
+static void _getEdgePosition(DynamicArray *edges, int iE, int *ptrResult,
+                             Edge *edge) {
+  if (iE == edges->counter || *ptrResult != -1) {
+    return;
+  }
+  int iEVertexSValue =
+      *(int *)((((Edge *)edges->getElement(edges, iE))->source)->value);
+  int iEVertexDValue =
+      *(int *)((((Edge *)edges->getElement(edges, iE))->destination)->value);
+  int tgtVertexSvalue = *(int *)((edge->source)->value);
+  int tgtVertexDvalue = *(int *)((edge->destination)->value);
+  if (iEVertexSValue == tgtVertexSvalue && iEVertexDValue == tgtVertexDvalue) {
+    *ptrResult = iE;
+  }
+  _getEdgePosition(edges, ++iE, ptrResult, edge);
+}
+void graphRemoveEdge(Graph *graph, Edge *edge) {
+  int result = -1;
+  int *ptrResult = &result;
+  _getEdgePosition(graph->edges, graph->edges->bottomIndex, ptrResult, edge);
+  if (result != -1) {
+    graph->edges->removeElementBack(graph->edges, result);
+  }
+}
 void *graphGetVertexValue(Graph *graph, Vertex *vertex) {}
 void graphSetVertexValue(Graph *graph, Vertex *vertex, void *value) {}
 void *graphGetEdgeValue(Graph *graph, Edge *edge) {}
 void graphSetEdgeValue(Graph *graph, Edge *edge, void *value) {}
-void destroyGraph(Graph *graph) { printf("is being called."); }
-void destroyVertex(Vertex *vertex) {}
-void destroyEdge(Edge *edge) {}
+void destroyGraph(Graph *graph) {
+  destroyDynamicArray(graph->vertices);
+  destroyDynamicArray(graph->edges);
+  free(graph);
+  graph = NULL;
+}
+void destroyVertex(Vertex *vertex) {
+  free(vertex);
+  vertex = NULL;
+}
+void destroyEdge(Edge *edge) {
+  free(edge);
+  edge = NULL;
+}

@@ -60,15 +60,14 @@ void GraphTest::SetUp() {
   graph = newGraph(this->vertices, this->edges);
 }
 void GraphTest::TearDown() {
-  destroyDynamicArray(this->vertices);
-  destroyDynamicArray(this->edges);
+  // destroyDynamicArray(this->vertices);
+  // destroyDynamicArray(this->edges);
   destroyGraph(this->graph);
   std::cout << "Cleaning up fixture" << std::endl;
 }
 void GraphTest::show() {
   std::cout << "Graph" << std::endl;
-  // I need to change to this->graph->....
-  for (int i = 0; i < this->vertices->counter; i++) {
+  for (int i = 0; i < this->graph->vertices->counter; i++) {
     std::cout << "vertex " << std::to_string(i) << ": "
               << std::to_string(*(
                      int *)(((Vertex *)this->vertices->getElement(vertices, i))
@@ -76,7 +75,7 @@ void GraphTest::show() {
               << std::endl;
   }
   // I need to change to this->graph->....
-  for (int i = 0; i < this->edges->counter; i++) {
+  for (int i = 0; i < this->graph->edges->counter; i++) {
     std::cout
         << "Edge " << std::to_string(i) << ": "
         << std::to_string(*(int *)((
@@ -126,7 +125,6 @@ TEST_F(GraphTest, HandleGraphAdjacent) {
   ASSERT_TRUE(results[4] == false);
 }
 TEST_F(GraphTest, HandleGraphNeighbors) {
-  // Vertex *ptrVertexArray[NUMBER_VERTICES];
   DynamicArray *vertexNeighbors = newDynamicArray(NULL);
   graph->graphNeighbors(
       graph, ((Vertex *)graph->vertices->getElement(graph->vertices, 0)),
@@ -139,6 +137,7 @@ TEST_F(GraphTest, HandleGraphNeighbors) {
   ASSERT_TRUE(*(int *)(neighbor1->value) == 4);
   destroyDynamicArray(vertexNeighbors);
   vertexNeighbors = newDynamicArray(NULL);
+
   graph->graphNeighbors(
       graph, ((Vertex *)graph->vertices->getElement(graph->vertices, 1)),
       vertexNeighbors);
@@ -158,11 +157,96 @@ TEST_F(GraphTest, HandleGraphAddVertex) {
   const int VERTICES_VALUES_LENGTH = 10;
   int verticesValues[VERTICES_VALUES_LENGTH];
   for (int i = 0; i < VERTICES_VALUES_LENGTH; i++) {
-    verticesValues[i] = i + 6;
+    verticesValues[i] = i + 5;
   }
   for (int i = 0; i < VERTICES_VALUES_LENGTH; i++) {
     Vertex *vertex = newVertex((int *)&verticesValues[i]);
     graph->vertices->addElement(graph->vertices, vertex);
   }
-  // show();
+  // this seems extremely weird I know but it needs to be done
+  // because realloc if find another chunck of memory it will
+  // do a free and return another pointer so the this->vertices->array
+  // needs to be updated to pointed to the new zone pointed.
+  if (graph->vertices->array != this->vertices->array) {
+    this->vertices->array = graph->vertices->array;
+  }
+  if (graph->edges->array != this->edges->array) {
+    this->edges->array = this->edges->array;
+  }
+  show();
+}
+TEST_F(GraphTest, HandleGraphAddEdge) {
+  const int VERTICES_VALUES_LENGTH = 10;
+  int verticesValues[VERTICES_VALUES_LENGTH];
+  for (int i = 0; i < VERTICES_VALUES_LENGTH; i++) {
+    verticesValues[i] = i + 5;
+  }
+  Edge *edge0_2 = newEdge(
+      ((Vertex *)graph->vertices->getElement(graph->vertices, 0)),
+      ((Vertex *)graph->vertices->getElement(graph->vertices, 2)), NULL);
+  Edge *edge2_0 = newEdge(
+      ((Vertex *)graph->vertices->getElement(graph->vertices, 2)),
+      ((Vertex *)graph->vertices->getElement(graph->vertices, 0)), NULL);
+
+  Edge *edge4_2 = newEdge(
+      ((Vertex *)graph->vertices->getElement(graph->vertices, 4)),
+      ((Vertex *)graph->vertices->getElement(graph->vertices, 2)), NULL);
+
+  Edge *edge2_4 = newEdge(
+      ((Vertex *)graph->vertices->getElement(graph->vertices, 2)),
+      ((Vertex *)graph->vertices->getElement(graph->vertices, 4)), NULL);
+  graph->graphAddEdge(graph, edge0_2);
+  graph->graphAddEdge(graph, edge2_0);
+  graph->graphAddEdge(graph, edge4_2);
+  graph->graphAddEdge(graph, edge2_4);
+  // this seems extremely weird I know but it needs to be done
+  // because realloc if find another chunck of memory it will
+  // do a free and return another pointer so the this->vertices->array
+  // needs to be updated to pointed to the new zone pointed.
+  if (graph->vertices->array != this->vertices->array) {
+    this->vertices->array = graph->vertices->array;
+  }
+  if (graph->edges->array != this->edges->array) {
+    this->edges->array = this->edges->array;
+  }
+
+  show();
+  destroyEdge(edge0_2);
+  destroyEdge(edge2_0);
+  destroyEdge(edge4_2);
+  destroyEdge(edge2_4);
+}
+TEST_F(GraphTest, HandleGraphRemoveEdge) {
+  // this should be different the graph itself should be
+  // able to return a demanded vertex
+  Vertex *vertexS =
+      ((Vertex *)this->graph->vertices->getElement(this->graph->vertices, 0));
+  Vertex *vertexD =
+      ((Vertex *)this->graph->vertices->getElement(this->graph->vertices, 1));
+  Vertex *vertexSs =
+      ((Vertex *)this->graph->vertices->getElement(this->graph->vertices, 1));
+  Vertex *vertexDd =
+      ((Vertex *)this->graph->vertices->getElement(this->graph->vertices, 0));
+  Edge *edge = newEdge(vertexS, vertexD, NULL);
+  Edge *edge2 = newEdge(vertexSs, vertexDd, NULL);
+  this->graph->graphRemoveEdge(this->graph, edge);
+  this->graph->graphRemoveEdge(this->graph, edge2);
+  DynamicArray *vertexNeighbors = newDynamicArray(NULL);
+  graph->graphNeighbors(
+      graph, ((Vertex *)graph->vertices->getElement(graph->vertices, 0)),
+      vertexNeighbors);
+  Vertex *neighbor0 =
+      ((Vertex *)vertexNeighbors->getElement(vertexNeighbors, 0));
+  Vertex *neighbor1 =
+      ((Vertex *)vertexNeighbors->getElement(vertexNeighbors, 1));
+  ASSERT_TRUE(*(int *)(neighbor0->value) == 4);
+  ASSERT_TRUE(vertexNeighbors->counter == 1);
+  destroyDynamicArray(vertexNeighbors);
+  destroyVertex(vertexS);
+  destroyVertex(vertexD);
+  destroyVertex(vertexSs);
+  destroyVertex(vertexDd);
+  destroyEdge(edge);
+  destroyEdge(edge2);
+  // this->graph
 }

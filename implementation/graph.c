@@ -53,7 +53,7 @@ bool graphAdjacent(Graph *graph, Vertex *vertex1, Vertex *vertex2) {
 // this should return vertices
 static void _getNeighbors(Vertex *vertex, DynamicArray *edges, int iE,
                           DynamicArray *vertexNeighbors) {
-  if (iE == (edges->counter) - 1) {
+  if (iE == (edges->counter-edges->bottomIndex) - 1) {
     return;
   }
   if (*(int *)(((Edge *)edges->getElement(edges, iE))->source->value) ==

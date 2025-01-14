@@ -61,3 +61,4 @@
   link: https://www.codechef.com/roadmap/data-structures-and-algorithms
 
 - After that maybe will be nice to make all the dsa concurrent save.
+- I will be working in the free management meanwhile.

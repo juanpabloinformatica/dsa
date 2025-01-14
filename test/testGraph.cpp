@@ -242,11 +242,9 @@ TEST_F(GraphTest, HandleGraphRemoveEdge) {
   ASSERT_TRUE(*(int *)(neighbor0->value) == 4);
   ASSERT_TRUE(vertexNeighbors->counter == 1);
   destroyDynamicArray(vertexNeighbors);
-  // destroyVertex(vertexS);
-  // destroyVertex(vertexD);
-  // destroyVertex(vertexSs);
-  // destroyVertex(vertexDd);
-  // destroyEdge(edge);
-  // destroyEdge(edge2);
+  destroyVertex(vertexS);
+  destroyVertex(vertexD);
+  destroyEdge(edge);
+  destroyEdge(edge2);
   // this->graph
 }

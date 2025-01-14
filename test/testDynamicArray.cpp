@@ -1,36 +1,42 @@
-#include "gtest/gtest.h"
-// #include <iostream>
+#include "testDynamicArray.hpp"
+#include <gtest/gtest.h>
 
-extern "C" {
-#include "../implementation/dynamicArray.h"
+void DynamicArrayTest::preSetup(void) {
+  // filling temporary array to test
+  for (int i = 0; i < ARRAY_LENGTH; i++) {
+    this->elements[i] = i;
+  }
 }
+void DynamicArrayTest::SetUp() {
+  this->preSetup();
+  this->dynamicArray = newDynamicArray(NULL);
+}
+void DynamicArrayTest::TearDown() {
+  destroyDynamicArray(this->dynamicArray);
+  std::cout << "Cleaning up fixture" << std::endl;
+}
+
 // Handling creation
-TEST(DynamicArrayTest, HandleCreation) {
-  DynamicArray *dynamicArray = newDynamicArray(NULL);
-  EXPECT_TRUE(dynamicArray != NULL);
+TEST_F(DynamicArrayTest, HandleCreation) {
+  EXPECT_TRUE(this->dynamicArray != NULL);
 }
 // Handling Adding
-TEST(DynamicArrayTest, HandleAddingElements) {
+TEST_F(DynamicArrayTest, HandleAddingElements) {
   // i will continue
-  const int ARRAY_LENGTH = 30;
-  DynamicArray *dynamicArray = newDynamicArray(NULL);
-  int elements[ARRAY_LENGTH];
+  // const int ARRAY_LENGTH = 30;
   for (int i = 0; i < ARRAY_LENGTH; i++) {
-    elements[i] = i;
-    dynamicArray->addElement(dynamicArray, (int *)&elements[i]);
+    this->dynamicArray->addElement(this->dynamicArray,
+                                   (int *)&this->elements[i]);
   }
   for (int i = 0; i < ARRAY_LENGTH; i++) {
-    int element = *(int *)(dynamicArray->array)[i];
-    ASSERT_EQ(element, i);
+    ASSERT_TRUE(*(int *)(this->dynamicArray->array[i]) == this->elements[i]);
   }
 }
-TEST(DynamicArrayTest, HandleGettingElements) {
-  const int ARRAY_LENGTH = 30;
-  DynamicArray *dynamicArray = newDynamicArray(NULL);
-  int elements[ARRAY_LENGTH];
+TEST_F(DynamicArrayTest, HandleGettingElements) {
+  // const int ARRAY_LENGTH = 30;
   for (int i = 0; i < ARRAY_LENGTH; i++) {
-    elements[i] = i;
-    dynamicArray->addElement(dynamicArray, (int *)&elements[i]);
+    this->dynamicArray->addElement(this->dynamicArray,
+                                   (int *)&this->elements[i]);
   }
   ASSERT_TRUE(*(int *)dynamicArray->getElement(dynamicArray, 0) == 0);
   ASSERT_TRUE(*(int *)dynamicArray->getElement(dynamicArray, 1) == 1);
@@ -38,14 +44,11 @@ TEST(DynamicArrayTest, HandleGettingElements) {
   ASSERT_TRUE(*(int *)dynamicArray->getElement(dynamicArray, 3) == 3);
 }
 
-TEST(DynamicArrayTest, HandleDeletingElementsFront) {
-  const int ARRAY_LENGTH = 30;
+TEST_F(DynamicArrayTest, HandleDeletingElementsFront) {
+  // const int ARRAY_LENGTH = 30;
   const int REMOVE_ELEMENTS = 10;
-  DynamicArray *dynamicArray = newDynamicArray(NULL);
-  int elements[ARRAY_LENGTH];
   for (int i = 0; i < ARRAY_LENGTH; i++) {
-    elements[i] = i;
-    dynamicArray->addElement(dynamicArray, (int *)&elements[i]);
+    dynamicArray->addElement(dynamicArray, (int *)&this->elements[i]);
   }
   for (int i = 0; i < REMOVE_ELEMENTS; i++) {
     dynamicArray->removeElementFront(dynamicArray, 0);

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #define DYNAMICARRAYCAP 10
+#define ARRAY_LENGTH 30
 typedef struct DynamicArray DynamicArray;
 
 // extern int createdNewArray;

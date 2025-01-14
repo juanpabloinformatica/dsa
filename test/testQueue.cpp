@@ -7,7 +7,7 @@ TEST(QueueTest, HandleQueueCreation) {
   EXPECT_TRUE(queue != NULL);
 }
 TEST(QueueTest, HandleQueueEnqueue) {
-  const int ARRAY_LENGTH = 30;
+  // const int ARRAY_LENGTH = 30;
   Queue *queue = newQueue();
   int elements[ARRAY_LENGTH];
   for (int i = 0; i < ARRAY_LENGTH; i++) {
@@ -20,7 +20,7 @@ TEST(QueueTest, HandleQueueEnqueue) {
   }
 }
 TEST(QueueTest, HandleQueueDequeue) {
-  const int ARRAY_LENGTH = 30;
+  // const int ARRAY_LENGTH = 30;
   Queue *queue = newQueue();
   int elements[ARRAY_LENGTH];
   for (int i = 0; i < ARRAY_LENGTH; i++) {
@@ -32,7 +32,7 @@ TEST(QueueTest, HandleQueueDequeue) {
 }
 
 TEST(QueueTest, HandleQueueIsEmpty) {
-  const int ARRAY_LENGTH = 30;
+  // const int ARRAY_LENGTH = 30;
   Queue *queue = newQueue();
   int elements[ARRAY_LENGTH];
   for (int i = 0; i < ARRAY_LENGTH; i++) {

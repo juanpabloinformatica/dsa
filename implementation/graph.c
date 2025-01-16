@@ -53,7 +53,7 @@ bool graphAdjacent(Graph *graph, Vertex *vertex1, Vertex *vertex2) {
 // this should return vertices
 static void _getNeighbors(Vertex *vertex, DynamicArray *edges, int iE,
                           DynamicArray *vertexNeighbors) {
-  if (iE == (edges->counter-edges->bottomIndex) - 1) {
+  if (iE == (edges->counter - edges->bottomIndex) - 1) {
     return;
   }
   if (*(int *)(((Edge *)edges->getElement(edges, iE))->source->value) ==
@@ -82,7 +82,7 @@ void graphAddEdge(Graph *graph, Edge *edge) {
 /* void **array; */
 static void _getEdgePosition(DynamicArray *edges, int iE, int *ptrResult,
                              Edge *edge) {
-  if (iE == edges->counter || *ptrResult != -1) {
+  if (iE == (edges->counter - edges->bottomIndex) || *ptrResult != -1) {
     return;
   }
   int iEVertexSValue =
@@ -104,7 +104,30 @@ void graphRemoveEdge(Graph *graph, Edge *edge) {
     graph->edges->removeElementBack(graph->edges, result);
   }
 }
-void *graphGetVertexValue(Graph *graph, Vertex *vertex) {}
+static void _findVertexPosition(DynamicArray *vertices, int iV, Vertex *vertex,
+                                int *ptrPosition) {
+  if (iV == (vertices->counter - vertices->bottomIndex) && *ptrPosition != -1) {
+    return;
+  }
+  int iVVertexValue =
+      *(int *)(((Vertex *)vertices->getElement(vertices, iV))->value);
+  if (iVVertexValue == *(int *)vertex->value) {
+    *ptrPosition = iV;
+  }
+  _findVertexPosition(vertices, ++iV, vertex, ptrPosition);
+}
+void *graphGetVertexValue(Graph *graph, Vertex *vertex) {
+  int position = -1;
+  int *ptrPosition = &position;
+  _findVertexPosition(graph->vertices, graph->vertices->bottomIndex, vertex,
+                      ptrPosition);
+  Vertex *gottenVertex =
+      ((Vertex *)graph->vertices->getElement(graph->vertices, *ptrPosition));
+  if (gottenVertex != NULL) {
+    return gottenVertex->value;
+  }
+  return NULL;
+}
 void graphSetVertexValue(Graph *graph, Vertex *vertex, void *value) {}
 void *graphGetEdgeValue(Graph *graph, Edge *edge) {}
 void graphSetEdgeValue(Graph *graph, Edge *edge, void *value) {}

@@ -9,8 +9,8 @@ class GraphTest : public Test {
 protected:
   Graph *graph;
   int verticesTmp[NUMBER_VERTICES];
-  DynamicArray *vertices;
-  DynamicArray *edges;
+  DynamicArray* vertices;
+  DynamicArray* edges;
   // Vertex *vertices[NUMBER_VERTICES];
   // Edge *edges[NUMBER_EDGES];
   void preSetup(void);

@@ -248,3 +248,20 @@ TEST_F(GraphTest, HandleGraphRemoveEdge) {
   destroyEdge(edge2);
   // this->graph
 }
+// This doesn't have sense if using dynamicArray instead of hashmap
+TEST_F(GraphTest, HandleGraphGetVertexValue) {
+  // I kind of feel this doesn't make sense
+  // I think if the vertex were instead of a dynamicArray
+  // a hashmap where u have a key the label and the value the actual value
+  // In this case I am considering the value and label as the same.
+  int tmpValue = 3;
+  int *ptrTmpValue = &tmpValue;
+  Vertex *tmpVertex = newVertex(ptrTmpValue);
+  void *value = this->graph->graphGetVertexValue(this->graph, tmpVertex);
+  ASSERT_TRUE(*(int *)value == tmpValue);
+  int tmpValue2 = 30;
+  int *ptrTmpValue2 = &tmpValue2;
+  Vertex *tmpVertex2 = newVertex(ptrTmpValue2);
+  void *value2 = this->graph->graphGetVertexValue(this->graph, tmpVertex2);
+  ASSERT_TRUE(value2 == NULL);
+}

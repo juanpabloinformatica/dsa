@@ -23,6 +23,7 @@ Graph *newGraph(DynamicArray *vertices, DynamicArray *edges) {
   ptrGraph->graphGetVertexValue = graphGetVertexValue;
   ptrGraph->graphGetEdgeValue = graphGetEdgeValue;
   ptrGraph->graphSetEdgeValue = graphSetEdgeValue;
+  ptrGraph->graphSetVertexValue = graphSetVertexValue;
   return ptrGraph;
 }
 
@@ -106,7 +107,7 @@ void graphRemoveEdge(Graph *graph, Edge *edge) {
 }
 static void _findVertexPosition(DynamicArray *vertices, int iV, Vertex *vertex,
                                 int *ptrPosition) {
-  if (iV == (vertices->counter - vertices->bottomIndex) && *ptrPosition != -1) {
+  if (iV == (vertices->counter - vertices->bottomIndex) || *ptrPosition != -1) {
     return;
   }
   int iVVertexValue =
@@ -121,15 +122,33 @@ void *graphGetVertexValue(Graph *graph, Vertex *vertex) {
   int *ptrPosition = &position;
   _findVertexPosition(graph->vertices, graph->vertices->bottomIndex, vertex,
                       ptrPosition);
+  if (position == -1) {
+    return NULL;
+  }
   Vertex *gottenVertex =
       ((Vertex *)graph->vertices->getElement(graph->vertices, *ptrPosition));
-  if (gottenVertex != NULL) {
-    return gottenVertex->value;
-  }
-  return NULL;
+  return gottenVertex->value;
 }
-void graphSetVertexValue(Graph *graph, Vertex *vertex, void *value) {}
-void *graphGetEdgeValue(Graph *graph, Edge *edge) {}
+void graphSetVertexValue(Graph *graph, Vertex *vertex, void *value) {
+  int position = -1;
+  int *ptrPosition = &position;
+  _findVertexPosition(graph->vertices, graph->vertices->bottomIndex, vertex,
+                      ptrPosition);
+  if (position == -1) {
+    return;
+  }
+  graph->vertices->setElement(graph->vertices, position, value);
+}
+void *graphGetEdgeValue(Graph *graph, Edge *edge) {
+  int position = -1;
+  int *ptrPosition = &position;
+  _getEdgePosition(graph->edges, graph->edges->bottomIndex, ptrPosition, edge);
+  if (position == -1) {
+    return NULL;
+  }
+  Edge *gotEdge = ((Edge *)graph->edges->getElement(graph->edges, position));
+  return gotEdge->edgeValue;
+}
 void graphSetEdgeValue(Graph *graph, Edge *edge, void *value) {}
 void destroyGraph(Graph *graph) {
   destroyDynamicArray(graph->vertices);

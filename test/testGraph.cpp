@@ -265,3 +265,27 @@ TEST_F(GraphTest, HandleGraphGetVertexValue) {
   void *value2 = this->graph->graphGetVertexValue(this->graph, tmpVertex2);
   ASSERT_TRUE(value2 == NULL);
 }
+TEST_F(GraphTest, HandleGraphSetVertexValue) {
+  int tmpValue = 3;
+  int *ptrTmpValue = &tmpValue;
+  Vertex *toChangeVertex = newVertex(ptrTmpValue);
+  int tValue = 598;
+  int *ptrTValue = &tValue;
+  Vertex *tmpVertex = newVertex(ptrTValue);
+  this->graph->graphSetVertexValue(this->graph, toChangeVertex, tmpVertex);
+  ASSERT_TRUE(*(int *)(this->graph->graphGetVertexValue(this->graph,
+                                                        tmpVertex)) == tValue);
+  ASSERT_TRUE((this->graph->graphGetVertexValue(this->graph, toChangeVertex)) ==
+              NULL);
+}
+TEST_F(GraphTest, HandleGraphGetEdgeValue) {
+  int vertexSValue = 0;
+  int *ptrVertexSValue = &vertexSValue;
+  int vertexDValue = 1;
+  int *ptrVertexDValue = &vertexDValue;
+  Vertex *vertexS = newVertex(ptrVertexSValue);
+  Vertex *vertexD = newVertex(ptrVertexSValue);
+  Edge *tmpEdge = newEdge(vertexS, vertexD, NULL);
+  this->graph->graphGetEdgeValue(this->graph, tmpEdge);
+}
+TEST_F(GraphTest, HandleGraphSetEdgeValue) {}

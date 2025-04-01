@@ -288,4 +288,11 @@ TEST_F(GraphTest, HandleGraphGetEdgeValue) {
   Edge *tmpEdge = newEdge(vertexS, vertexD, NULL);
   this->graph->graphGetEdgeValue(this->graph, tmpEdge);
 }
-TEST_F(GraphTest, HandleGraphSetEdgeValue) {}
+TEST_F(GraphTest, HandleGraphSetEdgeValue) {
+  int edgeValue = 900;
+  int *ptrEdgeValue = &edgeValue;
+  Edge *edgeT = (Edge *)(this->graph->edges->array[0]);
+  this->graph->graphSetEdgeValue(this->graph, edgeT, ptrEdgeValue);
+  Edge *edgeTt = ((Edge *)this->graph->edges->array[0]);
+  ASSERT_TRUE(*(int *)edgeTt->edgeValue == *(int *)ptrEdgeValue);
+}

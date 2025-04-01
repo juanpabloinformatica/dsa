@@ -149,7 +149,16 @@ void *graphGetEdgeValue(Graph *graph, Edge *edge) {
   Edge *gotEdge = ((Edge *)graph->edges->getElement(graph->edges, position));
   return gotEdge->edgeValue;
 }
-void graphSetEdgeValue(Graph *graph, Edge *edge, void *value) {}
+void graphSetEdgeValue(Graph *graph, Edge *edge, void *value) {
+  int position = -1;
+  int *ptrPosition = &position;
+  _getEdgePosition(graph->edges, graph->edges->bottomIndex, ptrPosition, edge);
+  if (position == -1) {
+    return;
+  }
+  Edge *tmpEdge = ((Edge *)graph->edges->getElement(graph->edges, position));
+  tmpEdge->edgeValue = value;
+}
 void destroyGraph(Graph *graph) {
   destroyDynamicArray(graph->vertices);
   destroyDynamicArray(graph->edges);
